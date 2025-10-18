@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { FlexboxSpacer } from "components/FlexboxSpacer";
 import { AutoTypingResume } from "home/AutoTypingResume";
+import { SparklesIcon, CheckCircleIcon } from "@heroicons/react/24/solid";
 
 export const Hero = () => {
   return (
@@ -11,8 +12,9 @@ export const Hero = () => {
       <div className="mx-auto max-w-xl lg:mx-0 lg:grow">
         {/* Badge Neo-Brutal */}
         <div className="mb-6 inline-block">
-          <span className="inline-block rounded-lg border-2 border-black bg-yellow-300 px-4 py-2 text-sm font-bold shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
-            ✨ 100% Gratuito & Otimizado para ATS
+          <span className="inline-flex items-center gap-2 rounded-lg border-2 border-black bg-yellow-300 px-4 py-2 text-sm font-bold shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
+            <SparklesIcon className="h-5 w-5" />
+            100% Gratuito & Otimizado para ATS
           </span>
         </div>
 
@@ -47,13 +49,14 @@ export const Hero = () => {
           >
             Criar Meu Currículo <span aria-hidden="true">→</span>
           </Link>
-          <p className="mt-4 text-sm font-medium text-gray-600">
-            ✓ Sem cadastro necessário
+          <p className="mt-4 flex items-center gap-2 text-sm font-medium text-gray-600">
+            <CheckCircleIcon className="h-5 w-5 text-green-600" />
+            Sem cadastro necessário
           </p>
         </div>
 
         {/* Card de Info Secundária */}
-        <div className="mt-8 inline-block p-4  lg:mt-20">
+        <div className="mt-8 inline-block p-4  lg:mt-6">
           <p className="text-sm font-medium text-gray-700">
             Já tem um currículo?{" "}
             <Link

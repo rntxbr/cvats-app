@@ -1,4 +1,7 @@
+"use client";
 import { Link } from "components/documentation";
+import { useState } from "react";
+import { ChevronDownIcon, QuestionMarkCircleIcon } from "@heroicons/react/24/solid";
 
 const QAS = [
   {
@@ -122,18 +125,101 @@ const QAS = [
 ];
 
 export const QuestionsAndAnswers = () => {
+  const [openIndex, setOpenIndex] = useState<number | null>(0);
+
+  const toggleAccordion = (index: number) => {
+    setOpenIndex(openIndex === index ? null : index);
+  };
+
   return (
-    <section className="mx-auto max-w-3xl divide-y divide-gray-300 lg:mt-4 lg:px-2">
-      <h2 className="text-center text-3xl font-bold">Perguntas & Respostas</h2>
-      <div className="mt-6 divide-y divide-gray-300">
-        {QAS.map(({ question, answer }) => (
-          <div key={question} className="py-6">
-            <h3 className="font-semibold leading-7">{question}</h3>
-            <div className="mt-3 grid gap-2 leading-7 text-gray-600">
-              {answer}
-            </div>
+    <section className="px-4 py-16 lg:py-24">
+      {/* Título da Seção */}
+      <div className="mb-12 text-center lg:mb-16">
+        <div className="mb-4 inline-flex items-center justify-center">
+          <div className="flex h-16 w-16 items-center justify-center rounded-xl border-4 border-black bg-orange-300 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]">
+            <QuestionMarkCircleIcon className="h-9 w-9 text-gray-900" />
           </div>
-        ))}
+        </div>
+        <h2 className="text-4xl font-bold text-gray-900 lg:text-5xl">
+          Perguntas{" "}
+          <span className="relative inline-block">
+            <span className="relative z-10">Frequentes</span>
+            <span className="absolute bottom-1 left-0 h-4 w-full bg-orange-300 -z-0"></span>
+          </span>
+        </h2>
+        <p className="mt-4 text-lg text-gray-600">
+          Tudo o que você precisa saber sobre o CVAts
+        </p>
+      </div>
+
+      {/* Accordions */}
+      <div className="mx-auto max-w-3xl">
+        <div className="space-y-4 lg:space-y-6">
+          {QAS.map(({ question, answer }, index) => {
+            const isOpen = openIndex === index;
+            const colors = [
+              "bg-yellow-300",
+              "bg-blue-300",
+              "bg-green-300",
+              "bg-purple-300",
+            ];
+            const color = colors[index % colors.length];
+
+            return (
+              <div
+                key={question}
+                className="group relative transition-all"
+              >
+                {/* Sombra de fundo offset */}
+                <div className={`absolute -right-2 -top-2 h-full w-full rounded-xl border-4 border-black ${color}`}></div>
+                
+                {/* Accordion Card */}
+                <div className="relative z-10 overflow-hidden rounded-xl border-4 border-black bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+                  {/* Header (sempre visível) */}
+                  <button
+                    onClick={() => toggleAccordion(index)}
+                    className="flex w-full items-center justify-between gap-4 p-6 text-left transition-colors hover:bg-gray-50 lg:p-8"
+                  >
+                    <h3 className="flex-grow text-lg font-bold text-gray-900 lg:text-xl">
+                      {question}
+                    </h3>
+                    <div className={`flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg border-3 border-black ${color} shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-transform ${isOpen ? "rotate-180" : ""}`}>
+                      <ChevronDownIcon className="h-6 w-6 text-gray-900" />
+                    </div>
+                  </button>
+
+                  {/* Content (expansível) */}
+                  <div
+                    className={`overflow-hidden transition-all duration-300 ease-in-out ${
+                      isOpen ? "max-h-[1000px] opacity-100" : "max-h-0 opacity-0"
+                    }`}
+                  >
+                    <div className="border-t-4 border-black bg-gray-50 p-6 lg:p-8">
+                      <div className="space-y-4 text-base leading-relaxed text-gray-700 lg:text-lg">
+                        {answer}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Badge de ajuda */}
+      <div className="mt-12 text-center lg:mt-16">
+        <div className="inline-block rounded-xl border-4 border-black bg-gradient-to-r from-blue-300 to-purple-300 px-8 py-4 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+          <p className="text-base font-bold text-gray-900 lg:text-lg">
+            Ainda tem dúvidas?{" "}
+            <Link
+              href="mailto:hello@open-resume.com"
+              className="underline decoration-2 underline-offset-4 hover:text-purple-900"
+            >
+              Entre em contato
+            </Link>
+          </p>
+        </div>
       </div>
     </section>
   );
