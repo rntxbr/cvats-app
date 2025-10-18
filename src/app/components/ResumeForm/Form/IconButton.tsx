@@ -15,7 +15,7 @@ export const ShowIconButton = ({
   show: boolean;
   setShow: (show: boolean) => void;
 }) => {
-  const tooltipText = show ? "Hide section" : "Show section";
+  const tooltipText = show ? "Ocultar seção" : "Mostrar seção";
   const onClick = () => {
     setShow(!show);
   };
@@ -39,7 +39,7 @@ export const MoveIconButton = ({
   size?: "small" | "medium";
   onClick: (type: MoveIconButtonType) => void;
 }) => {
-  const tooltipText = type === "up" ? "Move up" : "Move down";
+  const tooltipText = type === "up" ? "Mover para cima" : "Mover para baixo";
   const sizeClassName = size === "medium" ? "h-6 w-6" : "h-4 w-4";
   const Icon = type === "up" ? ArrowSmallUpIcon : ArrowSmallDownIcon;
 
@@ -78,8 +78,8 @@ export const BulletListIconButton = ({
   showBulletPoints: boolean;
 }) => {
   const tooltipText = showBulletPoints
-    ? "Hide bullet points"
-    : "Show bullet points";
+    ? "Ocultar marcadores"
+    : "Mostrar marcadores";
 
   return (
     <IconButton

@@ -39,11 +39,14 @@ export const BaseForm = ({
   children: React.ReactNode;
   className?: string;
 }) => (
-  <section
-    className={`flex flex-col gap-3 rounded-md bg-white p-6 pt-4 shadow transition-opacity duration-200 ${className}`}
-  >
-    {children}
-  </section>
+  <div className="relative">
+    <div className="absolute -right-2 -top-2 h-full w-full rounded-xl border-4 border-black bg-yellow-200"></div>
+    <section
+      className={`relative z-10 flex flex-col gap-3 rounded-xl border-4 border-black bg-white p-6 pt-4 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-opacity duration-200 ${className}`}
+    >
+      {children}
+    </section>
+  </div>
 );
 
 const FORM_TO_ICON: { [section in ShowForm]: typeof BuildingOfficeIcon } = {
@@ -94,7 +97,7 @@ export const Form = ({
           <Icon className="h-6 w-6 text-gray-600" aria-hidden="true" />
           <input
             type="text"
-            className="block w-full border-b border-transparent text-lg font-semibold tracking-wide text-gray-900 outline-none hover:border-gray-300 hover:shadow-sm focus:border-gray-300 focus:shadow-sm"
+            className="block w-full rounded-lg border-2 border-transparent bg-transparent px-2 py-1 text-lg font-bold tracking-wide text-gray-900 outline-none transition-all hover:border-gray-300 hover:bg-gray-50 focus:border-black focus:bg-white focus:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]"
             value={heading}
             onChange={(e) => setHeading(e.target.value)}
           />
@@ -119,13 +122,16 @@ export const Form = ({
             onClick={() => {
               dispatch(addSectionInForm({ form }));
             }}
-            className="flex items-center rounded-md bg-white py-2 pl-3 pr-4 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+            className="group relative inline-flex"
           >
-            <PlusSmallIcon
-              className="-ml-0.5 mr-1.5 h-5 w-5 text-gray-400"
-              aria-hidden="true"
-            />
-            {addButtonText}
+            <div className="absolute -right-1 -top-1 h-full w-full rounded-lg border-3 border-black bg-green-300"></div>
+            <div className="relative z-10 flex items-center rounded-lg border-3 border-black bg-white py-2 pl-3 pr-4 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-all group-hover:shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]">
+              <PlusSmallIcon
+                className="-ml-0.5 mr-1.5 h-5 w-5 text-gray-900"
+                aria-hidden="true"
+              />
+              <span className="text-sm font-bold text-gray-900">{addButtonText}</span>
+            </div>
           </button>
         </div>
       )}

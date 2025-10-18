@@ -45,11 +45,10 @@ export const ThemeForm = () => {
             onChange={handleSettingsChange}
             inputStyle={{ color: themeColor }}
           />
-          <div className="mt-2 flex flex-wrap gap-2">
+          <div className="mt-2 flex flex-wrap gap-3">
             {THEME_COLORS.map((color, idx) => (
               <div
-                className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-md text-sm text-white"
-                style={{ backgroundColor: color }}
+                className="relative cursor-pointer transition-transform hover:scale-110"
                 key={idx}
                 onClick={() => handleSettingsChange("themeColor", color)}
                 onKeyDown={(e) => {
@@ -58,7 +57,15 @@ export const ThemeForm = () => {
                 }}
                 tabIndex={0}
               >
-                {settings.themeColor === color ? "✓" : ""}
+                {settings.themeColor === color && (
+                  <div className="absolute -right-1 -top-1 h-full w-full rounded-lg border-3 border-black bg-yellow-200"></div>
+                )}
+                <div
+                  className="relative z-10 flex h-12 w-12 items-center justify-center rounded-lg border-3 border-black text-base font-black text-white shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]"
+                  style={{ backgroundColor: color }}
+                >
+                  {settings.themeColor === color ? "✓" : ""}
+                </div>
               </div>
             ))}
           </div>

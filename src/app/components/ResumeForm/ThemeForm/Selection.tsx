@@ -24,15 +24,20 @@ const Selection = ({
   const selectedStyle = {
     color: "white",
     backgroundColor: selectedColor,
-    borderColor: selectedColor,
+    fontWeight: "bold",
+    ...style,
+  };
+  
+  const baseStyle = {
+    backgroundColor: "white",
     ...style,
   };
 
   return (
     <div
-      className="flex w-[105px] cursor-pointer items-center justify-center rounded-md border border-gray-300 py-1.5 shadow-sm hover:border-gray-400 hover:bg-gray-100"
+      className="flex w-[105px] cursor-pointer items-center justify-center rounded-lg border-3 border-black py-2 font-bold shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-all hover:shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[-1px] hover:translate-y-[-1px]"
       onClick={onClick}
-      style={isSelected ? selectedStyle : style}
+      style={isSelected ? selectedStyle : baseStyle}
       onKeyDown={(e) => {
         if (["Enter", " "].includes(e.key)) onClick();
       }}
@@ -108,7 +113,7 @@ export const FontSizeSelections = ({
 
   return (
     <SelectionsWrapper>
-      {["Compact", "Standard", "Large"].map((type, idx) => {
+      {["Compacto", "Padrão", "Grande"].map((type, idx) => {
         const fontSizePt = String(compactSizePt + idx);
         const isSelected = fontSizePt === selectedFontSize;
         return (
@@ -151,8 +156,8 @@ export const DocumentSizeSelections = ({
           >
             <div className="flex flex-col items-center">
               <div>{type}</div>
-              <div className="text-xs">
-                {type === "Letter" ? "(US, Canada)" : "(other countries)"}
+              <div className="text-xs font-normal">
+                {type === "Letter" ? "(EUA, Canadá)" : "(outros países)"}
               </div>
             </div>
           </Selection>

@@ -47,27 +47,26 @@ const CircleRating = ({
   const [hoverRating, setHoverRating] = useState<number | null>(null);
 
   return (
-    <div className="flex items-center p-2">
-      {[...Array(numCircles)].map((_, idx) => (
-        <div
-          className={`cursor-pointer p-0.5`}
-          key={idx}
-          onClick={() => setRating(idx)}
-          onMouseEnter={() => setHoverRating(idx)}
-          onMouseLeave={() => setHoverRating(null)}
-        >
+    <div className="flex items-center gap-1 p-2">
+      {[...Array(numCircles)].map((_, idx) => {
+        const isActive = (hoverRating !== null && hoverRating >= idx) || (hoverRating === null && rating >= idx);
+        return (
           <div
-            className="h-5 w-5 rounded-full transition-transform duration-200 hover:scale-[120%] "
-            style={{
-              backgroundColor:
-                (hoverRating !== null && hoverRating >= idx) ||
-                (hoverRating === null && rating >= idx)
-                  ? circleColor
-                  : "#d1d5db", //gray-300
-            }}
-          />
-        </div>
-      ))}
+            className={`cursor-pointer transition-transform duration-200 hover:scale-110`}
+            key={idx}
+            onClick={() => setRating(idx)}
+            onMouseEnter={() => setHoverRating(idx)}
+            onMouseLeave={() => setHoverRating(null)}
+          >
+            <div
+              className="h-6 w-6 rounded-full border-3 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-all"
+              style={{
+                backgroundColor: isActive ? circleColor : "#ffffff",
+              }}
+            />
+          </div>
+        );
+      })}
     </div>
   );
 };

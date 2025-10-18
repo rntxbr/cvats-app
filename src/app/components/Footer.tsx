@@ -1,4 +1,6 @@
 import Link from "next/link";
+import Image from "next/image";
+import logoSrc from "public/logo.png";
 import { 
   HeartIcon, 
   CodeBracketIcon,
@@ -35,12 +37,23 @@ export const Footer = () => {
           {/* Coluna de Branding */}
           <div className="lg:col-span-5">
             {/* Logo/Nome */}
-            <div className="mb-6 inline-block rounded-xl border-4 border-black bg-gradient-to-r from-purple-300 to-blue-300 px-6 py-3 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
-              <h3 className="text-2xl font-black text-gray-900">CVAts</h3>
-            </div>
+            <Link href="/" className="group relative inline-block">
+              <div className="absolute -right-1 -top-1 h-full w-full rounded-lg border-3 border-black bg-purple-300"></div>
+              <div className="relative z-10 flex items-center gap-3 rounded-lg border-3 border-black bg-gradient-to-r from-yellow-300 to-red-300 px-5 py-2.5 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-all group-hover:shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]">
+                <Image
+                  src={logoSrc}
+                  alt="CVAts Logo"
+                  className="h-7 w-auto"
+                  priority
+                />
+                <span className="text-2xl font-black text-gray-900">
+                  CVAts
+                </span>
+              </div>
+            </Link>
 
             {/* Descrição */}
-            <p className="mb-6 text-base leading-relaxed text-gray-700 lg:text-lg">
+            <p className="mt-6 mb-6 text-base leading-relaxed text-gray-700 lg:text-lg">
               Criador de currículos gratuito e otimizado para sistemas ATS. 
               Crie seu currículo profissional em minutos e aumente suas chances 
               de conseguir a vaga dos sonhos.

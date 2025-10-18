@@ -19,16 +19,16 @@ export const InlineInput = <K extends string>({
 }: InputProps<K, string>) => {
   return (
     <label
-      className={`flex gap-2 text-base font-medium text-gray-700 ${labelClassName}`}
+      className={`flex gap-3 text-base font-bold text-gray-900 ${labelClassName}`}
     >
-      <span className="w-28">{label}</span>
+      <span className="w-32">{label}</span>
       <input
         type="text"
         name={name}
         value={value}
         placeholder={placeholder}
         onChange={(e) => onChange(name, e.target.value)}
-        className="w-[5rem] border-b border-gray-300 text-center font-semibold leading-3 outline-none"
+        className="w-[5rem] rounded-lg border-3 border-black px-2 py-1 text-center font-bold shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] outline-none transition-all focus:shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]"
         style={inputStyle}
       />
     </label>
