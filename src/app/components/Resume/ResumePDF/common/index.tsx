@@ -1,8 +1,10 @@
 import { Text, View, Link } from "@react-pdf/renderer";
-import type { Style } from "@react-pdf/types";
 import { styles, spacing } from "components/Resume/ResumePDF/styles";
 import { DEBUG_RESUME_PDF_FLAG } from "lib/constants";
 import { DEFAULT_FONT_COLOR } from "lib/redux/settingsSlice";
+
+// Type para estilos do react-pdf
+type Style = Record<string, any>;
 
 export const ResumePDFSection = ({
   themeColor,

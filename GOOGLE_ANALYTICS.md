@@ -22,7 +22,7 @@ O Google Analytics 4 foi implementado seguindo as melhores práticas do Next.js 
 Crie um arquivo `.env.local` na raiz do projeto:
 
 ```env
-NEXT_PUBLIC_GA_MEASUREMENT_ID=G-BVDXL0225W
+
 ```
 
 #### Para produção (Vercel):
