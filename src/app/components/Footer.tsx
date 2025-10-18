@@ -21,7 +21,7 @@ const FOOTER_LINKS = [
     links: [
       { label: "Como Funciona", href: "/#features" },
       { label: "FAQ", href: "/#faq" },
-      { label: "GitHub", href: "https://github.com/xitanggg/open-resume" },
+      { label: "GitHub", href: "https://github.com/rntxbr/cvats-app" },
     ],
   },
 ];
@@ -93,12 +93,12 @@ export const Footer = () => {
             
             {/* Cards de Ação */}
             <div className="space-y-3">
-              <Link
-                href="https://github.com/xitanggg/open-resume"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group relative block"
-              >
+            <Link
+              href="https://github.com/rntxbr/cvats-app"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group relative block"
+            >
                 <div className="absolute -right-1 -top-1 h-full w-full rounded-lg border-3 border-black bg-purple-300"></div>
                 <div className="relative z-10 flex items-center gap-3 rounded-lg border-3 border-black bg-white p-3 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-all group-hover:shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]">
                   <CodeBracketIcon className="h-5 w-5 flex-shrink-0 text-gray-900" />

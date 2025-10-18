@@ -35,7 +35,7 @@ const FEATURES = [
       <>
         Este é um projeto de código aberto e transparente. Você pode visualizar
         o código-fonte completo no{" "}
-        <Link href="https://github.com/xitanggg/open-resume">
+        <Link href="https://github.com/rntxbr/cvats-app">
           repositório GitHub
         </Link>
       </>

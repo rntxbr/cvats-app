@@ -17,7 +17,7 @@ const RESUME_EXAMPLES = [
     fileUrl: "resume-example/laverne-resume.pdf",
     description: (
       <span>
-        Borrowed from University of La Verne Career Center -{" "}
+        Emprestado do Centro de Carreiras da Universidade de La Verne -{" "}
         <Link href="https://laverne.edu/careers/wp-content/uploads/sites/15/2010/12/Undergraduate-Student-Resume-Examples.pdf">
           Link
         </Link>
@@ -28,7 +28,7 @@ const RESUME_EXAMPLES = [
     fileUrl: "resume-example/openresume-resume.pdf",
     description: (
       <span>
-        Created with OpenResume resume builder -{" "}
+        Criado com o criador de currículos CVAts -{" "}
         <Link href="/resume-builder">Link</Link>
       </span>
     ),
@@ -66,22 +66,22 @@ export default function ResumeParser() {
           <FlexboxSpacer maxWidth={45} className="hidden md:block" />
           <section className="max-w-[600px] grow">
             <Heading className="text-primary !mt-4">
-              Resume Parser Playground
+              Teste o Analisador de Currículos
             </Heading>
             <Paragraph smallMarginTop={true}>
-              This playground showcases the OpenResume resume parser and its
-              ability to parse information from a resume PDF. Click around the
-              PDF examples below to observe different parsing results.
+              Este analisador demonstra a capacidade do CVAts de extrair
+              informações de um currículo em PDF. Clique nos exemplos de PDF
+              abaixo para observar diferentes resultados de análise.
             </Paragraph>
             <div className="mt-3 flex gap-3">
               {RESUME_EXAMPLES.map((example, idx) => (
                 <article
                   key={idx}
                   className={cx(
-                    "flex-1 cursor-pointer rounded-md border-2 px-4 py-3 shadow-sm outline-none hover:bg-gray-50 focus:bg-gray-50",
+                    "relative flex-1 cursor-pointer rounded-lg outline-none transition-all",
                     example.fileUrl === fileUrl
-                      ? "border-blue-400"
-                      : "border-gray-300"
+                      ? "scale-105"
+                      : ""
                   )}
                   onClick={() => setFileUrl(example.fileUrl)}
                   onKeyDown={(e) => {
@@ -90,21 +90,29 @@ export default function ResumeParser() {
                   }}
                   tabIndex={0}
                 >
-                  <h1 className="font-semibold">Resume Example {idx + 1}</h1>
-                  <p className="mt-2 text-sm text-gray-500">
-                    {example.description}
-                  </p>
+                  {example.fileUrl === fileUrl && (
+                    <div className="absolute -right-1 -top-1 h-full w-full rounded-lg border-3 border-black bg-blue-300"></div>
+                  )}
+                  <div className={cx(
+                    "relative z-10 rounded-lg border-3 border-black bg-white px-4 py-3 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]",
+                    example.fileUrl === fileUrl ? "bg-blue-50" : ""
+                  )}>
+                    <h1 className="font-bold">Exemplo de Currículo {idx + 1}</h1>
+                    <p className="mt-2 text-sm text-gray-600">
+                      {example.description}
+                    </p>
+                  </div>
                 </article>
               ))}
             </div>
             <Paragraph>
-              You can also{" "}
-              <span className="font-semibold">add your resume below</span> to
-              access how well your resume would be parsed by similar Application
-              Tracking Systems (ATS) used in job applications. The more
-              information it can parse out, the better it indicates the resume
-              is well formatted and easy to read. It is beneficial to have the
-              name and email accurately parsed at the very least.
+              Você também pode{" "}
+              <span className="font-semibold">adicionar seu currículo abaixo</span> para
+              avaliar o quão bem ele seria analisado por Sistemas de Rastreamento
+              de Candidatos (ATS) similares usados em processos seletivos. Quanto
+              mais informações o sistema conseguir extrair, melhor indica que o
+              currículo está bem formatado e fácil de ler. É essencial que pelo
+              menos o nome e email sejam analisados com precisão.
             </Paragraph>
             <div className="mt-3">
               <ResumeDropzone
@@ -115,7 +123,7 @@ export default function ResumeParser() {
               />
             </div>
             <Heading level={2} className="!mt-[1.2em]">
-              Resume Parsing Results
+              Resultados da Análise do Currículo
             </Heading>
             <ResumeTable resume={resume} />
             <ResumeParserAlgorithmArticle

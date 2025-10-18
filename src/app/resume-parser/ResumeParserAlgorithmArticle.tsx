@@ -42,7 +42,7 @@ export const ResumeParserAlgorithmArticle = ({
     return content;
   };
   const step1TextItemsTable = [
-    ["#", "Text Content", "Metadata"],
+    ["#", "Conteúdo de Texto", "Metadados"],
     ...textItems.map((item, idx) => [
       idx + 1,
       item.text,
@@ -51,7 +51,7 @@ export const ResumeParserAlgorithmArticle = ({
   ];
 
   const step2LinesTable = [
-    ["Lines", "Line Content"],
+    ["Linhas", "Conteúdo da Linha"],
     ...lines.map((line, idx) => [
       idx + 1,
       line.map((item, idx) => (
@@ -84,18 +84,18 @@ export const ResumeParserAlgorithmArticle = ({
   };
   const step4ProfileFeatureScoresTable = [
     [
-      "Resume Attribute",
-      "Text (Highest Feature Score)",
-      "Feature Scores of Other Texts",
+      "Atributo de Currículo",
+      "Texto (Maior Pontuação de Recurso)",
+      "Pontuações de Recursos de Outros Textos",
     ],
-    ["Name", profile.name, <Scores key={"Name"} scores={profileScores.name} />],
+    ["Nome", profile.name, <Scores key={"Name"} scores={profileScores.name} />],
     [
       "Email",
       profile.email,
       <Scores key={"Email"} scores={profileScores.email} />,
     ],
     [
-      "Phone",
+      "Telefone",
       profile.phone,
       <Scores key={"Phone"} scores={profileScores.phone} />,
     ],
@@ -103,42 +103,42 @@ export const ResumeParserAlgorithmArticle = ({
 
   return (
     <article className="mt-10">
-      <Heading className="text-primary !mt-0 border-t-2 pt-8">
-        Resume Parser Algorithm Deep Dive
+      <Heading className="text-primary !mt-0 border-t-4 border-black pt-8">
+        Mergulho Profundo no Algoritmo do Analisador
       </Heading>
       <Paragraph smallMarginTop={true}>
-        For the technical curious, this section will dive into the OpenResume
-        parser algorithm and walks through the 4 steps on how it works. (Note
-        that the algorithm is designed to parse single column resume in English
-        language)
+        Para os curiosos técnicos, esta seção mergulha no algoritmo do analisador
+        CVAts e percorre os 4 passos de como ele funciona. (Note que o algoritmo
+        foi projetado para analisar currículos de coluna única em português e inglês)
       </Paragraph>
-      {/* Step 1. Read the text items from a PDF file */}
-      <Heading level={2}>Step 1. Read the text items from a PDF file</Heading>
+      {/* Passo 1. Ler os itens de texto de um arquivo PDF */}
+      <Heading level={2}>Passo 1. Ler os itens de texto de um arquivo PDF</Heading>
       <Paragraph smallMarginTop={true}>
-        A PDF file is a standardized file format defined by the{" "}
+        Um arquivo PDF é um formato de arquivo padronizado definido pela{" "}
         <Link href="https://www.iso.org/standard/51502.html">
-          ISO 32000 specification
+          especificação ISO 32000
         </Link>
-        . When you open up a PDF file using a text editor, you'll notice that
-        the raw content looks encoded and is difficult to read. To display it in
-        a readable format, you would need a PDF reader to decode and view the
-        file. Similarly, the resume parser first needs to decode the PDF file in
-        order to extract its text content.
+        . Quando você abre um arquivo PDF usando um editor de texto, notará que
+        o conteúdo bruto parece codificado e é difícil de ler. Para exibi-lo em
+        um formato legível, você precisaria de um leitor de PDF para decodificar
+        e visualizar o arquivo. Da mesma forma, o analisador de currículos
+        primeiro precisa decodificar o arquivo PDF para extrair seu conteúdo de texto.
       </Paragraph>
       <Paragraph>
-        While it is possible to write a custom PDF reader function following the
-        ISO 32000 specification, it is much simpler to leverage an existing
-        library. In this case, the resume parser uses Mozilla's open source{" "}
-        <Link href="https://github.com/mozilla/pdf.js">pdf.js</Link> library to
-        first extract all the text items in the file.
+        Embora seja possível escrever uma função personalizada de leitura de PDF
+        seguindo a especificação ISO 32000, é muito mais simples aproveitar uma
+        biblioteca existente. Neste caso, o analisador de currículos usa a
+        biblioteca de código aberto{" "}
+        <Link href="https://github.com/mozilla/pdf.js">pdf.js</Link> da Mozilla
+        para primeiro extrair todos os itens de texto no arquivo.
       </Paragraph>
       <Paragraph>
-        The table below lists {textItems.length} text items that are extracted
-        from the resume PDF added. A text item contains the text content and
-        also some metadata about the content, e.g. its x, y positions in the
-        document, whether the font is bolded, or whether it starts a new line.
-        (Note that x,y position is relative to the bottom left corner of the
-        page, which is the origin 0,0)
+        A tabela abaixo lista {textItems.length} itens de texto que são extraídos
+        do PDF do currículo adicionado. Um item de texto contém o conteúdo de texto
+        e também alguns metadados sobre o conteúdo, por exemplo, suas posições x, y
+        no documento, se a fonte está em negrito ou se inicia uma nova linha.
+        (Note que a posição x,y é relativa ao canto inferior esquerdo da página,
+        que é a origem 0,0)
       </Paragraph>
       <div className="mt-4 max-h-72 overflow-y-scroll border scrollbar scrollbar-track-gray-100 scrollbar-thumb-gray-200 scrollbar-w-3">
         <Table
@@ -147,24 +147,24 @@ export const ResumeParserAlgorithmArticle = ({
           tdClassNames={["", "", "md:whitespace-nowrap"]}
         />
       </div>
-      {/* Step 2. Group text items into lines */}
-      <Heading level={2}>Step 2. Group text items into lines</Heading>
+      {/* Passo 2. Agrupar itens de texto em linhas */}
+      <Heading level={2}>Passo 2. Agrupar itens de texto em linhas</Heading>
       <Paragraph smallMarginTop={true}>
-        The extracted text items aren't ready to use yet and have 2 main issues:
+        Os itens de texto extraídos ainda não estão prontos para usar e têm 2 problemas principais:
       </Paragraph>
       <Paragraph>
         <span className="mt-3 block font-semibold">
-          Issue 1: They have some unwanted noises.
+          Problema 1: Eles têm alguns ruídos indesejados.
         </span>
-        Some single text items can get broken into multiple ones, as you might
-        observe on the table above, e.g. a phone number "(123) 456-7890" might
-        be broken into 3 text items "(123) 456", "-" and "7890".
+        Alguns itens de texto únicos podem ser quebrados em múltiplos, como você
+        pode observar na tabela acima, por exemplo, um número de telefone
+        "(11) 98765-4321" pode ser quebrado em 3 itens de texto "(11) 98765", "-" e "4321".
       </Paragraph>
       <Paragraph smallMarginTop={true}>
-        <span className="font-semibold">Solution:</span> To tackle this issue,
-        the resume parser connects adjacent text items into one text item if
-        their distance is smaller than the average typical character width,
-        where
+        <span className="font-semibold">Solução:</span> Para resolver este problema,
+        o analisador de currículos conecta itens de texto adjacentes em um único
+        item de texto se a distância entre eles for menor que a largura média
+        típica de caractere, onde
         <span
           dangerouslySetInnerHTML={{
             __html: `<math display="block">
@@ -179,33 +179,35 @@ export const ResumeParserAlgorithmArticle = ({
           }}
           className="my-2 block text-left text-base"
         />
-        The average typical character width is calculated by dividing the sum of
-        all text items' widths by the total number characters of the text items
-        (Bolded texts and new line elements are excluded to not skew the
-        results).
+        A largura média típica de caractere é calculada dividindo a soma das
+        larguras de todos os itens de texto pelo número total de caracteres dos
+        itens de texto (Textos em negrito e elementos de nova linha são excluídos
+        para não distorcer os resultados).
       </Paragraph>
       <Paragraph>
         <span className="mt-3 block font-semibold">
-          Issue 2: They lack contexts and associations.
+          Problema 2: Eles carecem de contextos e associações.
         </span>
-        When we read a resume, we scan a resume line by line. Our brains can
-        process each section via visual cues such as texts' boldness and
-        proximity, where we can quickly associate texts closer together to be a
-        related group. The extracted text items however currently don't have
-        those contexts/associations and are just disjointed elements.
+        Quando lemos um currículo, escaneamos linha por linha. Nossos cérebros
+        podem processar cada seção por meio de pistas visuais como negrito e
+        proximidade dos textos, onde podemos rapidamente associar textos mais
+        próximos como um grupo relacionado. No entanto, os itens de texto
+        extraídos atualmente não têm esses contextos/associações e são apenas
+        elementos desconexos.
       </Paragraph>
       <Paragraph smallMarginTop={true}>
-        <span className="font-semibold">Solution:</span> To tackle this issue,
-        the resume parser reconstructs those contexts and associations similar
-        to how our brain would read and process the resume. It first groups text
-        items into lines since we read text line by line. It then groups lines
-        into sections, which will be discussed in the next step.
+        <span className="font-semibold">Solução:</span> Para resolver este problema,
+        o analisador de currículos reconstrói esses contextos e associações de
+        forma similar a como nosso cérebro leria e processaria o currículo. Primeiro
+        agrupa os itens de texto em linhas, já que lemos texto linha por linha.
+        Em seguida, agrupa linhas em seções, o que será discutido no próximo passo.
       </Paragraph>
       <Paragraph>
-        At the end of step 2, the resume parser extracts {lines.length} lines
-        from the resume PDF added, as shown in the table below. The result is
-        much more readable when displayed in lines. (Some lines might have
-        multiple text items, which are separated by a blue vertical divider{" "}
+        No final do passo 2, o analisador de currículos extrai {lines.length} linhas
+        do PDF do currículo adicionado, conforme mostrado na tabela abaixo. O
+        resultado é muito mais legível quando exibido em linhas. (Algumas linhas
+        podem ter múltiplos itens de texto, que são separados por um divisor
+        vertical azul{" "}
         <span className="select-none font-extrabold text-sky-400">
           &nbsp;{"|"}&nbsp;
         </span>
@@ -214,199 +216,204 @@ export const ResumeParserAlgorithmArticle = ({
       <div className="mt-4 max-h-96 overflow-y-scroll border scrollbar scrollbar-track-gray-100 scrollbar-thumb-gray-200 scrollbar-w-3">
         <Table table={step2LinesTable} className="!border-none" />
       </div>
-      {/* Step 3. Group lines into sections */}
-      <Heading level={2}>Step 3. Group lines into sections</Heading>
+      {/* Passo 3. Agrupar linhas em seções */}
+      <Heading level={2}>Passo 3. Agrupar linhas em seções</Heading>
       <Paragraph smallMarginTop={true}>
-        At step 2, the resume parser starts building contexts and associations
-        to text items by first grouping them into lines. Step 3 continues the
-        process to build additional associations by grouping lines into
-        sections.
+        No passo 2, o analisador de currículos começa a construir contextos e
+        associações aos itens de texto agrupando-os primeiro em linhas. O Passo 3
+        continua o processo para construir associações adicionais agrupando
+        linhas em seções.
       </Paragraph>
       <Paragraph>
-        Note that every section (except the profile section) starts with a
-        section title that takes up the entire line. This is a common pattern
-        not just in resumes but also in books and blogs. The resume parser uses
-        this pattern to group lines into the closest section title above these
-        lines.
+        Note que cada seção (exceto a seção de perfil) começa com um título de
+        seção que ocupa toda a linha. Este é um padrão comum não apenas em
+        currículos, mas também em livros e blogs. O analisador de currículos usa
+        este padrão para agrupar linhas no título de seção mais próximo acima
+        dessas linhas.
       </Paragraph>
       <Paragraph>
-        The resume parser applies some heuristics to detect a section title. The
-        main heuristic to determine a section title is to check if it fulfills
-        all 3 following conditions: <br />
-        1. It is the only text item in the line <br />
-        2. It is <span className="font-bold">bolded</span> <br />
-        3. Its letters are all UPPERCASE
+        O analisador de currículos aplica algumas heurísticas para detectar um
+        título de seção. A principal heurística para determinar um título de seção
+        é verificar se ele preenche todas as 3 seguintes condições: <br />
+        1. É o único item de texto na linha <br />
+        2. Está em <span className="font-bold">negrito</span> <br />
+        3. Suas letras estão todas em MAIÚSCULAS
         <br />
       </Paragraph>
       <Paragraph>
-        In simple words, if a text item is double emphasized to be both bolded
-        and uppercase, it is most likely a section title in a resume. This is
-        generally true for a well formatted resume. There can be exceptions, but
-        it is likely not a good use of bolded and uppercase in those cases.
+        Em palavras simples, se um item de texto é duplamente enfatizado para estar
+        em negrito e maiúsculas, é muito provável que seja um título de seção em um
+        currículo. Isso geralmente é verdade para um currículo bem formatado. Pode
+        haver exceções, mas provavelmente não é um bom uso de negrito e maiúsculas
+        nesses casos.
       </Paragraph>
       <Paragraph>
-        The resume parser also has a fallback heuristic if the main heuristic
-        doesn't apply. The fallback heuristic mainly performs a keyword matching
-        against a list of common resume section title keywords.
+        O analisador de currículos também tem uma heurística de fallback se a
+        heurística principal não se aplicar. A heurística de fallback principalmente
+        realiza uma correspondência de palavras-chave contra uma lista de palavras-chave
+        comuns de títulos de seção de currículo.
       </Paragraph>
       <Paragraph>
-        At the end of step 3, the resume parser identifies the sections from the
-        resume and groups those lines with the associated section title, as
-        shown in the table below. Note that{" "}
-        <span className="font-bold">the section titles are bolded</span> and{" "}
+        No final do passo 3, o analisador de currículos identifica as seções do
+        currículo e agrupa essas linhas com o título de seção associado, conforme
+        mostrado na tabela abaixo. Note que{" "}
+        <span className="font-bold">os títulos de seção estão em negrito</span> e{" "}
         <span className="bg-teal-50">
-          the lines associated with the section are highlighted with the same
-          colors
+          as linhas associadas à seção são destacadas com as mesmas cores
         </span>
         .
       </Paragraph>
       <Step3SectionsTable sections={sections} />
-      {/* Step 4. Extract resume from sections */}
-      <Heading level={2}>Step 4. Extract resume from sections</Heading>
+      {/* Passo 4. Extrair currículo das seções */}
+      <Heading level={2}>Passo 4. Extrair currículo das seções</Heading>
       <Paragraph smallMarginTop={true}>
-        Step 4 is the last step of the resume parsing process and is also the
-        core of the resume parser, where it extracts resume information from the
-        sections.
+        O Passo 4 é o último passo do processo de análise de currículo e também é
+        o núcleo do analisador de currículos, onde ele extrai informações do
+        currículo das seções.
       </Paragraph>
-      <Heading level={3}>Feature Scoring System</Heading>
+      <Heading level={3}>Sistema de Pontuação de Recursos</Heading>
       <Paragraph smallMarginTop={true}>
-        The gist of the extraction engine is a feature scoring system. Each
-        resume attribute to be extracted has a custom feature sets, where each
-        feature set consists of a feature matching function and a feature
-        matching score if matched (feature matching score can be a positive or
-        negative number). To compute the final feature score of a text item for
-        a particular resume attribute, it would run the text item through all
-        its feature sets and sum up the matching feature scores. This process is
-        carried out for all text items within the section, and the text item
-        with the highest computed feature score is identified as the extracted
-        resume attribute.
+        A essência do motor de extração é um sistema de pontuação de recursos.
+        Cada atributo de currículo a ser extraído tem um conjunto de recursos
+        personalizados, onde cada conjunto de recursos consiste em uma função de
+        correspondência de recursos e uma pontuação de correspondência de recursos
+        se corresponder (a pontuação de correspondência de recursos pode ser um
+        número positivo ou negativo). Para calcular a pontuação final de recursos
+        de um item de texto para um atributo de currículo específico, ele executaria
+        o item de texto através de todos os seus conjuntos de recursos e somaria as
+        pontuações de recursos correspondentes. Este processo é realizado para todos
+        os itens de texto dentro da seção, e o item de texto com a maior pontuação
+        de recursos calculada é identificado como o atributo de currículo extraído.
       </Paragraph>
       <Paragraph>
-        As a demonstration, the table below shows 3 resume attributes in the
-        profile section of the resume PDF added.
+        Como demonstração, a tabela abaixo mostra 3 atributos de currículo na
+        seção de perfil do PDF do currículo adicionado.
       </Paragraph>
       <Table table={step4ProfileFeatureScoresTable} className="mt-4" />
       {(profileScores.name.find((item) => item.text === profile.name)?.score ||
         0) > 0 && (
         <Paragraph smallMarginTop={true}>
-          In the resume PDF added, the resume attribute name is likely to be "
-          {profile.name}" since its feature score is{" "}
+          No PDF do currículo adicionado, o atributo de nome do currículo provavelmente é "
+          {profile.name}" já que sua pontuação de recursos é{" "}
           {profileScores.name.find((item) => item.text === profile.name)?.score}
-          , which is the highest feature score out of all text items in the
-          profile section. (Some text items' feature scores can be negative,
-          indicating they are very unlikely to be the targeted attribute)
+          , que é a maior pontuação de recursos de todos os itens de texto na
+          seção de perfil. (As pontuações de recursos de alguns itens de texto
+          podem ser negativas, indicando que é muito improvável que sejam o
+          atributo alvo)
         </Paragraph>
       )}
-      <Heading level={3}>Feature Sets</Heading>
+      <Heading level={3}>Conjuntos de Recursos</Heading>
       <Paragraph smallMarginTop={true}>
-        Having explained the feature scoring system, we can dive more into how
-        feature sets are constructed for a resume attribute. It follows 2
-        principles: <br />
-        1. A resume attribute's feature sets are designed relative to all other
-        resume attributes within the same section. <br />
-        2. A resume attribute's feature sets are manually crafted based on its
-        characteristics and likelihood of each characteristic.
+        Tendo explicado o sistema de pontuação de recursos, podemos mergulhar mais
+        em como os conjuntos de recursos são construídos para um atributo de currículo.
+        Ele segue 2 princípios: <br />
+        1. Os conjuntos de recursos de um atributo de currículo são projetados em
+        relação a todos os outros atributos de currículo dentro da mesma seção. <br />
+        2. Os conjuntos de recursos de um atributo de currículo são criados manualmente
+        com base em suas características e probabilidade de cada característica.
       </Paragraph>
       <Paragraph>
-        The table below lists some of the feature sets for the resume attribute
-        name. It contains feature function that matches the name attribute with
-        positive feature score and also feature function that only matches other
-        resume attributes in the section with negative feature score.
+        A tabela abaixo lista alguns dos conjuntos de recursos para o atributo de
+        currículo nome. Ela contém função de recurso que corresponde ao atributo
+        nome com pontuação de recurso positiva e também função de recurso que
+        corresponde apenas a outros atributos de currículo na seção com pontuação
+        de recurso negativa.
       </Paragraph>
       <Table
         table={step4NameFeatureSetsTable}
-        title="Name Feature Sets"
+        title="Conjuntos de Recursos de Nome"
         className="mt-4"
       />
-      <Heading level={3}>Core Feature Function</Heading>
+      <Heading level={3}>Função de Recurso Principal</Heading>
       <Paragraph smallMarginTop={true}>
-        Each resume attribute has multiple feature sets. They can be found in
-        the source code under the extract-resume-from-sections folder and we
-        won't list them all out here. Each resume attribute usually has a core
-        feature function that greatly identifies them, so we will list out the
-        core feature function below.
+        Cada atributo de currículo tem múltiplos conjuntos de recursos. Eles podem
+        ser encontrados no código-fonte na pasta extract-resume-from-sections e não
+        vamos listá-los todos aqui. Cada atributo de currículo geralmente tem uma
+        função de recurso principal que os identifica amplamente, então vamos listar
+        a função de recurso principal abaixo.
       </Paragraph>
       <Table table={step4CoreFeatureFunctionTable} className="mt-4" />
-      <Heading level={3}>Special Case: Subsections</Heading>
+      <Heading level={3}>Caso Especial: Subseções</Heading>
       <Paragraph smallMarginTop={true}>
-        The last thing that is worth mentioning is subsections. For profile
-        section, we can directly pass all the text items to the feature scoring
-        systems. But for other sections, such as education and work experience,
-        we have to first divide the section into subsections since there can be
-        multiple schools or work experiences in the section. The feature scoring
-        system then process each subsection to retrieve each's resume attributes
-        and append the results.
+        A última coisa que vale a pena mencionar são as subseções. Para a seção
+        de perfil, podemos passar diretamente todos os itens de texto para os
+        sistemas de pontuação de recursos. Mas para outras seções, como educação
+        e experiência profissional, temos que primeiro dividir a seção em subseções,
+        já que pode haver múltiplas escolas ou experiências de trabalho na seção.
+        O sistema de pontuação de recursos então processa cada subseção para
+        recuperar os atributos de currículo de cada uma e anexar os resultados.
       </Paragraph>
       <Paragraph smallMarginTop={true}>
-        The resume parser applies some heuristics to detect a subsection. The
-        main heuristic to determine a subsection is to check if the vertical
-        line gap between 2 lines is larger than the typical line gap * 1.4,
-        since a well formatted resume usually creates a new empty line break
-        before adding the next subsection. There is also a fallback heuristic if
-        the main heuristic doesn't apply to check if the text item is bolded.
+        O analisador de currículos aplica algumas heurísticas para detectar uma
+        subseção. A principal heurística para determinar uma subseção é verificar
+        se o espaço vertical entre 2 linhas é maior que o espaço de linha típico * 1.4,
+        já que um currículo bem formatado geralmente cria uma nova quebra de linha
+        vazia antes de adicionar a próxima subseção. Também há uma heurística de
+        fallback se a heurística principal não se aplicar para verificar se o item
+        de texto está em negrito.
       </Paragraph>
       <Paragraph>
-        And that is everything about the OpenResume parser algorithm :)
+        E isso é tudo sobre o algoritmo do analisador CVAts :)
       </Paragraph>
       <Paragraph>
-        Written by <Link href="https://github.com/xitanggg">Xitang</Link> on
-        June 2023
+        Escrito por <Link href="https://github.com/xitanggg">Xitang</Link> em
+        Junho de 2023
       </Paragraph>
     </article>
   );
 };
 
 const step4NameFeatureSetsTable = [
-  ["Feature Function", "Feature Matching Score"],
-  ["Contains only letters, spaces or periods", "+3"],
-  ["Is bolded", "+2"],
-  ["Contains all uppercase letters", "+2"],
-  ["Contains @", "-4 (match email)"],
-  ["Contains number", "-4 (match phone)"],
-  ["Contains ,", "-4 (match address)"],
-  ["Contains /", "-4 (match url)"],
+  ["Função de Recurso", "Pontuação de Correspondência"],
+  ["Contém apenas letras, espaços ou pontos", "+3"],
+  ["Está em negrito", "+2"],
+  ["Contém todas as letras maiúsculas", "+2"],
+  ["Contém @", "-4 (corresponde email)"],
+  ["Contém número", "-4 (corresponde telefone)"],
+  ["Contém ,", "-4 (corresponde endereço)"],
+  ["Contém /", "-4 (corresponde url)"],
 ];
 
 const step4CoreFeatureFunctionTable = [
-  ["Resume Attribute", "Core Feature Function", "Regex"],
-  ["Name", "Contains only letters, spaces or periods", "/^[a-zA-Z\\s\\.]+$/"],
+  ["Atributo de Currículo", "Função de Recurso Principal", "Regex"],
+  ["Nome", "Contém apenas letras, espaços ou pontos", "/^[a-zA-Z\\s\\.]+$/"],
   [
     "Email",
     <>
-      Match email format xxx@xxx.xxx
+      Corresponde formato de email xxx@xxx.xxx
       <br />
-      xxx can be anything not space
+      xxx pode ser qualquer coisa que não seja espaço
     </>,
     "/\\S+@\\S+\\.\\S+/",
   ],
   [
-    "Phone",
+    "Telefone",
     <>
-      Match phone format (xxx)-xxx-xxxx <br /> () and - are optional
+      Corresponde formato de telefone (xxx)-xxx-xxxx <br /> () e - são opcionais
     </>,
     "/\\(?\\d{3}\\)?[\\s-]?\\d{3}[\\s-]?\\d{4}/",
   ],
   [
-    "Location",
-    <>Match city and state format {"City, ST"}</>,
+    "Localização",
+    <>Corresponde formato cidade e estado {"Cidade, UF"}</>,
     "/[A-Z][a-zA-Z\\s]+, [A-Z]{2}/",
   ],
-  ["Url", "Match url format xxx.xxx/xxx", "/\\S+\\.[a-z]+\\/\\S+/"],
-  ["School", "Contains a school keyword, e.g. College, University, School", ""],
-  ["Degree", "Contains a degree keyword, e.g. Associate, Bachelor, Master", ""],
-  ["GPA", "Match GPA format x.xx", "/[0-4]\\.\\d{1,2}/"],
+  ["Url", "Corresponde formato de url xxx.xxx/xxx", "/\\S+\\.[a-z]+\\/\\S+/"],
+  ["Instituição", "Contém palavra-chave de escola, ex: Faculdade, Universidade, Escola", ""],
+  ["Grau", "Contém palavra-chave de grau, ex: Técnico, Graduação, Mestrado", ""],
+  ["Média", "Corresponde formato de média x.xx", "/[0-4]\\.\\d{1,2}/"],
   [
-    "Date",
-    "Contains date keyword related to year, month, seasons or the word Present",
-    "Year: /(?:19|20)\\d{2}/",
+    "Data",
+    "Contém palavra-chave de data relacionada a ano, mês, estações ou a palavra Presente",
+    "Ano: /(?:19|20)\\d{2}/",
   ],
   [
-    "Job Title",
-    "Contains a job title keyword, e.g. Analyst, Engineer, Intern",
+    "Cargo",
+    "Contém palavra-chave de cargo, ex: Analista, Engenheiro, Estagiário",
     "",
   ],
-  ["Company", "Is bolded or doesn't match job title & date", ""],
-  ["Project", "Is bolded or doesn't match date", ""],
+  ["Empresa", "Está em negrito ou não corresponde cargo e data", ""],
+  ["Projeto", "Está em negrito ou não corresponde data", ""],
 ];
 
 const Step3SectionsTable = ({
@@ -414,7 +421,7 @@ const Step3SectionsTable = ({
 }: {
   sections: ResumeSectionToLines;
 }) => {
-  const table: React.ReactNode[][] = [["Lines", "Line Content"]];
+  const table: React.ReactNode[][] = [["Linhas", "Conteúdo da Linha"]];
   const trClassNames = [];
   let lineCounter = 0;
   const BACKGROUND_COLORS = [
@@ -449,7 +456,7 @@ const Step3SectionsTable = ({
     const [sectionTitle, lines] = sectionsEntries[i];
     table.push([
       sectionTitle === "profile" ? "" : lineCounter,
-      sectionTitle === "profile" ? "PROFILE" : sectionTitle,
+      sectionTitle === "profile" ? "PERFIL" : sectionTitle,
     ]);
     trClassNames.push(`${sectionBackgroundColor} font-bold`);
     lineCounter += 1;

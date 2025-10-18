@@ -132,11 +132,11 @@ export const ResumeDropzone = ({
                 !playgroundView && "text-lg font-semibold"
               )}
             >
-              Browse a pdf file or drop it here
+              Procure um arquivo PDF ou arraste-o aqui
             </p>
             <p className="flex text-sm text-gray-500">
               <LockClosedIcon className="mr-1 mt-1 h-3 w-3 text-gray-400" />
-              File data is used locally and never leaves your browser
+              Os dados do arquivo são usados localmente e nunca saem do seu navegador
             </p>
           </>
         ) : (
@@ -147,7 +147,7 @@ export const ResumeDropzone = ({
             <button
               type="button"
               className="outline-theme-blue rounded-md p-1 text-gray-400 hover:bg-gray-100 hover:text-gray-500"
-              title="Remove file"
+              title="Remover arquivo"
               onClick={onRemove}
             >
               <XMarkIcon className="h-6 w-6" />
@@ -163,7 +163,7 @@ export const ResumeDropzone = ({
                   playgroundView ? "border" : "bg-primary"
                 )}
               >
-                Browse file
+                Procurar arquivo
                 <input
                   type="file"
                   className="sr-only"
@@ -172,7 +172,7 @@ export const ResumeDropzone = ({
                 />
               </label>
               {hasNonPdfFile && (
-                <p className="mt-6 text-red-400">Only pdf file is supported</p>
+                <p className="mt-6 text-red-400">Apenas arquivos PDF são suportados</p>
               )}
             </>
           ) : (
@@ -183,12 +183,12 @@ export const ResumeDropzone = ({
                   className="btn-primary"
                   onClick={onImportClick}
                 >
-                  Import and Continue <span aria-hidden="true">→</span>
+                  Importar e Continuar <span aria-hidden="true">→</span>
                 </button>
               )}
               <p className={cx(" text-gray-500", !playgroundView && "mt-6")}>
-                Note: {!playgroundView ? "Import" : "Parser"} works best on
-                single column resume
+                Nota: {!playgroundView ? "A importação" : "O analisador"} funciona melhor com
+                currículos de coluna única
               </p>
             </>
           )}

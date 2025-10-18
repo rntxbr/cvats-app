@@ -40,10 +40,10 @@ export const SkillsForm = () => {
       <div className="col-span-full grid grid-cols-6 gap-3">
         <div className="relative col-span-full">
           <BulletListTextarea
-            label="Skills List"
+            label="Lista de Habilidades"
             labelClassName="col-span-full"
             name="descriptions"
-            placeholder="Bullet points"
+            placeholder="Pontos destacados"
             value={descriptions}
             onChange={handleSkillsChange}
             showBulletPoints={showBulletPoints}
@@ -57,12 +57,12 @@ export const SkillsForm = () => {
         </div>
         <div className="col-span-full mb-4 mt-6 border-t-2 border-dotted border-gray-200" />
         <InputGroupWrapper
-          label="Featured Skills (Optional)"
+          label="Habilidades em Destaque (Opcional)"
           className="col-span-full"
         >
           <p className="mt-2 text-sm font-normal text-gray-600">
-            Featured skills is optional to highlight top skills, with more
-            circles mean higher proficiency.
+            Habilidades em destaque são opcionais para destacar suas principais competências,
+            mais círculos significam maior proficiência.
           </p>
         </InputGroupWrapper>
 
@@ -75,7 +75,7 @@ export const SkillsForm = () => {
             setSkillRating={(newSkill, newRating) => {
               handleFeaturedSkillsChange(idx, newSkill, newRating);
             }}
-            placeholder={`Featured Skill ${idx + 1}`}
+            placeholder={`Habilidade em Destaque ${idx + 1}`}
             circleColor={themeColor}
           />
         ))}

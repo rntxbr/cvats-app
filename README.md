@@ -56,16 +56,16 @@ O CVAts é criado com o framework web NextJS e segue sua estrutura de projeto. O
 
 ### Método 1: npm
 
-1. Baixe o repositório `git clone https://github.com/xitanggg/open-resume.git`
-2. Mude para o diretório `cd open-resume`
+1. Baixe o repositório `git clone https://github.com/rntxbr/cvats-app.git`
+2. Mude para o diretório `cd cvats-app`
 3. Instale as dependências `npm install`
 4. Inicie um servidor de desenvolvimento `npm run dev`
 5. Abra seu navegador e visite [http://localhost:3000](http://localhost:3000) para ver o CVAts em ação
 
 ### Método 2: Docker
 
-1. Baixe o repositório `git clone https://github.com/xitanggg/open-resume.git`
-2. Mude para o diretório `cd open-resume`
+1. Baixe o repositório `git clone https://github.com/rntxbr/cvats-app.git`
+2. Mude para o diretório `cd cvats-app`
 3. Construa o container `docker build -t cvats .`
 4. Inicie o container `docker run -p 3000:3000 cvats`
 5. Abra seu navegador e visite [http://localhost:3000](http://localhost:3000) para ver o CVAts em ação

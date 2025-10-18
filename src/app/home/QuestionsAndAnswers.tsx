@@ -101,7 +101,7 @@ const QAS = [
           Você pode nos enviar um email em{" "}
           <Link href="mailto:hello@open-resume.com">hello@open-resume.com</Link>{" "}
           ou{" "}
-          <Link href="https://github.com/xitanggg/open-resume/issues/new">
+          <Link href="https://github.com/rntxbr/cvats-app/issues/new">
             abrir uma issue
           </Link>{" "}
           em nosso repositório no Github. Seja você goste ou não, adoraríamos
@@ -114,7 +114,7 @@ const QAS = [
           enfrentam dificuldades ao criar seus currículos, e seu apoio
           boca-a-boca seria muito apreciado. Se você usa Github, também pode
           mostrar seu apoio{" "}
-          <Link href="https://github.com/xitanggg/open-resume">
+          <Link href="https://github.com/rntxbr/cvats-app">
             dando uma estrela ao projeto
           </Link>{" "}
           para ajudar a aumentar sua popularidade e alcance.

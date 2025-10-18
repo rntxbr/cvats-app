@@ -21,7 +21,7 @@ export const EducationsForm = () => {
   const showBulletPoints = useAppSelector(selectShowBulletPoints(form));
 
   return (
-    <Form form={form} addButtonText="Add School">
+    <Form form={form} addButtonText="Adicionar Instituição">
       {educations.map(({ school, degree, gpa, date, descriptions }, idx) => {
         const handleEducationChange = (
           ...[
@@ -47,46 +47,46 @@ export const EducationsForm = () => {
             showMoveUp={showMoveUp}
             showMoveDown={showMoveDown}
             showDelete={showDelete}
-            deleteButtonTooltipText="Delete school"
+            deleteButtonTooltipText="Excluir instituição"
           >
             <Input
-              label="School"
+              label="Instituição"
               labelClassName="col-span-4"
               name="school"
-              placeholder="Cornell University"
+              placeholder="Universidade de São Paulo"
               value={school}
               onChange={handleEducationChange}
             />
             <Input
-              label="Date"
+              label="Data"
               labelClassName="col-span-2"
               name="date"
-              placeholder="May 2018"
+              placeholder="Dez 2020"
               value={date}
               onChange={handleEducationChange}
             />
             <Input
-              label="Degree & Major"
+              label="Curso & Especialização"
               labelClassName="col-span-4"
               name="degree"
-              placeholder="Bachelor of Science in Computer Engineering"
+              placeholder="Bacharelado em Ciência da Computação"
               value={degree}
               onChange={handleEducationChange}
             />
             <Input
-              label="GPA"
+              label="Média"
               labelClassName="col-span-2"
               name="gpa"
-              placeholder="3.81"
+              placeholder="8.5"
               value={gpa}
               onChange={handleEducationChange}
             />
             <div className="relative col-span-full">
               <BulletListTextarea
-                label="Additional Information (Optional)"
+                label="Informações Adicionais (Opcional)"
                 labelClassName="col-span-full"
                 name="descriptions"
-                placeholder="Free paragraph space to list out additional activities, courses, awards etc"
+                placeholder="Espaço livre para listar atividades extras, cursos, prêmios, etc"
                 value={descriptions}
                 onChange={handleEducationChange}
                 showBulletPoints={showBulletPoints}

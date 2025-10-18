@@ -17,18 +17,18 @@ export const ProfileForm = () => {
     <BaseForm>
       <div className="grid grid-cols-6 gap-3">
         <Input
-          label="Name"
+          label="Nome"
           labelClassName="col-span-full"
           name="name"
-          placeholder="Sal Khan"
+          placeholder="João Silva"
           value={name}
           onChange={handleProfileChange}
         />
         <Textarea
-          label="Objective"
+          label="Objetivo"
           labelClassName="col-span-full"
           name="summary"
-          placeholder="Entrepreneur and educator obsessed with making education free for anyone"
+          placeholder="Profissional dedicado com experiência em tecnologia e paixão por inovação"
           value={summary}
           onChange={handleProfileChange}
         />
@@ -36,15 +36,15 @@ export const ProfileForm = () => {
           label="Email"
           labelClassName="col-span-4"
           name="email"
-          placeholder="hello@khanacademy.org"
+          placeholder="joao.silva@email.com"
           value={email}
           onChange={handleProfileChange}
         />
         <Input
-          label="Phone"
+          label="Telefone"
           labelClassName="col-span-2"
           name="phone"
-          placeholder="(123)456-7890"
+          placeholder="(11) 98765-4321"
           value={phone}
           onChange={handleProfileChange}
         />
@@ -52,15 +52,15 @@ export const ProfileForm = () => {
           label="Website"
           labelClassName="col-span-4"
           name="url"
-          placeholder="linkedin.com/in/khanacademy"
+          placeholder="linkedin.com/in/joaosilva"
           value={url}
           onChange={handleProfileChange}
         />
         <Input
-          label="Location"
+          label="Localização"
           labelClassName="col-span-2"
           name="location"
-          placeholder="NYC, NY"
+          placeholder="São Paulo, SP"
           value={location}
           onChange={handleProfileChange}
         />

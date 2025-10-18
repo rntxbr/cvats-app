@@ -15,7 +15,7 @@ const LOGOS = [
   { src: logoAmazonSrc, alt: "Logo da Amazon" },
 ];
 
-// LogoCloud is disabled per issue: https://github.com/xitanggg/open-resume/issues/7
+// LogoCloud is disabled per issue: https://github.com/rntxbr/cvats-app/issues/7
 export const LogoCloud = () => (
   <section className="mt-14 lg:mt-10">
     <h2 className="text-center font-semibold text-gray-500">
