@@ -11,6 +11,7 @@ import { Heading, Link, Paragraph } from "components/documentation";
 import { ResumeTable } from "resume-parser/ResumeTable";
 import { FlexboxSpacer } from "components/FlexboxSpacer";
 import { ResumeParserAlgorithmArticle } from "resume-parser/ResumeParserAlgorithmArticle";
+import { trackATSParserUsed } from "lib/gtag";
 
 const RESUME_EXAMPLES = [
   {
@@ -79,9 +80,7 @@ export default function ResumeParser() {
                   key={idx}
                   className={cx(
                     "relative flex-1 cursor-pointer rounded-lg outline-none transition-all",
-                    example.fileUrl === fileUrl
-                      ? "scale-105"
-                      : ""
+                    example.fileUrl === fileUrl ? "scale-105" : ""
                   )}
                   onClick={() => setFileUrl(example.fileUrl)}
                   onKeyDown={(e) => {
@@ -93,11 +92,15 @@ export default function ResumeParser() {
                   {example.fileUrl === fileUrl && (
                     <div className="absolute -right-1 -top-1 h-full w-full rounded-lg border-3 border-black bg-blue-300"></div>
                   )}
-                  <div className={cx(
-                    "relative z-10 rounded-lg border-3 border-black bg-white px-4 py-3 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]",
-                    example.fileUrl === fileUrl ? "bg-blue-50" : ""
-                  )}>
-                    <h1 className="font-bold">Exemplo de Currículo {idx + 1}</h1>
+                  <div
+                    className={cx(
+                      "relative z-10 rounded-lg border-3 border-black bg-white px-4 py-3 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]",
+                      example.fileUrl === fileUrl ? "bg-blue-50" : ""
+                    )}
+                  >
+                    <h1 className="font-bold">
+                      Exemplo de Currículo {idx + 1}
+                    </h1>
                     <p className="mt-2 text-sm text-gray-600">
                       {example.description}
                     </p>
@@ -107,18 +110,29 @@ export default function ResumeParser() {
             </div>
             <Paragraph>
               Você também pode{" "}
-              <span className="font-semibold">adicionar seu currículo abaixo</span> para
-              avaliar o quão bem ele seria analisado por Sistemas de Rastreamento
-              de Candidatos (ATS) similares usados em processos seletivos. Quanto
-              mais informações o sistema conseguir extrair, melhor indica que o
-              currículo está bem formatado e fácil de ler. É essencial que pelo
-              menos o nome e email sejam analisados com precisão.
+              <span className="font-semibold">
+                adicionar seu currículo abaixo
+              </span>{" "}
+              para avaliar o quão bem ele seria analisado por Sistemas de
+              Rastreamento de Candidatos (ATS) similares usados em processos
+              seletivos. Quanto mais informações o sistema conseguir extrair,
+              melhor indica que o currículo está bem formatado e fácil de ler. É
+              essencial que pelo menos o nome e email sejam analisados com
+              precisão.
             </Paragraph>
             <div className="mt-3">
               <ResumeDropzone
-                onFileUrlChange={(fileUrl) =>
-                  setFileUrl(fileUrl || defaultFileUrl)
-                }
+                onFileUrlChange={(fileUrl) => {
+                  const newFileUrl = fileUrl || defaultFileUrl;
+                  setFileUrl(newFileUrl);
+                  // Rastreia quando usuário faz upload de um PDF próprio
+                  if (
+                    fileUrl &&
+                    !RESUME_EXAMPLES.some((ex) => ex.fileUrl === fileUrl)
+                  ) {
+                    trackATSParserUsed("User Upload");
+                  }
+                }}
                 playgroundView={true}
               />
             </div>

@@ -1,8 +1,8 @@
 import Link from "next/link";
 import Image from "next/image";
 import logoSrc from "public/logo.png";
-import { 
-  HeartIcon, 
+import {
+  HeartIcon,
   CodeBracketIcon,
   EnvelopeIcon,
   DocumentTextIcon,
@@ -46,17 +46,15 @@ export const Footer = () => {
                   className="h-7 w-auto"
                   priority
                 />
-                <span className="text-2xl font-black text-gray-900">
-                  CVAts
-                </span>
+                <span className="text-2xl font-black text-gray-900">CVAts</span>
               </div>
             </Link>
 
             {/* Descrição */}
             <p className="mt-6 mb-6 text-base leading-relaxed text-gray-700 lg:text-lg">
-              Criador de currículos gratuito e otimizado para sistemas ATS. 
-              Crie seu currículo profissional em minutos e aumente suas chances 
-              de conseguir a vaga dos sonhos.
+              Criador de currículos gratuito e otimizado para sistemas ATS. Crie
+              seu currículo profissional em minutos e aumente suas chances de
+              conseguir a vaga dos sonhos.
             </p>
 
             {/* Badges */}
@@ -103,15 +101,15 @@ export const Footer = () => {
             <p className="mb-4 text-sm text-gray-700">
               Contribua com o projeto ou reporte problemas no GitHub
             </p>
-            
+
             {/* Cards de Ação */}
             <div className="space-y-3">
-            <Link
-              href="https://github.com/rntxbr/cvats-app"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group relative block"
-            >
+              <Link
+                href="https://github.com/rntxbr/cvats-app"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group relative block"
+              >
                 <div className="absolute -right-1 -top-1 h-full w-full rounded-lg border-3 border-black bg-purple-300"></div>
                 <div className="relative z-10 flex items-center gap-3 rounded-lg border-3 border-black bg-white p-3 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-all group-hover:shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]">
                   <CodeBracketIcon className="h-5 w-5 flex-shrink-0 text-gray-900" />
@@ -144,9 +142,9 @@ export const Footer = () => {
         <div className="flex flex-col items-center justify-between gap-4 lg:flex-row">
           {/* Copyright */}
           <p className="text-center text-sm font-medium text-gray-700 lg:text-left">
-            © {new Date().getFullYear()} CVAts. Feito com{" "}
-            <HeartIcon className="inline h-4 w-4 text-red-500" /> para ajudar 
-            profissionais a conquistarem suas vagas.
+            © {new Date().getFullYear()} CVAts. Desenvolvido por{" "}
+            <Link href="https://www.linkedin.com/in/rkhael/" className="font-bold">Renato Khael</Link>
+         
           </p>
 
           {/* Links Rápidos */}
@@ -171,4 +169,3 @@ export const Footer = () => {
     </footer>
   );
 };
-

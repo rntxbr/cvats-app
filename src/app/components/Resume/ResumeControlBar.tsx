@@ -7,6 +7,7 @@ import {
 } from "@heroicons/react/24/outline";
 import { usePDF } from "@react-pdf/renderer";
 import dynamic from "next/dynamic";
+import { trackResumeDownload } from "lib/gtag";
 
 const ResumeControlBar = ({
   scale,
@@ -30,7 +31,7 @@ const ResumeControlBar = ({
 
   // Hook to update pdf when document changes
   useEffect(() => {
-    update();
+    update(document);
   }, [update, document]);
 
   return (
@@ -63,6 +64,7 @@ const ResumeControlBar = ({
         className="ml-1 flex items-center gap-1 rounded-md border border-gray-300 px-3 py-0.5 hover:bg-gray-100 lg:ml-8"
         href={instance.url!}
         download={fileName}
+        onClick={() => trackResumeDownload()}
       >
         <ArrowDownTrayIcon className="h-4 w-4" />
         <span className="whitespace-nowrap">Download Resume</span>
