@@ -120,7 +120,7 @@ export const Footer = () => {
               </Link>
 
               <Link
-                href="mailto:hello@open-resume.com"
+                href="mailto:renatokhael@gmail.com"
                 className="group relative block"
               >
                 <div className="absolute -right-1 -top-1 h-full w-full rounded-lg border-3 border-black bg-blue-300"></div>
@@ -143,8 +143,12 @@ export const Footer = () => {
           {/* Copyright */}
           <p className="text-center text-sm font-medium text-gray-700 lg:text-left">
             © {new Date().getFullYear()} CVAts. Desenvolvido por{" "}
-            <Link href="https://www.linkedin.com/in/rkhael/" className="font-bold">Renato Khael</Link>
-         
+            <Link
+              href="https://www.linkedin.com/in/rkhael/"
+              className="font-bold"
+            >
+              Renato Khael
+            </Link>
           </p>
 
           {/* Links Rápidos */}

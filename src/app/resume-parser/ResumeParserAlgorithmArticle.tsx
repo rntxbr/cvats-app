@@ -107,12 +107,15 @@ export const ResumeParserAlgorithmArticle = ({
         Mergulho Profundo no Algoritmo do Analisador
       </Heading>
       <Paragraph smallMarginTop={true}>
-        Para os curiosos técnicos, esta seção mergulha no algoritmo do analisador
-        CVAts e percorre os 4 passos de como ele funciona. (Note que o algoritmo
-        foi projetado para analisar currículos de coluna única em português e inglês)
+        Para os curiosos técnicos, esta seção mergulha no algoritmo do
+        analisador CVAts e percorre os 4 passos de como ele funciona. (Note que
+        o algoritmo foi projetado para analisar currículos de coluna única em
+        português e inglês)
       </Paragraph>
       {/* Passo 1. Ler os itens de texto de um arquivo PDF */}
-      <Heading level={2}>Passo 1. Ler os itens de texto de um arquivo PDF</Heading>
+      <Heading level={2}>
+        Passo 1. Ler os itens de texto de um arquivo PDF
+      </Heading>
       <Paragraph smallMarginTop={true}>
         Um arquivo PDF é um formato de arquivo padronizado definido pela{" "}
         <Link href="https://www.iso.org/standard/51502.html">
@@ -122,7 +125,8 @@ export const ResumeParserAlgorithmArticle = ({
         o conteúdo bruto parece codificado e é difícil de ler. Para exibi-lo em
         um formato legível, você precisaria de um leitor de PDF para decodificar
         e visualizar o arquivo. Da mesma forma, o analisador de currículos
-        primeiro precisa decodificar o arquivo PDF para extrair seu conteúdo de texto.
+        primeiro precisa decodificar o arquivo PDF para extrair seu conteúdo de
+        texto.
       </Paragraph>
       <Paragraph>
         Embora seja possível escrever uma função personalizada de leitura de PDF
@@ -133,12 +137,12 @@ export const ResumeParserAlgorithmArticle = ({
         para primeiro extrair todos os itens de texto no arquivo.
       </Paragraph>
       <Paragraph>
-        A tabela abaixo lista {textItems.length} itens de texto que são extraídos
-        do PDF do currículo adicionado. Um item de texto contém o conteúdo de texto
-        e também alguns metadados sobre o conteúdo, por exemplo, suas posições x, y
-        no documento, se a fonte está em negrito ou se inicia uma nova linha.
-        (Note que a posição x,y é relativa ao canto inferior esquerdo da página,
-        que é a origem 0,0)
+        A tabela abaixo lista {textItems.length} itens de texto que são
+        extraídos do PDF do currículo adicionado. Um item de texto contém o
+        conteúdo de texto e também alguns metadados sobre o conteúdo, por
+        exemplo, suas posições x, y no documento, se a fonte está em negrito ou
+        se inicia uma nova linha. (Note que a posição x,y é relativa ao canto
+        inferior esquerdo da página, que é a origem 0,0)
       </Paragraph>
       <div className="mt-4 max-h-72 overflow-y-scroll border scrollbar scrollbar-track-gray-100 scrollbar-thumb-gray-200 scrollbar-w-3">
         <Table
@@ -150,21 +154,23 @@ export const ResumeParserAlgorithmArticle = ({
       {/* Passo 2. Agrupar itens de texto em linhas */}
       <Heading level={2}>Passo 2. Agrupar itens de texto em linhas</Heading>
       <Paragraph smallMarginTop={true}>
-        Os itens de texto extraídos ainda não estão prontos para usar e têm 2 problemas principais:
+        Os itens de texto extraídos ainda não estão prontos para usar e têm 2
+        problemas principais:
       </Paragraph>
       <Paragraph>
         <span className="mt-3 block font-semibold">
           Problema 1: Eles têm alguns ruídos indesejados.
         </span>
         Alguns itens de texto únicos podem ser quebrados em múltiplos, como você
-        pode observar na tabela acima, por exemplo, um número de telefone
-        "(11) 98765-4321" pode ser quebrado em 3 itens de texto "(11) 98765", "-" e "4321".
+        pode observar na tabela acima, por exemplo, um número de telefone "(11)
+        98765-4321" pode ser quebrado em 3 itens de texto "(11) 98765", "-" e
+        "4321".
       </Paragraph>
       <Paragraph smallMarginTop={true}>
-        <span className="font-semibold">Solução:</span> Para resolver este problema,
-        o analisador de currículos conecta itens de texto adjacentes em um único
-        item de texto se a distância entre eles for menor que a largura média
-        típica de caractere, onde
+        <span className="font-semibold">Solução:</span> Para resolver este
+        problema, o analisador de currículos conecta itens de texto adjacentes
+        em um único item de texto se a distância entre eles for menor que a
+        largura média típica de caractere, onde
         <span
           dangerouslySetInnerHTML={{
             __html: `<math display="block">
@@ -181,8 +187,8 @@ export const ResumeParserAlgorithmArticle = ({
         />
         A largura média típica de caractere é calculada dividindo a soma das
         larguras de todos os itens de texto pelo número total de caracteres dos
-        itens de texto (Textos em negrito e elementos de nova linha são excluídos
-        para não distorcer os resultados).
+        itens de texto (Textos em negrito e elementos de nova linha são
+        excluídos para não distorcer os resultados).
       </Paragraph>
       <Paragraph>
         <span className="mt-3 block font-semibold">
@@ -196,18 +202,19 @@ export const ResumeParserAlgorithmArticle = ({
         elementos desconexos.
       </Paragraph>
       <Paragraph smallMarginTop={true}>
-        <span className="font-semibold">Solução:</span> Para resolver este problema,
-        o analisador de currículos reconstrói esses contextos e associações de
-        forma similar a como nosso cérebro leria e processaria o currículo. Primeiro
-        agrupa os itens de texto em linhas, já que lemos texto linha por linha.
-        Em seguida, agrupa linhas em seções, o que será discutido no próximo passo.
+        <span className="font-semibold">Solução:</span> Para resolver este
+        problema, o analisador de currículos reconstrói esses contextos e
+        associações de forma similar a como nosso cérebro leria e processaria o
+        currículo. Primeiro agrupa os itens de texto em linhas, já que lemos
+        texto linha por linha. Em seguida, agrupa linhas em seções, o que será
+        discutido no próximo passo.
       </Paragraph>
       <Paragraph>
-        No final do passo 2, o analisador de currículos extrai {lines.length} linhas
-        do PDF do currículo adicionado, conforme mostrado na tabela abaixo. O
-        resultado é muito mais legível quando exibido em linhas. (Algumas linhas
-        podem ter múltiplos itens de texto, que são separados por um divisor
-        vertical azul{" "}
+        No final do passo 2, o analisador de currículos extrai {lines.length}{" "}
+        linhas do PDF do currículo adicionado, conforme mostrado na tabela
+        abaixo. O resultado é muito mais legível quando exibido em linhas.
+        (Algumas linhas podem ter múltiplos itens de texto, que são separados
+        por um divisor vertical azul{" "}
         <span className="select-none font-extrabold text-sky-400">
           &nbsp;{"|"}&nbsp;
         </span>
@@ -220,8 +227,8 @@ export const ResumeParserAlgorithmArticle = ({
       <Heading level={2}>Passo 3. Agrupar linhas em seções</Heading>
       <Paragraph smallMarginTop={true}>
         No passo 2, o analisador de currículos começa a construir contextos e
-        associações aos itens de texto agrupando-os primeiro em linhas. O Passo 3
-        continua o processo para construir associações adicionais agrupando
+        associações aos itens de texto agrupando-os primeiro em linhas. O Passo
+        3 continua o processo para construir associações adicionais agrupando
         linhas em seções.
       </Paragraph>
       <Paragraph>
@@ -233,31 +240,32 @@ export const ResumeParserAlgorithmArticle = ({
       </Paragraph>
       <Paragraph>
         O analisador de currículos aplica algumas heurísticas para detectar um
-        título de seção. A principal heurística para determinar um título de seção
-        é verificar se ele preenche todas as 3 seguintes condições: <br />
+        título de seção. A principal heurística para determinar um título de
+        seção é verificar se ele preenche todas as 3 seguintes condições: <br />
         1. É o único item de texto na linha <br />
         2. Está em <span className="font-bold">negrito</span> <br />
         3. Suas letras estão todas em MAIÚSCULAS
         <br />
       </Paragraph>
       <Paragraph>
-        Em palavras simples, se um item de texto é duplamente enfatizado para estar
-        em negrito e maiúsculas, é muito provável que seja um título de seção em um
-        currículo. Isso geralmente é verdade para um currículo bem formatado. Pode
-        haver exceções, mas provavelmente não é um bom uso de negrito e maiúsculas
-        nesses casos.
+        Em palavras simples, se um item de texto é duplamente enfatizado para
+        estar em negrito e maiúsculas, é muito provável que seja um título de
+        seção em um currículo. Isso geralmente é verdade para um currículo bem
+        formatado. Pode haver exceções, mas provavelmente não é um bom uso de
+        negrito e maiúsculas nesses casos.
       </Paragraph>
       <Paragraph>
         O analisador de currículos também tem uma heurística de fallback se a
-        heurística principal não se aplicar. A heurística de fallback principalmente
-        realiza uma correspondência de palavras-chave contra uma lista de palavras-chave
-        comuns de títulos de seção de currículo.
+        heurística principal não se aplicar. A heurística de fallback
+        principalmente realiza uma correspondência de palavras-chave contra uma
+        lista de palavras-chave comuns de títulos de seção de currículo.
       </Paragraph>
       <Paragraph>
         No final do passo 3, o analisador de currículos identifica as seções do
-        currículo e agrupa essas linhas com o título de seção associado, conforme
-        mostrado na tabela abaixo. Note que{" "}
-        <span className="font-bold">os títulos de seção estão em negrito</span> e{" "}
+        currículo e agrupa essas linhas com o título de seção associado,
+        conforme mostrado na tabela abaixo. Note que{" "}
+        <span className="font-bold">os títulos de seção estão em negrito</span>{" "}
+        e{" "}
         <span className="bg-teal-50">
           as linhas associadas à seção são destacadas com as mesmas cores
         </span>
@@ -267,8 +275,8 @@ export const ResumeParserAlgorithmArticle = ({
       {/* Passo 4. Extrair currículo das seções */}
       <Heading level={2}>Passo 4. Extrair currículo das seções</Heading>
       <Paragraph smallMarginTop={true}>
-        O Passo 4 é o último passo do processo de análise de currículo e também é
-        o núcleo do analisador de currículos, onde ele extrai informações do
+        O Passo 4 é o último passo do processo de análise de currículo e também
+        é o núcleo do analisador de currículos, onde ele extrai informações do
         currículo das seções.
       </Paragraph>
       <Heading level={3}>Sistema de Pontuação de Recursos</Heading>
@@ -276,14 +284,15 @@ export const ResumeParserAlgorithmArticle = ({
         A essência do motor de extração é um sistema de pontuação de recursos.
         Cada atributo de currículo a ser extraído tem um conjunto de recursos
         personalizados, onde cada conjunto de recursos consiste em uma função de
-        correspondência de recursos e uma pontuação de correspondência de recursos
-        se corresponder (a pontuação de correspondência de recursos pode ser um
-        número positivo ou negativo). Para calcular a pontuação final de recursos
-        de um item de texto para um atributo de currículo específico, ele executaria
-        o item de texto através de todos os seus conjuntos de recursos e somaria as
-        pontuações de recursos correspondentes. Este processo é realizado para todos
-        os itens de texto dentro da seção, e o item de texto com a maior pontuação
-        de recursos calculada é identificado como o atributo de currículo extraído.
+        correspondência de recursos e uma pontuação de correspondência de
+        recursos se corresponder (a pontuação de correspondência de recursos
+        pode ser um número positivo ou negativo). Para calcular a pontuação
+        final de recursos de um item de texto para um atributo de currículo
+        específico, ele executaria o item de texto através de todos os seus
+        conjuntos de recursos e somaria as pontuações de recursos
+        correspondentes. Este processo é realizado para todos os itens de texto
+        dentro da seção, e o item de texto com a maior pontuação de recursos
+        calculada é identificado como o atributo de currículo extraído.
       </Paragraph>
       <Paragraph>
         Como demonstração, a tabela abaixo mostra 3 atributos de currículo na
@@ -293,8 +302,8 @@ export const ResumeParserAlgorithmArticle = ({
       {(profileScores.name.find((item) => item.text === profile.name)?.score ||
         0) > 0 && (
         <Paragraph smallMarginTop={true}>
-          No PDF do currículo adicionado, o atributo de nome do currículo provavelmente é "
-          {profile.name}" já que sua pontuação de recursos é{" "}
+          No PDF do currículo adicionado, o atributo de nome do currículo
+          provavelmente é "{profile.name}" já que sua pontuação de recursos é{" "}
           {profileScores.name.find((item) => item.text === profile.name)?.score}
           , que é a maior pontuação de recursos de todos os itens de texto na
           seção de perfil. (As pontuações de recursos de alguns itens de texto
@@ -304,20 +313,22 @@ export const ResumeParserAlgorithmArticle = ({
       )}
       <Heading level={3}>Conjuntos de Recursos</Heading>
       <Paragraph smallMarginTop={true}>
-        Tendo explicado o sistema de pontuação de recursos, podemos mergulhar mais
-        em como os conjuntos de recursos são construídos para um atributo de currículo.
-        Ele segue 2 princípios: <br />
-        1. Os conjuntos de recursos de um atributo de currículo são projetados em
-        relação a todos os outros atributos de currículo dentro da mesma seção. <br />
-        2. Os conjuntos de recursos de um atributo de currículo são criados manualmente
-        com base em suas características e probabilidade de cada característica.
+        Tendo explicado o sistema de pontuação de recursos, podemos mergulhar
+        mais em como os conjuntos de recursos são construídos para um atributo
+        de currículo. Ele segue 2 princípios: <br />
+        1. Os conjuntos de recursos de um atributo de currículo são projetados
+        em relação a todos os outros atributos de currículo dentro da mesma
+        seção. <br />
+        2. Os conjuntos de recursos de um atributo de currículo são criados
+        manualmente com base em suas características e probabilidade de cada
+        característica.
       </Paragraph>
       <Paragraph>
-        A tabela abaixo lista alguns dos conjuntos de recursos para o atributo de
-        currículo nome. Ela contém função de recurso que corresponde ao atributo
-        nome com pontuação de recurso positiva e também função de recurso que
-        corresponde apenas a outros atributos de currículo na seção com pontuação
-        de recurso negativa.
+        A tabela abaixo lista alguns dos conjuntos de recursos para o atributo
+        de currículo nome. Ela contém função de recurso que corresponde ao
+        atributo nome com pontuação de recurso positiva e também função de
+        recurso que corresponde apenas a outros atributos de currículo na seção
+        com pontuação de recurso negativa.
       </Paragraph>
       <Table
         table={step4NameFeatureSetsTable}
@@ -326,11 +337,12 @@ export const ResumeParserAlgorithmArticle = ({
       />
       <Heading level={3}>Função de Recurso Principal</Heading>
       <Paragraph smallMarginTop={true}>
-        Cada atributo de currículo tem múltiplos conjuntos de recursos. Eles podem
-        ser encontrados no código-fonte na pasta extract-resume-from-sections e não
-        vamos listá-los todos aqui. Cada atributo de currículo geralmente tem uma
-        função de recurso principal que os identifica amplamente, então vamos listar
-        a função de recurso principal abaixo.
+        Cada atributo de currículo tem múltiplos conjuntos de recursos. Eles
+        podem ser encontrados no código-fonte na pasta
+        extract-resume-from-sections e não vamos listá-los todos aqui. Cada
+        atributo de currículo geralmente tem uma função de recurso principal que
+        os identifica amplamente, então vamos listar a função de recurso
+        principal abaixo.
       </Paragraph>
       <Table table={step4CoreFeatureFunctionTable} className="mt-4" />
       <Heading level={3}>Caso Especial: Subseções</Heading>
@@ -338,26 +350,23 @@ export const ResumeParserAlgorithmArticle = ({
         A última coisa que vale a pena mencionar são as subseções. Para a seção
         de perfil, podemos passar diretamente todos os itens de texto para os
         sistemas de pontuação de recursos. Mas para outras seções, como educação
-        e experiência profissional, temos que primeiro dividir a seção em subseções,
-        já que pode haver múltiplas escolas ou experiências de trabalho na seção.
-        O sistema de pontuação de recursos então processa cada subseção para
-        recuperar os atributos de currículo de cada uma e anexar os resultados.
+        e experiência profissional, temos que primeiro dividir a seção em
+        subseções, já que pode haver múltiplas escolas ou experiências de
+        trabalho na seção. O sistema de pontuação de recursos então processa
+        cada subseção para recuperar os atributos de currículo de cada uma e
+        anexar os resultados.
       </Paragraph>
       <Paragraph smallMarginTop={true}>
         O analisador de currículos aplica algumas heurísticas para detectar uma
-        subseção. A principal heurística para determinar uma subseção é verificar
-        se o espaço vertical entre 2 linhas é maior que o espaço de linha típico * 1.4,
-        já que um currículo bem formatado geralmente cria uma nova quebra de linha
-        vazia antes de adicionar a próxima subseção. Também há uma heurística de
-        fallback se a heurística principal não se aplicar para verificar se o item
-        de texto está em negrito.
+        subseção. A principal heurística para determinar uma subseção é
+        verificar se o espaço vertical entre 2 linhas é maior que o espaço de
+        linha típico * 1.4, já que um currículo bem formatado geralmente cria
+        uma nova quebra de linha vazia antes de adicionar a próxima subseção.
+        Também há uma heurística de fallback se a heurística principal não se
+        aplicar para verificar se o item de texto está em negrito.
       </Paragraph>
       <Paragraph>
         E isso é tudo sobre o algoritmo do analisador CVAts :)
-      </Paragraph>
-      <Paragraph>
-        Escrito por <Link href="https://github.com/xitanggg">Xitang</Link> em
-        Junho de 2023
       </Paragraph>
     </article>
   );
@@ -399,8 +408,16 @@ const step4CoreFeatureFunctionTable = [
     "/[A-Z][a-zA-Z\\s]+, [A-Z]{2}/",
   ],
   ["Url", "Corresponde formato de url xxx.xxx/xxx", "/\\S+\\.[a-z]+\\/\\S+/"],
-  ["Instituição", "Contém palavra-chave de escola, ex: Faculdade, Universidade, Escola", ""],
-  ["Grau", "Contém palavra-chave de grau, ex: Técnico, Graduação, Mestrado", ""],
+  [
+    "Instituição",
+    "Contém palavra-chave de escola, ex: Faculdade, Universidade, Escola",
+    "",
+  ],
+  [
+    "Grau",
+    "Contém palavra-chave de grau, ex: Técnico, Graduação, Mestrado",
+    "",
+  ],
   ["Média", "Corresponde formato de média x.xx", "/[0-4]\\.\\d{1,2}/"],
   [
     "Data",

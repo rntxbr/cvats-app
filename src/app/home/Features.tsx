@@ -1,9 +1,9 @@
 import { Link } from "components/documentation";
-import { 
-  SparklesIcon, 
-  ShieldCheckIcon, 
-  LockClosedIcon, 
-  CodeBracketIcon 
+import {
+  SparklesIcon,
+  ShieldCheckIcon,
+  LockClosedIcon,
+  CodeBracketIcon,
 } from "@heroicons/react/24/solid";
 
 const FEATURES = [
@@ -58,7 +58,7 @@ export const Features = () => {
           </span>
           ?
         </h2>
-        <p className="mt-4 text-lg text-gray-600">
+        <p className="mt-4 text-xl font-bold ">
           Ferramentas poderosas para criar o currículo perfeito
         </p>
       </div>
@@ -72,14 +72,17 @@ export const Features = () => {
               className="group relative transition-all hover:-translate-y-1"
             >
               {/* Sombra de fundo offset */}
-              <div className={`absolute -right-3 -top-3 h-full w-full rounded-2xl border-4 border-black ${color}`}></div>
-              
+              <div
+                className={`absolute -right-3 -top-3 h-full w-full rounded-2xl border-4 border-black ${color}`}
+              ></div>
+
               {/* Card principal */}
               <div className="relative z-10 flex h-full flex-col rounded-2xl border-4 border-black bg-white p-6 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all group-hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] lg:p-8">
-                
                 {/* Ícone com fundo colorido */}
                 <div className="mb-4 inline-flex">
-                  <div className={`flex h-16 w-16 items-center justify-center rounded-xl border-4 border-black ${color} shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]`}>
+                  <div
+                    className={`flex h-16 w-16 items-center justify-center rounded-xl border-4 border-black ${color} shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]`}
+                  >
                     <Icon className="h-9 w-9 text-gray-900" />
                   </div>
                 </div>
@@ -103,7 +106,8 @@ export const Features = () => {
       <div className="mt-12 text-center lg:mt-16">
         <div className="inline-block rounded-xl border-4 border-black bg-gradient-to-r from-yellow-300 to-red-300 px-8 py-4 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
           <p className="text-base font-bold text-gray-900 lg:text-lg">
-            Usado por milhares de profissionais para conquistar suas vagas dos sonhos
+            Usado por milhares de profissionais para conquistar suas vagas dos
+            sonhos
           </p>
         </div>
       </div>

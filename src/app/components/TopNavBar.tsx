@@ -3,22 +3,22 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import logoSrc from "public/logo.png";
-import { 
-  DocumentTextIcon, 
+import {
+  DocumentTextIcon,
   ChartBarIcon,
-  StarIcon 
+  StarIcon,
 } from "@heroicons/react/24/solid";
 
 const NAV_LINKS = [
   {
     href: "/resume-builder",
-    label: "Construtor",
+    label: "Criar novo currículo",
     icon: DocumentTextIcon,
     color: "bg-blue-300",
   },
   {
     href: "/resume-parser",
-    label: "Analisador",
+    label: "Analisar meu Currículo",
     icon: ChartBarIcon,
     color: "bg-green-300",
   },
@@ -32,7 +32,7 @@ export const TopNavBar = () => {
       aria-label="Site Header"
       className="sticky top-0 z-50 w-full border-b-4 border-black bg-white shadow-[0_4px_0px_0px_rgba(0,0,0,1)]"
     >
-      <div className="mx-auto max-w-7xl px-4 py-3 lg:px-6">
+      <div className="mx-auto container px-4 py-3 lg:px-6">
         <div className="flex items-center justify-between gap-4">
           {/* Logo/Brand */}
           <Link href="/" className="group relative flex-shrink-0">
@@ -41,11 +41,11 @@ export const TopNavBar = () => {
               <Image
                 src={logoSrc}
                 alt="CVAts Logo"
-                className="h-6 w-auto lg:h-7"
+                className="h-6 w-auto lg:h-7 rounded-lg"
                 priority
               />
               <span className="text-xl font-black text-gray-900 lg:text-2xl">
-                CVAts
+                CVATS.com.br
               </span>
             </div>
           </Link>
@@ -57,14 +57,16 @@ export const TopNavBar = () => {
           >
             {NAV_LINKS.map(({ href, label, icon: Icon, color }) => {
               const isActive = pathName === href;
-              
+
               return (
                 <Link
                   key={href}
                   href={href}
                   className="group relative hidden sm:block"
                 >
-                  <div className={`absolute -right-1 -top-1 h-full w-full rounded-lg border-3 border-black ${color}`}></div>
+                  <div
+                    className={`absolute -right-1 -top-1 h-full w-full rounded-lg border-3 border-black ${color}`}
+                  ></div>
                   <div
                     className={`relative z-10 flex items-center gap-2 rounded-lg border-3 border-black bg-white px-3 py-2 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-all group-hover:shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] lg:px-4 lg:py-2.5 ${
                       isActive ? "bg-gray-50" : ""

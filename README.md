@@ -10,8 +10,6 @@ Site oficial: [https://cvats.com.br](https://cvats.com.br)
 
 O criador de currículos do CVAts permite que o usuário crie um currículo profissional moderno facilmente.
 
-
-
 Possui 5 Funcionalidades Principais:
 | <div style="width:285px">**Funcionalidade**</div> | **Descrição** |
 |---|---|
@@ -25,32 +23,30 @@ Possui 5 Funcionalidades Principais:
 
 O segundo componente do CVAts é o analisador de currículos. Para aqueles que já têm um currículo existente, o analisador pode ajudar a testar e confirmar sua compatibilidade com sistemas ATS.
 
-![Demonstração do Analisador](https://i.ibb.co/JvSVwNk/resume-parser-demo-optimize.gif)
-
 Você pode aprender mais sobre o algoritmo do analisador na [seção "Mergulho Profundo no Algoritmo do Analisador"](https://cvats.com.br/resume-parser).
 
 ## 📚 Stack Tecnológica
 
-| <div style="width:140px">**Categoria**</div> | <div style="width:100px">**Escolha**</div> | **Descrição** |
-|---|---|---|
-| **Linguagem** | [TypeScript](https://github.com/microsoft/TypeScript) | TypeScript é JavaScript com verificação de tipo estática e ajuda a detectar muitos bugs bobos em tempo de código. |
-| **Biblioteca de UI** | [React](https://github.com/facebook/react) | A sintaxe declarativa e arquitetura baseada em componentes do React torna simples desenvolver componentes reutilizáveis e reativos. |
-| **Gerenciamento de Estado** | [Redux Toolkit](https://github.com/reduxjs/redux-toolkit) | Redux toolkit reduz o código repetitivo para configurar e atualizar uma store redux central, que é usada no gerenciamento do estado complexo do currículo. |
-| **Framework CSS** | [Tailwind CSS](https://github.com/tailwindlabs/tailwindcss) | Tailwind acelera o desenvolvimento fornecendo utilitários CSS úteis e removendo a necessidade de alternar contexto entre arquivos tsx e css. |
-| **Framework Web** | [NextJS 13](https://github.com/vercel/next.js) | Next.js suporta geração de sites estáticos e ajuda a construir páginas React eficientes que suportam SEO. |
-| **Leitor de PDF** | [PDF.js](https://github.com/mozilla/pdf.js) | PDF.js lê conteúdo de arquivos PDF e é usado pelo analisador de currículos em sua primeira etapa para ler o conteúdo de um PDF de currículo. |
-| **Renderizador de PDF** | [React-pdf](https://github.com/diegomura/react-pdf) | React-pdf cria arquivos PDF e é usado pelo criador de currículos para criar um arquivo PDF para download. |
+| <div style="width:140px">**Categoria**</div> | <div style="width:100px">**Escolha**</div>                  | **Descrição**                                                                                                                                              |
+| -------------------------------------------- | ----------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Linguagem**                                | [TypeScript](https://github.com/microsoft/TypeScript)       | TypeScript é JavaScript com verificação de tipo estática e ajuda a detectar muitos bugs bobos em tempo de código.                                          |
+| **Biblioteca de UI**                         | [React](https://github.com/facebook/react)                  | A sintaxe declarativa e arquitetura baseada em componentes do React torna simples desenvolver componentes reutilizáveis e reativos.                        |
+| **Gerenciamento de Estado**                  | [Redux Toolkit](https://github.com/reduxjs/redux-toolkit)   | Redux toolkit reduz o código repetitivo para configurar e atualizar uma store redux central, que é usada no gerenciamento do estado complexo do currículo. |
+| **Framework CSS**                            | [Tailwind CSS](https://github.com/tailwindlabs/tailwindcss) | Tailwind acelera o desenvolvimento fornecendo utilitários CSS úteis e removendo a necessidade de alternar contexto entre arquivos tsx e css.               |
+| **Framework Web**                            | [NextJS 13](https://github.com/vercel/next.js)              | Next.js suporta geração de sites estáticos e ajuda a construir páginas React eficientes que suportam SEO.                                                  |
+| **Leitor de PDF**                            | [PDF.js](https://github.com/mozilla/pdf.js)                 | PDF.js lê conteúdo de arquivos PDF e é usado pelo analisador de currículos em sua primeira etapa para ler o conteúdo de um PDF de currículo.               |
+| **Renderizador de PDF**                      | [React-pdf](https://github.com/diegomura/react-pdf)         | React-pdf cria arquivos PDF e é usado pelo criador de currículos para criar um arquivo PDF para download.                                                  |
 
 ## 📁 Estrutura do Projeto
 
 O CVAts é criado com o framework web NextJS e segue sua estrutura de projeto. O código-fonte pode ser encontrado em `src/app`. Há um total de 4 rotas de página, conforme mostrado na tabela abaixo. (O caminho do código é relativo a `src/app`)
 
-| <div style="width:115px">**Rota da Página**</div> | **Caminho do Código** | **Descrição** |
-|---|---|---|
-| / | /page.tsx | Página inicial que contém hero, currículo com digitação automática, passos, depoimentos, nuvem de logos, etc |
-| /resume-import | /resume-import/page.tsx | Página de importação de currículo, onde você pode escolher importar dados de um PDF de currículo existente. O componente principal usado é `ResumeDropzone` (`/components/ResumeDropzone.tsx`) |
-| /resume-builder | /resume-builder/page.tsx | Página do criador de currículos para construir e baixar um PDF de currículo. Os componentes principais usados são `ResumeForm` (`/components/ResumeForm`) e `Resume` (`/components/Resume`) |
-| /resume-parser | /resume-parser/page.tsx | Página do analisador de currículos para testar a compatibilidade do currículo com sistemas ATS. O utilitário de biblioteca principal usado é `parseResumeFromPdf` (`/lib/parse-resume-from-pdf`) |
+| <div style="width:115px">**Rota da Página**</div> | **Caminho do Código**    | **Descrição**                                                                                                                                                                                    |
+| ------------------------------------------------- | ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| /                                                 | /page.tsx                | Página inicial que contém hero, currículo com digitação automática, passos, depoimentos, nuvem de logos, etc                                                                                     |
+| /resume-import                                    | /resume-import/page.tsx  | Página de importação de currículo, onde você pode escolher importar dados de um PDF de currículo existente. O componente principal usado é `ResumeDropzone` (`/components/ResumeDropzone.tsx`)   |
+| /resume-builder                                   | /resume-builder/page.tsx | Página do criador de currículos para construir e baixar um PDF de currículo. Os componentes principais usados são `ResumeForm` (`/components/ResumeForm`) e `Resume` (`/components/Resume`)      |
+| /resume-parser                                    | /resume-parser/page.tsx  | Página do analisador de currículos para testar a compatibilidade do currículo com sistemas ATS. O utilitário de biblioteca principal usado é `parseResumeFromPdf` (`/lib/parse-resume-from-pdf`) |
 
 ## 💻 Desenvolvimento Local
 

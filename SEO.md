@@ -308,7 +308,7 @@ Com esta implementação, você deve alcançar:
 Para dúvidas sobre implementação de SEO:
 
 - GitHub Issues: https://github.com/rntxbr/cvats-app/issues
-- Email: hello@open-resume.com
+- Email: renatokhael@gmail.com
 
 ---
 

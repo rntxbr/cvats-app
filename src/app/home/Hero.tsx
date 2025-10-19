@@ -1,25 +1,29 @@
 import Link from "next/link";
 import { FlexboxSpacer } from "components/FlexboxSpacer";
 import { AutoTypingResume } from "home/AutoTypingResume";
-import { SparklesIcon, CheckCircleIcon } from "@heroicons/react/24/solid";
+import {
+  SparklesIcon,
+  CheckCircleIcon,
+  ArrowRightCircleIcon,
+} from "@heroicons/react/24/solid";
 
 export const Hero = () => {
   return (
-    <section className="px-4 py-12 lg:flex lg:min-h-[825px] lg:items-center lg:justify-center lg:py-20">
+    <section className="py-12 lg:flex lg:min-h-[825px] lg:items-center lg:justify-center lg:py-20">
       <FlexboxSpacer maxWidth={75} minWidth={0} className="hidden lg:block" />
-      
+
       {/* Conteúdo Principal */}
-      <div className="mx-auto max-w-xl lg:mx-0 lg:grow">
+      <div className="mx-auto container lg:mx-0 lg:grow">
         {/* Badge Neo-Brutal */}
         <div className="mb-6 inline-block">
-          <span className="inline-flex items-center gap-2 rounded-lg border-2 border-black bg-yellow-300 px-4 py-2 text-sm font-bold shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
+          <span className="text-sm inline-flex items-center gap-2 rounded-lg border-2 border-black bg-yellow-300 px-4 py-2 font-bold shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
             <SparklesIcon className="h-5 w-5" />
             100% Gratuito & Otimizado para ATS
           </span>
         </div>
 
         {/* Título Principal */}
-        <h1 className="text-4xl font-bold leading-tight text-gray-900 lg:text-6xl">
+        <h1 className="text-4xl font-bold lg:text-6xl">
           Crie um currículo
           <br />
           <span className="relative inline-block">
@@ -35,22 +39,25 @@ export const Hero = () => {
         </h1>
 
         {/* Descrição */}
-        <p className="mt-6 text-lg leading-relaxed text-gray-700 lg:text-xl">
+        <p className="mt-6 text-lg leading-relaxed lg:text-xl">
           Aumente suas chances de aprovação com um currículo que{" "}
-          <span className="font-bold text-gray-900">passa pelos sistemas de rastreamento</span>{" "}
+          <span className="font-bold text-gray-900">
+            passa pelos sistemas de rastreamento
+          </span>{" "}
           das empresas
         </p>
 
         {/* CTA Principal */}
-        <div className="mt-8 lg:mt-12">
+        <div className="mt-6">
           <Link
             href="/resume-import"
-            className="inline-block rounded-lg border-4 border-black bg-red-400 px-8 py-4 text-lg font-bold text-white shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] transition-all hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] active:translate-x-[4px] active:translate-y-[4px] active:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]"
+            className="inline-flex items-center gap-2 rounded-lg border-4 border-black bg-red-400 px-8 py-4 text-xl font-bold text-white shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] transition-all hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] active:translate-x-[4px] active:translate-y-[4px] active:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]"
           >
-            Criar Meu Currículo <span aria-hidden="true">→</span>
+            Criar Meu Currículo
+            <ArrowRightCircleIcon className="h-6 w-6" />
           </Link>
-          <p className="mt-4 flex items-center gap-2 text-sm font-medium text-gray-600">
-            <CheckCircleIcon className="h-5 w-5 text-green-600" />
+          <p className="mt-4 flex items-center gap-2 text-lg font-bold ">
+            <CheckCircleIcon className="h-5 w-5 " />
             Sem cadastro necessário
           </p>
         </div>
@@ -70,7 +77,7 @@ export const Hero = () => {
       </div>
 
       <FlexboxSpacer maxWidth={100} minWidth={50} className="hidden lg:block" />
-      
+
       {/* Preview do Currículo */}
       <div className="mt-12 flex justify-center lg:mt-0 lg:block lg:grow">
         <div className="relative">

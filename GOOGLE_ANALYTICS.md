@@ -327,7 +327,7 @@ Se você está migrando do GA3 (UA):
 Para dúvidas:
 
 - GitHub Issues: https://github.com/rntxbr/cvats-app/issues
-- Email: hello@open-resume.com
+- Email: renatokhael@gmail.com
 - Documentação Google Analytics: https://support.google.com/analytics
 
 ---

@@ -105,7 +105,7 @@ const QAS = [
           A melhor maneira de apoiar este projeto é compartilhar seus
           pensamentos e feedback conosco para ajudar a melhorá-lo ainda mais.
           Você pode nos enviar um email em{" "}
-          <Link href="mailto:hello@open-resume.com">hello@open-resume.com</Link>{" "}
+          <Link href="mailto:renatokhael@gmail.com">renatokhael@gmail.com</Link>{" "}
           ou{" "}
           <Link href="https://github.com/rntxbr/cvats-app/issues/new">
             abrir uma issue
@@ -204,7 +204,7 @@ export const QuestionsAndAnswers = () => {
         </div>
 
         {/* Accordions */}
-        <div className="mx-auto max-w-3xl">
+        <div className="mx-auto w-full">
           <div className="space-y-4 lg:space-y-6">
             {QAS.map(({ question, answer }, index) => {
               const isOpen = openIndex === index;
@@ -269,7 +269,7 @@ export const QuestionsAndAnswers = () => {
             <p className="text-base font-bold text-gray-900 lg:text-lg">
               Ainda tem dúvidas?{" "}
               <Link
-                href="mailto:hello@open-resume.com"
+                href="mailto:renatokhael@gmail.com"
                 className="underline decoration-2 underline-offset-4 hover:text-purple-900"
               >
                 Entre em contato
