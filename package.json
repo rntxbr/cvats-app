@@ -1,5 +1,10 @@
 {
-  "name": "open-resume",
+  "name": "cvats",
+  "author": {
+    "name": "Renato Khael",
+    "email": "renatokhael@gmaial.com",
+    "url": "https://renatokhael.com"
+  },
   "version": "0.1.0",
   "private": true,
   "scripts": {
