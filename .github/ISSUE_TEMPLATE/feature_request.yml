@@ -1,0 +1,101 @@
+name: 🚀 Feature Request
+description: Suggest a new feature or enhancement for CVAts
+title: "[FEATURE]: "
+labels: ["enhancement", "needs-triage"]
+assignees: []
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for suggesting a new feature! Please provide as much detail as possible to help us understand your request.
+
+  - type: textarea
+    id: feature-description
+    attributes:
+      label: 🚀 Feature Description
+      description: A clear and concise description of the feature you'd like to see added.
+      placeholder: What feature would you like to add?
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem-statement
+    attributes:
+      label: 🤔 Problem Statement
+      description: What problem does this feature solve? Is your feature request related to a problem?
+      placeholder: Describe the problem you're trying to solve...
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposed-solution
+    attributes:
+      label: 💡 Proposed Solution
+      description: Describe the solution you'd like to see implemented.
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: 🔄 Alternative Solutions
+      description: Describe any alternative solutions or features you've considered.
+
+  - type: dropdown
+    id: feature-category
+    attributes:
+      label: 📂 Feature Category
+      description: Which area of CVAts would this feature affect?
+      options:
+        - Resume Builder
+        - Resume Import/PDF Parser
+        - Resume Parser/Analyzer
+        - UI/UX
+        - Performance
+        - Accessibility
+        - Documentation
+        - Other (please specify)
+    validations:
+      required: true
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: ⭐ Priority
+      description: How important is this feature to you?
+      options:
+        - Low - Nice to have
+        - Medium - Would improve my experience
+        - High - Significantly impacts my workflow
+        - Critical - This is blocking me from using CVAts effectively
+
+  - type: textarea
+    id: use-cases
+    attributes:
+      label: 🎯 Use Cases
+      description: Describe specific scenarios where this feature would be useful.
+      placeholder: |
+        1. When I need to...
+        2. In cases where...
+        3. For users who...
+
+  - type: textarea
+    id: mockups
+    attributes:
+      label: 🎨 Mockups/Examples
+      description: If you have any mockups, sketches, or examples from other tools, please share them here.
+      placeholder: Drag and drop or paste any mockups, sketches, or reference images...
+
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: 📋 Checklist
+      description: Please confirm the following
+      options:
+        - label: I have searched existing issues to ensure this is not a duplicate
+          required: true
+        - label: This feature is within the scope of CVAts (ATS-optimized resume builder)
+          required: true
+        - label: I am willing to help implement this feature if needed
+          required: false

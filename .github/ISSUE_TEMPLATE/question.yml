@@ -1,0 +1,67 @@
+name: ❓ Question
+description: Ask a question about CVAts
+title: "[QUESTION]: "
+labels: ["question", "help-wanted"]
+assignees: []
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Have a question about CVAts? We're here to help! Please provide as much context as possible.
+
+  - type: textarea
+    id: question
+    attributes:
+      label: ❓ Your Question
+      description: What would you like to know about CVAts?
+      placeholder: Ask your question here...
+    validations:
+      required: true
+
+  - type: dropdown
+    id: question-type
+    attributes:
+      label: 🔍 Question Type
+      description: What type of question are you asking?
+      options:
+        - How to use a feature
+        - Troubleshooting
+        - Best practices
+        - Technical implementation
+        - Contribution related
+        - General inquiry
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: context
+    attributes:
+      label: 📝 Context
+      description: Provide any relevant context about your question
+      placeholder: |
+        - What are you trying to achieve?
+        - What have you tried so far?
+        - Any relevant background information...
+
+  - type: textarea
+    id: browser-info
+    attributes:
+      label: 🌐 Browser & System Info
+      description: If your question is related to a specific issue, please include your browser and system information.
+      placeholder: |
+        Browser: Chrome/Firefox/Safari/etc.
+        Version: (if known)
+        OS: Windows/macOS/Linux/etc.
+
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: 📋 Checklist
+      description: Please confirm the following
+      options:
+        - label: I have searched existing issues and documentation
+          required: true
+        - label: I have read the contributing guidelines (if contributing)
+          required: false
