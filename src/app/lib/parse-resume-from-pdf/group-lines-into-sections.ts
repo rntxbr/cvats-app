@@ -41,21 +41,40 @@ export const groupLinesIntoSections = (lines: Lines) => {
   return sections;
 };
 
+const normalizeTextForComparison = (value: string) =>
+  value.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+
 const SECTION_TITLE_PRIMARY_KEYWORDS = [
   "experience",
+  "experiencia",
+  "trabalho",
+  "profissional",
   "education",
+  "educacao",
+  "formacao",
+  "academica",
   "project",
+  "projeto",
   "skill",
+  "habilidade",
+  "competencia",
 ];
 const SECTION_TITLE_SECONDARY_KEYWORDS = [
   "job",
+  "emprego",
   "course",
+  "curso",
   "extracurricular",
   "objective",
+  "objetivo",
   "summary", // LinkedIn generated resume has a summary section
+  "resumo",
   "award",
+  "premio",
   "honor",
+  "honra",
   "project",
+  "projeto",
 ];
 const SECTION_TITLE_KEYWORDS = [
   ...SECTION_TITLE_PRIMARY_KEYWORDS,
@@ -81,16 +100,21 @@ const isSectionTitle = (line: Line, lineNumber: number) => {
   // The following is a fallback heuristic to detect section title if it includes a keyword match
   // (This heuristics is not well tested and may not work well)
   const text = textItem.text.trim();
+  const normalizedText = normalizeTextForComparison(text);
+  const textWithoutDiacritics = text
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "");
   const textHasAtMost2Words =
     text.split(" ").filter((s) => s !== "&").length <= 2;
-  const startsWithCapitalLetter = /[A-Z]/.test(text.slice(0, 1));
+  const firstChar = textWithoutDiacritics.slice(0, 1);
+  const startsWithCapitalLetter = firstChar >= "A" && firstChar <= "Z";
 
   if (
     textHasAtMost2Words &&
     hasOnlyLettersSpacesAmpersands(textItem) &&
     startsWithCapitalLetter &&
     SECTION_TITLE_KEYWORDS.some((keyword) =>
-      text.toLowerCase().includes(keyword)
+      normalizedText.includes(keyword)
     )
   ) {
     return true;

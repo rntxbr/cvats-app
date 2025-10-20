@@ -153,12 +153,18 @@ export const extractProfile = (sections: ResumeSectionToLines) => {
     true
   );
 
-  const summaryLines = getSectionLinesByKeywords(sections, ["summary"]);
+  const summaryLines = getSectionLinesByKeywords(sections, [
+    "summary",
+    "resumo",
+  ]);
   const summarySection = summaryLines
     .flat()
     .map((textItem) => textItem.text)
     .join(" ");
-  const objectiveLines = getSectionLinesByKeywords(sections, ["objective"]);
+  const objectiveLines = getSectionLinesByKeywords(sections, [
+    "objective",
+    "objetivo",
+  ]);
   const objectiveSection = objectiveLines
     .flat()
     .map((textItem) => textItem.text)

@@ -7,9 +7,15 @@ export const getSectionLinesByKeywords = (
   sections: ResumeSectionToLines,
   keywords: string[]
 ) => {
+  const normalizeTextForComparison = (value: string) =>
+    value.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+  const normalizedKeywords = keywords.map((keyword) =>
+    normalizeTextForComparison(keyword)
+  );
   for (const sectionName in sections) {
-    const hasKeyWord = keywords.some((keyword) =>
-      sectionName.toLowerCase().includes(keyword)
+    const normalizedSectionName = normalizeTextForComparison(sectionName);
+    const hasKeyWord = normalizedKeywords.some((keyword) =>
+      normalizedSectionName.includes(keyword)
     );
     if (hasKeyWord) {
       return sections[sectionName];
