@@ -107,7 +107,7 @@ export const TopNavBar = () => {
               <div className="absolute -right-1 -top-1 h-full w-full rounded-lg border-3 border-black bg-yellow-300"></div>
               <div className="relative z-10 flex items-center gap-2 rounded-lg border-3 border-black bg-white px-4 py-2.5 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-all group-hover:shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]">
                 <StarIcon className="h-4 w-4 text-yellow-600" />
-                <span className="text-sm font-bold text-gray-900">Star</span>
+                <span className="text-sm font-bold text-gray-900">Github</span>
               </div>
             </Link>
           </nav>
