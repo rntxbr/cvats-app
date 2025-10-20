@@ -93,7 +93,7 @@ export const Features = () => {
                 </h3>
 
                 {/* Texto descritivo */}
-                <p className="flex-grow text-base leading-relaxed text-gray-700 lg:text-lg">
+                <p className="flex-grow text-base leading-relaxed  lg:text-lg">
                   {text}
                 </p>
               </div>

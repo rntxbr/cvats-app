@@ -6,7 +6,11 @@ import { cx } from "lib/cx";
 
 const TableRowHeader = ({ children }: { children: React.ReactNode }) => (
   <tr className="divide-x-4 divide-black border-y-4 border-black bg-gradient-to-r from-yellow-300 to-blue-300">
-    <th className="px-4 py-3 text-left text-base font-bold text-gray-900 lg:text-lg" scope="colgroup" colSpan={2}>
+    <th
+      className="px-4 py-3 text-left text-base font-bold text-gray-900 lg:text-lg"
+      scope="colgroup"
+      colSpan={2}
+    >
       {children}
     </th>
   </tr>
@@ -21,11 +25,16 @@ const TableRow = ({
   value: string | string[];
   className?: string | false;
 }) => (
-  <tr className={cx("divide-x-4 divide-black border-b-2 border-black hover:bg-blue-50", className)}>
+  <tr
+    className={cx(
+      "divide-x-4 divide-black border-b-2 border-black hover:bg-blue-50",
+      className
+    )}
+  >
     <th className="px-4 py-3 text-left font-bold text-gray-900" scope="row">
       {label}
     </th>
-    <td className="w-full px-4 py-3 text-gray-700">
+    <td className="w-full px-4 py-3 ">
       {typeof value === "string"
         ? value
         : value.map((x, idx) => (

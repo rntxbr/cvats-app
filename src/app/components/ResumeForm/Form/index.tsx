@@ -40,9 +40,8 @@ export const BaseForm = ({
   className?: string;
 }) => (
   <div className="relative">
-    <div className="absolute -right-2 -top-2 h-full w-full rounded-xl border-4 border-black bg-yellow-200"></div>
     <section
-      className={`relative z-10 flex flex-col gap-3 rounded-xl border-4 border-black bg-white p-6 pt-4 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-opacity duration-200 ${className}`}
+      className={`relative z-10 flex flex-col gap-3  border-4 border-black bg-white p-6 pt-4 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-opacity duration-200 ${className}`}
     >
       {children}
     </section>
@@ -130,7 +129,9 @@ export const Form = ({
                 className="-ml-0.5 mr-1.5 h-5 w-5 text-gray-900"
                 aria-hidden="true"
               />
-              <span className="text-sm font-bold text-gray-900">{addButtonText}</span>
+              <span className="text-sm font-bold text-gray-900">
+                {addButtonText}
+              </span>
             </div>
           </button>
         </div>

@@ -6,6 +6,8 @@ O objetivo do CVAts é fornecer a todos acesso gratuito a um design de currícul
 
 Site oficial: [https://cvats.com.br](https://cvats.com.br)
 
+![CVAts Screenshot](print.png)
+
 ## ⚒️ Criador de Currículos
 
 O criador de currículos do CVAts permite que o usuário crie um currículo profissional moderno facilmente.

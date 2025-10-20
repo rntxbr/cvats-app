@@ -64,7 +64,7 @@ export const Hero = () => {
 
         {/* Card de Info Secundária */}
         <div className="mt-8 inline-block p-4  lg:mt-6">
-          <p className="text-sm font-medium text-gray-700">
+          <p className="text-sm font-medium ">
             Já tem um currículo?{" "}
             <Link
               href="/resume-parser"

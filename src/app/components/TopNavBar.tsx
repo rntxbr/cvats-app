@@ -32,7 +32,7 @@ export const TopNavBar = () => {
       aria-label="Site Header"
       className="sticky top-0 z-50 w-full border-b-4 border-black bg-white shadow-[0_4px_0px_0px_rgba(0,0,0,1)]"
     >
-      <div className="mx-auto container px-4 py-3 lg:px-6">
+      <div className="mx-auto container py-3 ">
         <div className="flex items-center justify-between gap-4">
           {/* Logo/Brand */}
           <Link href="/" className="group relative flex-shrink-0">

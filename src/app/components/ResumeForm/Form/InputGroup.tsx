@@ -26,14 +26,14 @@ export const InputGroupWrapper = ({
   className?: string;
   children?: React.ReactNode;
 }) => (
-  <label className={`text-base font-medium text-gray-700 ${className}`}>
+  <label className={`text-base font-medium  ${className}`}>
     {label}
     {children}
   </label>
 );
 
 export const INPUT_CLASS_NAME =
-  "mt-1 px-3 py-2 block w-full rounded-lg border-3 border-black text-gray-900 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] outline-none font-normal text-base transition-all focus:shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] focus:translate-x-[-1px] focus:translate-y-[-1px] hover:shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]";
+  "mt-1 px-3 py-2 block w-full rounded-lg border-2 border-black text-gray-900 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] outline-none font-normal text-base transition-all focus:shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] focus:translate-x-[-1px] focus:translate-y-[-1px] hover:shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]";
 
 export const Input = <K extends string>({
   name,

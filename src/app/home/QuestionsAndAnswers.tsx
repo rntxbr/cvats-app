@@ -251,7 +251,7 @@ export const QuestionsAndAnswers = () => {
                       }`}
                     >
                       <div className="border-t-4 border-black bg-gray-50 p-6 lg:p-8">
-                        <div className="space-y-4 text-base leading-relaxed text-gray-700 lg:text-lg">
+                        <div className="space-y-4 text-base leading-relaxed  lg:text-lg">
                           {answer}
                         </div>
                       </div>

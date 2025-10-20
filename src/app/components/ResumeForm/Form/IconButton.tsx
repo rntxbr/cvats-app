@@ -89,9 +89,7 @@ export const BulletListIconButton = ({
       className={showBulletPoints ? "!bg-sky-100" : ""}
     >
       <ListBulletIcon
-        className={`h-4 w-4 ${
-          showBulletPoints ? "text-gray-700" : "text-gray-400"
-        }`}
+        className={`h-4 w-4 ${showBulletPoints ? "" : "text-gray-400"}`}
         aria-hidden="true"
       />
       <span className="sr-only">{tooltipText}</span>

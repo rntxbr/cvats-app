@@ -51,7 +51,7 @@ export const Footer = () => {
             </Link>
 
             {/* Descrição */}
-            <p className="mt-6 mb-6 text-base leading-relaxed text-gray-700 lg:text-lg">
+            <p className="mt-6 mb-6 text-base leading-relaxed  lg:text-lg">
               Criador de currículos gratuito e otimizado para sistemas ATS. Crie
               seu currículo profissional em minutos e aumente suas chances de
               conseguir a vaga dos sonhos.
@@ -82,7 +82,7 @@ export const Footer = () => {
                     <li key={link.label}>
                       <Link
                         href={link.href}
-                        className="text-base text-gray-700 transition-colors hover:text-purple-700 hover:underline"
+                        className="text-base  transition-colors hover:text-purple-700 hover:underline"
                       >
                         {link.label}
                       </Link>
@@ -98,7 +98,7 @@ export const Footer = () => {
             <h4 className="mb-4 text-lg font-bold text-gray-900">
               Fique por dentro
             </h4>
-            <p className="mb-4 text-sm text-gray-700">
+            <p className="mb-4 text-sm ">
               Contribua com o projeto ou reporte problemas no GitHub
             </p>
 
@@ -108,28 +108,40 @@ export const Footer = () => {
                 href="https://github.com/rntxbr/cvats-app"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group relative block"
+                className="flex gap-2"
               >
-                <div className="absolute -right-1 -top-1 h-full w-full rounded-lg border-3 border-black bg-purple-300"></div>
-                <div className="relative z-10 flex items-center gap-3 rounded-lg border-3 border-black bg-white p-3 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-all group-hover:shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]">
+                
                   <CodeBracketIcon className="h-5 w-5 flex-shrink-0 text-gray-900" />
                   <span className="text-sm font-bold text-gray-900">
-                    Ver no GitHub
+                    Acessar Código
                   </span>
-                </div>
+           
+              </Link>
+
+              <Link
+                href="https://github.com/rntxbr/cvats-app/issues/" 
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex gap-2"
+              >
+                
+                  <CodeBracketIcon className="h-5 w-5 flex-shrink-0 text-gray-900" />
+                  <span className="text-sm font-bold text-gray-900">
+                    Reportar Bug (Abrir Issue)
+                  </span>
+           
               </Link>
 
               <Link
                 href="mailto:renatokhael@gmail.com"
-                className="group relative block"
+                className="flex gap-2"
               >
-                <div className="absolute -right-1 -top-1 h-full w-full rounded-lg border-3 border-black bg-blue-300"></div>
-                <div className="relative z-10 flex items-center gap-3 rounded-lg border-3 border-black bg-white p-3 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-all group-hover:shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]">
+               
                   <EnvelopeIcon className="h-5 w-5 flex-shrink-0 text-gray-900" />
                   <span className="text-sm font-bold text-gray-900">
                     Entre em contato
                   </span>
-                </div>
+              
               </Link>
             </div>
           </div>
@@ -141,7 +153,7 @@ export const Footer = () => {
         {/* Rodapé Inferior */}
         <div className="flex flex-col items-center justify-between gap-4 lg:flex-row">
           {/* Copyright */}
-          <p className="text-center text-sm font-medium text-gray-700 lg:text-left">
+          <p className="text-center text-sm font-medium  lg:text-left">
             © {new Date().getFullYear()} CVAts. Desenvolvido por{" "}
             <Link
               href="https://www.linkedin.com/in/rkhael/"

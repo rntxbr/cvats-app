@@ -5,10 +5,10 @@ import testimonialVivianSrc from "public/assets/testimonial-vivian.jpg";
 import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { useTailwindBreakpoints } from "lib/hooks/useTailwindBreakpoints";
-import { 
-  HeartIcon, 
+import {
+  HeartIcon,
   StarIcon,
-  ChatBubbleLeftRightIcon 
+  ChatBubbleLeftRightIcon,
 } from "@heroicons/react/24/solid";
 
 const TESTIMONIALS = [
@@ -55,7 +55,7 @@ export const Testimonials = ({ children }: { children?: React.ReactNode }) => {
   );
   const isHoveredOnTestimonial = useRef(false);
   const { isLg } = useTailwindBreakpoints();
-  
+
   useEffect(() => {
     const intervalId = setInterval(() => {
       if (!isHoveredOnTestimonial.current) {
@@ -97,92 +97,113 @@ export const Testimonials = ({ children }: { children?: React.ReactNode }) => {
       {/* Cards de Depoimentos com animação original */}
       <div className="mx-auto mt-10 h-[280px] max-w-3xl lg:h-[400px] lg:pt-28">
         <div className="relative lg:ml-[-50px]">
-          {TESTIMONIALS.map(({ src, quote, name, title, color, rating }, idx) => {
-            const className = testimonialsClassNames[idx];
-            return (
-              <div
-                key={idx}
-                className={`absolute max-w-3xl transition-all duration-1000 ease-linear ${className}`}
-                onMouseEnter={() => {
-                  if (className === "z-10") {
-                    isHoveredOnTestimonial.current = true;
-                  }
-                }}
-                onMouseLeave={() => {
-                  if (className === "z-10") {
-                    isHoveredOnTestimonial.current = false;
-                  }
-                }}
-              >
-                {/* Card Neo-Brutal */}
-                <div className="relative">
-                  {/* Sombra de fundo offset colorida */}
-                  <div className={`absolute -right-2 -top-2 h-full w-full rounded-2xl border-4 border-black ${color}`}></div>
-                  
-                  {/* Card principal */}
-                  <figure className="relative z-10 flex gap-4 rounded-2xl border-4 border-black bg-white p-5 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] lg:gap-6 lg:p-7">
-                    {/* Foto com efeito 3D */}
-                    <div className="relative hidden flex-shrink-0 lg:block">
-                      <div className={`absolute -right-1 -top-1 h-24 w-24 rounded-full border-3 border-black ${color}`}></div>
-                      <Image
-                        className="relative z-10 h-24 w-24 select-none rounded-full border-3 border-black object-cover"
-                        src={src}
-                        alt={`Foto de ${name}`}
-                      />
-                    </div>
+          {TESTIMONIALS.map(
+            ({ src, quote, name, title, color, rating }, idx) => {
+              const className = testimonialsClassNames[idx];
+              return (
+                <div
+                  key={idx}
+                  className={`absolute max-w-3xl transition-all duration-1000 ease-linear ${className}`}
+                  onMouseEnter={() => {
+                    if (className === "z-10") {
+                      isHoveredOnTestimonial.current = true;
+                    }
+                  }}
+                  onMouseLeave={() => {
+                    if (className === "z-10") {
+                      isHoveredOnTestimonial.current = false;
+                    }
+                  }}
+                >
+                  {/* Card Neo-Brutal */}
+                  <div className="relative">
+                    {/* Sombra de fundo offset colorida */}
+                    <div
+                      className={`absolute -right-2 -top-2 h-full w-full rounded-2xl border-4 border-black ${color}`}
+                    ></div>
 
-                    <div className="flex-1">
-                      {/* Ícone de citação */}
-                      <div className="mb-3 inline-flex">
-                        <div className={`rounded-lg border-3 border-black ${color} p-2 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]`}>
-                          <ChatBubbleLeftRightIcon className="h-5 w-5 text-gray-900" />
-                        </div>
+                    {/* Card principal */}
+                    <figure className="relative z-10 flex gap-4 rounded-2xl border-4 border-black bg-white p-5 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] lg:gap-6 lg:p-7">
+                      {/* Foto com efeito 3D */}
+                      <div className="relative hidden flex-shrink-0 lg:block">
+                        <div
+                          className={`absolute -right-1 -top-1 h-24 w-24 rounded-full border-3 border-black ${color}`}
+                        ></div>
+                        <Image
+                          className="relative z-10 h-24 w-24 select-none rounded-full border-3 border-black object-cover"
+                          src={src}
+                          alt={`Foto de ${name}`}
+                        />
                       </div>
 
-                      {/* Citação */}
-                      <blockquote>
-                        <p className="text-base leading-relaxed text-gray-700 lg:text-lg">
-                          "{quote}"
-                        </p>
-                      </blockquote>
-
-                      {/* Rating */}
-                      <div className="my-3 flex gap-1">
-                        {Array.from({ length: rating }).map((_, i) => (
-                          <StarIcon key={i} className="h-4 w-4 text-yellow-500" />
-                        ))}
-                      </div>
-
-                      {/* Autor */}
-                      <figcaption className="mt-3">
-                        <div className="hidden gap-2 lg:flex">
-                          <div className="font-bold text-gray-900">{name}</div>
-                          <div className="select-none text-gray-700" aria-hidden="true">
-                            •
+                      <div className="flex-1">
+                        {/* Ícone de citação */}
+                        <div className="mb-3 inline-flex">
+                          <div
+                            className={`rounded-lg border-3 border-black ${color} p-2 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]`}
+                          >
+                            <ChatBubbleLeftRightIcon className="h-5 w-5 text-gray-900" />
                           </div>
-                          <div className="font-medium text-gray-600">{title}</div>
                         </div>
-                        <div className="flex items-center gap-4 lg:hidden">
-                          <div className="relative">
-                            <div className={`absolute -right-1 -top-1 h-12 w-12 rounded-full border-2 border-black ${color}`}></div>
-                            <Image
-                              className="relative z-10 h-12 w-12 select-none rounded-full border-2 border-black object-cover"
-                              src={src}
-                              alt={`Foto de ${name}`}
+
+                        {/* Citação */}
+                        <blockquote>
+                          <p className="text-base leading-relaxed  lg:text-lg">
+                            "{quote}"
+                          </p>
+                        </blockquote>
+
+                        {/* Rating */}
+                        <div className="my-3 flex gap-1">
+                          {Array.from({ length: rating }).map((_, i) => (
+                            <StarIcon
+                              key={i}
+                              className="h-4 w-4 text-yellow-500"
                             />
-                          </div>
-                          <div>
-                            <div className="font-bold text-gray-900">{name}</div>
-                            <div className="text-sm font-medium text-gray-600">{title}</div>
-                          </div>
+                          ))}
                         </div>
-                      </figcaption>
-                    </div>
-                  </figure>
+
+                        {/* Autor */}
+                        <figcaption className="mt-3">
+                          <div className="hidden gap-2 lg:flex">
+                            <div className="font-bold text-gray-900">
+                              {name}
+                            </div>
+                            <div className="select-none " aria-hidden="true">
+                              •
+                            </div>
+                            <div className="font-medium text-gray-600">
+                              {title}
+                            </div>
+                          </div>
+                          <div className="flex items-center gap-4 lg:hidden">
+                            <div className="relative">
+                              <div
+                                className={`absolute -right-1 -top-1 h-12 w-12 rounded-full border-2 border-black ${color}`}
+                              ></div>
+                              <Image
+                                className="relative z-10 h-12 w-12 select-none rounded-full border-2 border-black object-cover"
+                                src={src}
+                                alt={`Foto de ${name}`}
+                              />
+                            </div>
+                            <div>
+                              <div className="font-bold text-gray-900">
+                                {name}
+                              </div>
+                              <div className="text-sm font-medium text-gray-600">
+                                {title}
+                              </div>
+                            </div>
+                          </div>
+                        </figcaption>
+                      </div>
+                    </figure>
+                  </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            }
+          )}
         </div>
       </div>
 
