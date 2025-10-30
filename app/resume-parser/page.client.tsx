@@ -19,10 +19,10 @@ const RESUME_EXAMPLES = [
     ),
   },
   {
-    fileUrl: "resume-example/openresume-resume.pdf",
+    fileUrl: "resume-example/cvats-resume.pdf",
     description: (
       <span>
-        Created with OpenResume resume builder -{" "}
+        Created with cvats resume builder -{" "}
         <Link href="/resume-builder">Link</Link>
       </span>
     ),

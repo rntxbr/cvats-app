@@ -40,7 +40,7 @@ export const ProjectsForm = () => {
             <Input
               name="project"
               label="Nome do projeto"
-              placeholder="OpenResume"
+              placeholder="cvats"
               value={project}
               onChange={handleProjectChange}
               labelClassName="col-span-4"
