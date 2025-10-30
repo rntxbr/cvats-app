@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { LockClosedIcon } from "@heroicons/react/24/solid";
+import { LockClosedIcon, ArrowUpTrayIcon, ArrowRightIcon, DocumentTextIcon } from "@heroicons/react/24/solid";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import {
   getHasUsedAppBefore,
@@ -13,7 +13,7 @@ const addPdfSrc = "/assets/add-pdf.svg";
 import Image from "next/image";
 import { cx } from "@/app/lib/cx";
 import { deepClone } from "@/app/lib/deep-clone";
-import { FaRegFilePdf, FaCloudUploadAlt, FaArrowRight, FaCheckCircle  } from "react-icons/fa";
+ 
 
 const defaultFileState = {
   name: "",
@@ -113,7 +113,7 @@ export const ResumeDropzone = ({
         className="flex flex-col justify-center items-center space-y-4"
       >
         {!playgroundView && (
-         <FaRegFilePdf size={64} className="text-[#28584c]" />
+         <DocumentTextIcon className="h-16 w-16 text-[#28584c]" />
         )}
         {!hasFile ? (
           <>
@@ -149,7 +149,7 @@ export const ResumeDropzone = ({
                 className="cursor-pointer bg-[#28584c] text-white px-10 py-4 rounded-xl font-bold flex items-center gap-4"
                 
               >
-                <FaCloudUploadAlt />
+                <ArrowUpTrayIcon className="h-5 w-5" />
                 Procurar arquivo
                 <input
                   type="file"
@@ -170,7 +170,7 @@ export const ResumeDropzone = ({
                   className="cursor-pointer bg-[#28584c] text-white px-10 py-4 rounded-xl font-bold flex justify-center items-center gap-2"
                   onClick={onImportClick}
                 >
-                 Continuar <FaArrowRight />
+                 Continuar <ArrowRightIcon className="h-4 w-4" />
                 </button>
               )}
               <p className={cx(" text-[#28584c]", !playgroundView && "mt-6")}>

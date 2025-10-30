@@ -1,4 +1,5 @@
 import { Page, View, Document } from "@react-pdf/renderer";
+import { Fragment } from "react";
 import { styles, spacing } from "@/components/Resume/ResumePDF/styles";
 import { ResumePDFProfile } from "@/components/Resume/ResumePDF/ResumePDFProfile";
 import { ResumePDFWorkExperience } from "@/components/Resume/ResumePDF/ResumePDFWorkExperience";
@@ -127,7 +128,8 @@ export const ResumePDF = ({
           />
           {showFormsOrder.map((form) => {
             const Component = formTypeToComponent[form];
-            return <Component key={form} />;
+            const element = Component();
+            return <Fragment key={form}>{element}</Fragment>;
           })}
         </View>
       </Page>

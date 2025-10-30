@@ -10,6 +10,7 @@ import { deepClone } from "../lib/deep-clone";
 export const END_HOME_RESUME: Resume = {
   profile: {
     name: "João Silva",
+    role: "Engenheiro de Software",
     summary:
       "Engenheiro de software focado em criar produtos excepcionais que as pessoas amam",
     email: "joao.silva@example.com",

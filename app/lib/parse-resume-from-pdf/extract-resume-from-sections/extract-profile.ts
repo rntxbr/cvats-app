@@ -189,6 +189,7 @@ export const extractProfile = (sections: ResumeSectionToLines) => {
   return {
     profile: {
       name,
+      role: "",
       email,
       phone,
       location,

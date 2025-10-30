@@ -13,8 +13,8 @@ const sora = Sora({
 });
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://cvats.com.br";
-const siteName = "CVAts";
-const siteTitle = "CVAts - Criador de Currículos Gratuito Otimizado para ATS";
+const siteName = "cvats";
+const siteTitle = "cvats - criador de currículos gratuito otimizado para ATS";
 const siteDescription =
   "CVAts é um criador de currículos gratuito, de código aberto e poderoso que permite criar um currículo profissional moderno em 3 passos simples. Otimizado para sistemas ATS (Applicant Tracking System) como Greenhouse, Lever e Workday. Teste a compatibilidade do seu currículo com o analisador ATS integrado.";
 
@@ -43,9 +43,9 @@ export const metadata = {
     "template de currículo",
     "código aberto",
   ],
-  authors: [{ name: "CVAts Team" }],
-  creator: "CVAts",
-  publisher: "CVAts",
+  authors: [{ name: "Renato Khael" }],
+  creator: "Renato Khael",
+  publisher: "Renato Khael",
   formatDetection: {
     email: false,
     address: false,
@@ -63,7 +63,7 @@ export const metadata = {
         url: `${siteUrl}/og-image.png`,
         width: 1200,
         height: 630,
-        alt: "CVAts - Criador de Currículos Otimizado para ATS",
+        alt: "cvats - criador de currículos otimizado para ATS",
       },
     ],
   },
@@ -72,7 +72,7 @@ export const metadata = {
     title: siteTitle,
     description: siteDescription,
     images: [`${siteUrl}/og-image.png`],
-    creator: "@cvats",
+    creator: "Renato Khael",
   },
   robots: {
     index: true,
@@ -90,7 +90,7 @@ export const metadata = {
     shortcut: "/favicon.ico",
     apple: "/apple-touch-icon.png",
   },
-  manifest: "/manifest.json",
+ 
   alternates: {
     canonical: siteUrl,
   },

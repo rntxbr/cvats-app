@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { LottieWorkflow } from "./LottieWorkflow";
+import { ArrowRightIcon } from "@heroicons/react/24/solid";
 import { FaArrowRight } from "react-icons/fa";
 
 
@@ -18,10 +19,10 @@ export const Hero = () => {
         </p>
         <div className="flex items-center gap-2">
         <Link href="/resume-import" className="inline-flex justify-center items-center gap-2 bg-[#28584c] text-white px-8 sm:px-10 py-4 rounded-xl font-bold mt-6 w-full sm:w-auto transition-all duration-200 ease-out hover:-translate-y-0.5 hover:shadow-lg hover:bg-[#1f473d] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#28584c]">
-          Criar currículo <FaArrowRight />
+          Criar currículo <ArrowRightIcon className="h-4 w-4" />
         </Link>
         <Link href="/resume-parser" className="inline-flex justify-center items-center gap-2 bg-[#28584c36] text-[#28584c] px-8 sm:px-10 py-4 rounded-xl font-bold mt-6 w-full sm:w-auto transition-all duration-200 ease-out hover:-translate-y-0.5 hover:shadow-lg hover:bg-[#28584c26] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#28584c]">
-         Análisar Currículo <FaArrowRight />
+         Análisar Currículo <ArrowRightIcon className="h-4 w-4" />
         </Link>
         </div>
         <p className="mt-3 text-sm text-[#28584c] font-bold lg:ml-2">Não é necessário cadastro</p>

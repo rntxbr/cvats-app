@@ -3,7 +3,6 @@ import { ArrowDownTrayIcon } from "@heroicons/react/24/outline";
 import { usePDF } from "@react-pdf/renderer";
 import dynamic from "next/dynamic";
 import Link from "next/link";
-import { FaFileDownload } from "react-icons/fa";
 
 const ResumeControlBar = ({
 
@@ -31,7 +30,7 @@ const ResumeControlBar = ({
           href={instance.url}
           download={fileName}
         >
-        <FaFileDownload />
+        <ArrowDownTrayIcon className="h-5 w-5" />
           <span>Baixar Currículo</span>
         </Link>
       ) : (
