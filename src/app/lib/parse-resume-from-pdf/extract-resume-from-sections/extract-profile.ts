@@ -23,9 +23,11 @@ export const matchEmail = (item: TextItem) => item.text.match(/\S+@\S+\.\S+/);
 const hasAt = (item: TextItem) => item.text.includes("@");
 
 // Phone
-// Simple phone regex that matches (xxx)-xxx-xxxx where () and - are optional, - can also be space
+// Supports US and robust Brazilian phone formats (mobile/fixed, flexible on DDD/spacing/country code).
 export const matchPhone = (item: TextItem) =>
-  item.text.match(/\(?\d{3}\)?[\s-]?\d{3}[\s-]?\d{4}/);
+  item.text.match(
+    /\(?\d{3}\)?[\s-]?\d{3}[\s-]?\d{4}|(?:(?:\+|00)?55\s*)?(?:\(?\d{2}\)?\s*)?(?:9\s*\d{4}|\d{4})\s*\-?\s*\d{4}/
+  );
 const hasParenthesis = (item: TextItem) => /\([0-9]+\)/.test(item.text);
 
 // Location
