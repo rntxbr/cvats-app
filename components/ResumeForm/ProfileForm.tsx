@@ -39,6 +39,7 @@ export const ProfileForm = () => {
           placeholder="Entrepreneur and educator obsessed with making education free for anyone"
           value={summary}
           onChange={handleProfileChange}
+          rows={5}
         />
         <Input
           label="E-mail"

@@ -64,16 +64,17 @@ export const Textarea = <T extends string>({
   value = "",
   placeholder,
   onChange,
-}: InputProps<T, string>) => {
-  const textareaRef = useAutosizeTextareaHeight({ value });
+  rows = 4,
+}: InputProps<T, string> & { rows?: number }) => {
+  const textareaRef = useAutosizeTextareaHeight({ value, minRows: rows });
 
   return (
     <InputGroupWrapper label={label} className={wrapperClassName}>
       <textarea
         ref={textareaRef}
-        rows={4}
+        rows={rows}
         name={name}
-        className={`${INPUT_CLASS_NAME} resize-none overflow-hidden`}
+        className={`${INPUT_CLASS_NAME} resize-y overflow-auto`}
         placeholder={placeholder}
         value={value}
         onChange={(e) => onChange(name, e.target.value)}
