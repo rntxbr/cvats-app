@@ -18,12 +18,28 @@ export const Resume = () => {
   const [scale, setScale] = useState(1);
   const resume = useAppSelector(selectResume);
   const settings = useAppSelector(selectSettings);
-  const document = useMemo(
-    () => (
-      <ResumePDF resume={resume} settings={settings} isPDF={true} suppressErrorMessages={false} />
-    ),
-    [resume, settings]
+
+  // Criar o documento diretamente - o usePDF deve detectar mudanças automaticamente
+  // mas vamos usar uma key no ResumeControlBar para forçar recriação quando necessário
+  const document = (
+    <ResumePDF resume={resume} settings={settings} isPDF={true} suppressErrorMessages={false} />
   );
+  
+  // Key baseada nos dados principais para forçar remontagem do ResumeControlBar
+  // quando os dados mudarem, garantindo que usePDF gere o PDF atualizado
+  // Usando uma hash simples dos dados principais
+  const controlBarKey = useMemo(() => {
+    const profileHash = `${resume.profile.name}-${resume.profile.email}-${resume.profile.phone}`;
+    const experiencesHash = resume.workExperiences
+      .map((exp) => `${exp.company}-${exp.jobTitle}`)
+      .join("|");
+    const educationsHash = resume.educations
+      .map((edu) => `${edu.school}-${edu.degree}`)
+      .join("|");
+    const projectsHash = resume.projects.map((proj) => proj.project).join("|");
+    const skillsHash = resume.skills.descriptions.join("|");
+    return `${profileHash}-${experiencesHash}-${educationsHash}-${projectsHash}-${skillsHash}-${settings.documentSize}`;
+  }, [resume, settings.documentSize]);
 
   useRegisterReactPDFFont();
   useRegisterReactPDFHyphenationCallback(settings.fontFamily);
@@ -63,6 +79,7 @@ export const Resume = () => {
             </ResumeIframeCSR>
           </section>
           <ResumeControlBarCSR
+            key={controlBarKey}
             scale={scale}
             setScale={setScale}
             documentSize={settings.documentSize}

@@ -8,21 +8,14 @@ import { ResumeDropzone } from "@/components/ResumeDropzone";
 
 const RESUME_EXAMPLES = [
   {
-    fileUrl: "resume-example/laverne-resume.pdf",
-    description: (
-      <span>
-        Borrowed from University of La Verne Career Center -{" "}
-        <Link href="https://laverne.edu/careers/wp-content/uploads/sites/15/2010/12/Undergraduate-Student-Resume-Examples.pdf">
-          Link
-        </Link>
-      </span>
-    ),
+    fileUrl: "resume-example/joao-silva-curriculo.pdf",
+    description: <span>Criado com cvats</span>,
   },
   {
-    fileUrl: "resume-example/cvats-resume.pdf",
+    fileUrl: "resume-example/joao-silva-curriculo.pdf",
     description: (
       <span>
-        Created with cvats resume builder - <Link href="/resume-builder">Link</Link>
+        Criado com cvats na análise ATS - <Link href="/resume-builder">Link</Link>
       </span>
     ),
   },

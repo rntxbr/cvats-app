@@ -156,7 +156,7 @@ export const ResumeFeaturedSkill = ({
             width: "9pt",
             marginLeft: "2.25pt",
             backgroundColor: rating >= idx ? themeColor : "#d9d9d9",
-            borderRadius: "100%",
+            borderRadius: "4.5pt",
           }}
         />
       ))}
