@@ -82,7 +82,7 @@ body:
     attributes:
       label: Versão do Navegador/Dispositivo
       description: Qual versão do seu navegador ou dispositivo você está usando?
-      placeholder: ex: Chrome 120.0, Safari 17.1, iOS 16.0
+      placeholder: "ex: Chrome 120.0, Safari 17.1, iOS 16.0"
 
   - type: textarea
     id: screenshots

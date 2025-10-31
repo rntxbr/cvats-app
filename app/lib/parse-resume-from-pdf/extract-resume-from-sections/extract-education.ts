@@ -40,6 +40,10 @@ const SCHOOLS = [
   "Escola",
   "Centro Universitário",
   "Centro Universitario",
+  "UFABC", "UFSC", "UFRJ", "USP", "UNICAMP", "UFMG", "UFRGS", "UFBA", "UFPE", "UFC",
+  "UFPR", "UFF", "UFES", "UFPA", "UFCE", "UFGO", "UFMS", "UFMT", "UFAM", "UFPB",
+  "UFPI", "UFAL", "UFS", "UFU", "UFV", "UFJF", "UFPEL", "UFSM", "UFRN", "UFMA",
+  "UNIFESP", "UNB", "PUC", "PUCRS", "PUCSP", "PUC-Rio", "PUC-RJ", "PUC-MG",
 ];
 const hasSchool = (item: TextItem) => SCHOOLS.some((school) => item.text.includes(school));
 // prettier-ignore
@@ -67,9 +71,45 @@ const DEGREES = [
   "Doutorado",
   "Pos-Graduacao",
   "Pós-Graduação",
+  "Engenharia",
+  "Medicina",
+  "Direito",
+  "Administracao",
+  "Administração",
+  "Contabilidade",
+  "Psicologia",
+  "Pedagogia",
+  "Letras",
+  "Historia",
+  "História",
+  "Geografia",
+  "Matematica",
+  "Matemática",
+  "Fisica",
+  "Física",
+  "Quimica",
+  "Química",
+  "Biologia",
+  "Computacao",
+  "Computação",
+  "Sistemas",
+  "Informatica",
+  "Informática",
+  "Analise",
+  "Análise",
+  "Ciência",
+  "Ciencia",
 ];
-const hasDegree = (item: TextItem) =>
-  DEGREES.some((degree) => item.text.includes(degree)) || /[ABM][A-Z.]/.test(item.text); // Match AA, B.S., MBA, etc.
+const hasDegree = (item: TextItem) => {
+  const text = item.text;
+  // Check if any degree keyword is in the text
+  if (DEGREES.some((degree) => text.includes(degree))) return true;
+  // Match abbreviations like AA, B.S., MBA, etc.
+  if (/[ABM][A-Z.]/.test(text)) return true;
+  // Match common Brazilian degree patterns like "Engenharia de X", "Ciência da X"
+  if (/^(Engenharia|Ciencia|Ciência|Analise|Análise|Sistemas|Administração|Administracao)\s+(da|de|do|dos|das)?\s*[\p{L}\s-]+$/iu.test(text)) return true;
+  return false;
+};
 const matchGPA = (item: TextItem) => item.text.match(/[0-9]{1,2}[.,]\d{1,2}/);
 const matchGrade = (item: TextItem) => {
   const normalized = item.text.replace(",", ".");
@@ -82,14 +122,14 @@ const matchGrade = (item: TextItem) => {
 
 const SCHOOL_FEATURE_SETS: FeatureSet[] = [
   [hasSchool, 4],
-  [hasDegree, -4],
-  [hasNumber, -4],
+  [hasDegree, -3], // Reduced penalty - some schools might have degree-like names
+  [hasNumber, -2], // Reduced penalty - years might appear near school name
 ];
 
 const DEGREE_FEATURE_SETS: FeatureSet[] = [
   [hasDegree, 4],
-  [hasSchool, -4],
-  [hasNumber, -3],
+  [hasSchool, -3], // Reduced penalty - degree might mention school
+  [hasNumber, -2], // Reduced penalty - years might appear near degree
 ];
 
 const GPA_FEATURE_SETS: FeatureSet[] = [
@@ -108,15 +148,30 @@ export const extractEducation = (sections: ResumeSectionToLines) => {
     "educação",
     "formacao",
     "formação",
+    "formacoes",
+    "formaçoes",
     "escolaridade",
     "acadêmico",
     "academico",
+    "academica",
+    "acadêmica",
+    "ensino",
+    "graduacao",
+    "graduação",
+    "curso",
+    "cursos",
+    "universidade",
+    "faculdade",
+    "instituicao",
+    "instituição",
   ]);
   const subsections = divideSectionIntoSubsections(lines);
   for (const subsectionLines of subsections) {
     const textItems = subsectionLines.flat();
-    const [school, schoolScores] = getTextWithHighestFeatureScore(textItems, SCHOOL_FEATURE_SETS);
-    const [degree, degreeScores] = getTextWithHighestFeatureScore(textItems, DEGREE_FEATURE_SETS);
+    // For school, don't require positive score - accept any match
+    const [school, schoolScores] = getTextWithHighestFeatureScore(textItems, SCHOOL_FEATURE_SETS, false);
+    // For degree, don't require positive score - accept any match
+    const [degree, degreeScores] = getTextWithHighestFeatureScore(textItems, DEGREE_FEATURE_SETS, false);
     const [gpa, gpaScores] = getTextWithHighestFeatureScore(textItems, GPA_FEATURE_SETS);
     const [date, dateScores] = getTextWithHighestFeatureScore(textItems, DATE_FEATURE_SETS);
 
