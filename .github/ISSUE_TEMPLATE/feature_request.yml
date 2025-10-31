@@ -1,5 +1,5 @@
-name: 🚀 Feature Request
-description: Suggest a new feature or enhancement for CVAts
+name: Solicitação de Funcionalidade
+description: Sugira uma nova funcionalidade ou melhoria para o cvats
 title: "[FEATURE]: "
 labels: ["enhancement", "needs-triage"]
 assignees: []
@@ -8,94 +8,94 @@ body:
   - type: markdown
     attributes:
       value: |
-        Thanks for suggesting a new feature! Please provide as much detail as possible to help us understand your request.
+        Obrigado por sugerir uma nova funcionalidade! Por favor, forneça o máximo de detalhes possível para nos ajudar a entender sua solicitação.
 
   - type: textarea
     id: feature-description
     attributes:
-      label: 🚀 Feature Description
-      description: A clear and concise description of the feature you'd like to see added.
-      placeholder: What feature would you like to add?
+      label: Descrição da Funcionalidade
+      description: Uma descrição clara e concisa da funcionalidade que você gostaria de ver adicionada.
+      placeholder: Que funcionalidade você gostaria de adicionar?
     validations:
       required: true
 
   - type: textarea
     id: problem-statement
     attributes:
-      label: 🤔 Problem Statement
-      description: What problem does this feature solve? Is your feature request related to a problem?
-      placeholder: Describe the problem you're trying to solve...
+      label: Declaração do Problema
+      description: Que problema esta funcionalidade resolve? Sua solicitação de funcionalidade está relacionada a um problema?
+      placeholder: Descreva o problema que você está tentando resolver...
     validations:
       required: true
 
   - type: textarea
     id: proposed-solution
     attributes:
-      label: 💡 Proposed Solution
-      description: Describe the solution you'd like to see implemented.
+      label: Solução Proposta
+      description: Descreva a solução que você gostaria de ver implementada.
     validations:
       required: true
 
   - type: textarea
     id: alternatives
     attributes:
-      label: 🔄 Alternative Solutions
-      description: Describe any alternative solutions or features you've considered.
+      label: Soluções Alternativas
+      description: Descreva quaisquer soluções ou funcionalidades alternativas que você considerou.
 
   - type: dropdown
     id: feature-category
     attributes:
-      label: 📂 Feature Category
-      description: Which area of CVAts would this feature affect?
+      label: Categoria da Funcionalidade
+      description: Qual área do cvats esta funcionalidade afetaria?
       options:
-        - Resume Builder
-        - Resume Import/PDF Parser
-        - Resume Parser/Analyzer
+        - Construtor de Currículo
+        - Importação de Currículo/Parser PDF
+        - Analisador de Currículo
         - UI/UX
         - Performance
-        - Accessibility
-        - Documentation
-        - Other (please specify)
+        - Acessibilidade
+        - Documentação
+        - Outro (por favor, especifique)
     validations:
       required: true
 
   - type: dropdown
     id: priority
     attributes:
-      label: ⭐ Priority
-      description: How important is this feature to you?
+      label: Prioridade
+      description: Quão importante é esta funcionalidade para você?
       options:
-        - Low - Nice to have
-        - Medium - Would improve my experience
-        - High - Significantly impacts my workflow
-        - Critical - This is blocking me from using CVAts effectively
+        - Baixa - Seria bom ter
+        - Média - Melhoraria minha experiência
+        - Alta - Impacta significativamente meu fluxo de trabalho
+        - Crítica - Isso está me impedindo de usar o cvats efetivamente
 
   - type: textarea
     id: use-cases
     attributes:
-      label: 🎯 Use Cases
-      description: Describe specific scenarios where this feature would be useful.
+      label: Casos de Uso
+      description: Descreva cenários específicos onde esta funcionalidade seria útil.
       placeholder: |
-        1. When I need to...
-        2. In cases where...
-        3. For users who...
+        1. Quando eu preciso...
+        2. Nos casos em que...
+        3. Para usuários que...
 
   - type: textarea
     id: mockups
     attributes:
-      label: 🎨 Mockups/Examples
-      description: If you have any mockups, sketches, or examples from other tools, please share them here.
-      placeholder: Drag and drop or paste any mockups, sketches, or reference images...
+      label: Mockups/Exemplos
+      description: Se você tiver mockups, esboços ou exemplos de outras ferramentas, por favor compartilhe aqui.
+      placeholder: Arraste e solte ou cole qualquer mockup, esboço ou imagem de referência...
 
   - type: checkboxes
     id: terms
     attributes:
-      label: 📋 Checklist
-      description: Please confirm the following
+      label: Lista de Verificação
+      description: Por favor, confirme o seguinte
       options:
-        - label: I have searched existing issues to ensure this is not a duplicate
+        - label: Busquei em issues existentes para garantir que não é uma duplicata
           required: true
-        - label: This feature is within the scope of CVAts (ATS-optimized resume builder)
+        - label: Esta funcionalidade está dentro do escopo do cvats (construtor de currículos otimizado para ATS)
           required: true
-        - label: I am willing to help implement this feature if needed
+        - label: Estou disposto a ajudar a implementar esta funcionalidade se necessário
           required: false

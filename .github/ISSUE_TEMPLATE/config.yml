@@ -1,11 +1,11 @@
 blank_issues_enabled: false
 contact_links:
-  - name: 💬 GitHub Discussions
+  - name: Discussões no GitHub
     url: https://github.com/rntxbr/cvats-app/discussions
-    about: Please ask and answer questions here
-  - name: 📖 Documentation
+    about: Por favor, faça e responda perguntas aqui
+  - name: Documentação
     url: https://github.com/rntxbr/cvats-app#readme
-    about: Check out our documentation for common questions
-  - name: 🔒 Security Issue
+    about: Confira nossa documentação para perguntas comuns
+  - name: Problema de Segurança
     url: mailto:renatokhael@gmail.com
-    about: Please report security issues privately via email
+    about: Por favor, relate problemas de segurança privadamente via email

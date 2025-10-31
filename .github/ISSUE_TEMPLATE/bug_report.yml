@@ -1,5 +1,5 @@
-name: 🐛 Bug Report
-description: File a bug report to help us improve CVAts
+name: Relatório de Bug
+description: Relate um bug para nos ajudar a melhorar o cvats
 title: "[BUG]: "
 labels: ["bug", "needs-triage"]
 assignees: []
@@ -8,112 +8,112 @@ body:
   - type: markdown
     attributes:
       value: |
-        Thanks for taking the time to fill out this bug report! Please provide as much detail as possible to help us reproduce and fix the issue.
+        Obrigado por preencher este relatório de bug! Por favor, forneça o máximo de detalhes possível para nos ajudar a reproduzir e corrigir o problema.
 
   - type: textarea
     id: bug-description
     attributes:
-      label: 🐛 Bug Description
-      description: A clear and concise description of what the bug is.
-      placeholder: Tell us what went wrong...
+      label: Descrição do Bug
+      description: Uma descrição clara e concisa do que é o bug.
+      placeholder: Diga-nos o que deu errado...
     validations:
       required: true
 
   - type: textarea
     id: steps-to-reproduce
     attributes:
-      label: 🔄 Steps to Reproduce
-      description: Steps to reproduce the behavior
+      label: Passos para Reproduzir
+      description: Passos para reproduzir o comportamento
       placeholder: |
-        1. Go to '...'
-        2. Click on '....'
-        3. Scroll down to '....'
-        4. See error
+        1. Vá para '...'
+        2. Clique em '....'
+        3. Role até '....'
+        4. Veja o erro
     validations:
       required: true
 
   - type: textarea
     id: expected-behavior
     attributes:
-      label: ✅ Expected Behavior
-      description: A clear and concise description of what you expected to happen.
+      label: Comportamento Esperado
+      description: Uma descrição clara e concisa do que você esperava que acontecesse.
     validations:
       required: true
 
   - type: textarea
     id: actual-behavior
     attributes:
-      label: ❌ Actual Behavior
-      description: A clear and concise description of what actually happened.
+      label: Comportamento Atual
+      description: Uma descrição clara e concisa do que realmente aconteceu.
     validations:
       required: true
 
   - type: dropdown
     id: browser
     attributes:
-      label: 🌐 Browser
-      description: Which browser are you using?
+      label: Navegador
+      description: Qual navegador você está usando?
       options:
         - Chrome
         - Firefox
         - Safari
         - Edge
-        - Other (please specify in additional context)
+        - Outro (por favor, especifique no contexto adicional)
     validations:
       required: true
 
   - type: dropdown
     id: os
     attributes:
-      label: 💻 Operating System
-      description: Which operating system are you using?
+      label: Sistema Operacional
+      description: Qual sistema operacional você está usando?
       options:
         - Windows
         - macOS
         - Linux
         - iOS
         - Android
-        - Other
+        - Outro
     validations:
       required: true
 
   - type: input
     id: version
     attributes:
-      label: 📱 Device/Browser Version
-      description: What version of your browser or device are you using?
-      placeholder: e.g., Chrome 120.0, Safari 17.1, iOS 16.0
+      label: Versão do Navegador/Dispositivo
+      description: Qual versão do seu navegador ou dispositivo você está usando?
+      placeholder: ex: Chrome 120.0, Safari 17.1, iOS 16.0
 
   - type: textarea
     id: screenshots
     attributes:
-      label: 📸 Screenshots/Videos
-      description: If applicable, add screenshots or screen recordings to help explain your problem.
-      placeholder: Drag and drop or paste your images here...
+      label: Capturas de Tela/Vídeos
+      description: Se aplicável, adicione capturas de tela ou gravações de tela para ajudar a explicar seu problema.
+      placeholder: Arraste e solte ou cole suas imagens aqui...
 
   - type: textarea
     id: console-logs
     attributes:
-      label: 📋 Console Logs (if applicable)
-      description: If there are any console errors, please paste them here.
+      label: Logs do Console (se aplicável)
+      description: Se houver erros no console, por favor cole-os aqui.
       render: shell
-      placeholder: Paste any relevant console output here...
+      placeholder: Cole qualquer saída relevante do console aqui...
 
   - type: textarea
     id: additional-context
     attributes:
-      label: 📝 Additional Context
-      description: Add any other context about the problem here.
+      label: Contexto Adicional
+      description: Adicione qualquer outro contexto sobre o problema aqui.
 
   - type: checkboxes
     id: terms
     attributes:
-      label: 📋 Checklist
-      description: Please confirm the following
+      label: Lista de Verificação
+      description: Por favor, confirme o seguinte
       options:
-        - label: I have searched existing issues to ensure this is not a duplicate
+        - label: Busquei em issues existentes para garantir que não é uma duplicata
           required: true
-        - label: I have read the contributing guidelines
+        - label: Li as diretrizes de contribuição
           required: true
-        - label: I am providing the bug report in good faith and with the best of my knowledge
+        - label: Estou fornecendo o relatório de bug de boa fé e com o melhor do meu conhecimento
           required: true

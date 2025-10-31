@@ -1,78 +1,78 @@
-## Description
+## Descrição
 
-<!-- Provide a clear and concise description of what this PR does. -->
+<!-- Forneça uma descrição clara e concisa do que este PR faz. -->
 
-## Type of Change
+## Tipo de Mudança
 
-<!-- Mark the relevant option with an "x" -->
+<!-- Marque a opção relevante com um "x" -->
 
-- [ ] 🐛 Bug fix (non-breaking change which fixes an issue)
-- [ ] ✨ New feature (non-breaking change which adds functionality)
-- [ ] 💥 Breaking change (fix or feature that would cause existing functionality to not work as expected)
-- [ ] 📝 Documentation update
-- [ ] 🔧 Refactoring (no functional changes)
-- [ ] ⚡ Performance improvement
-- [ ] 🧪 Tests (adding or updating tests)
-- [ ] 🔒 Security fix
+- [ ] Correção de bug (mudança que não quebra funcionalidades e corrige um problema)
+- [ ] Nova funcionalidade (mudança que não quebra funcionalidades e adiciona funcionalidade)
+- [ ] Mudança que quebra compatibilidade (correção ou funcionalidade que faria com que a funcionalidade existente não funcione como esperado)
+- [ ] Atualização de documentação
+- [ ] Refatoração (sem mudanças funcionais)
+- [ ] Melhoria de performance
+- [ ] Testes (adicionar ou atualizar testes)
+- [ ] Correção de segurança
 
-## Related Issue
+## Issue Relacionada
 
-<!-- Link to the issue this PR addresses -->
+<!-- Link para a issue que este PR resolve -->
 
-Closes #(issue number)
+Fecha #(número da issue)
 
-## Changes Made
+## Mudanças Realizadas
 
-<!-- Describe the changes you made in detail -->
+<!-- Descreva em detalhes as mudanças que você fez -->
 
-## Screenshots/Videos
+## Capturas de Tela/Vídeos
 
-<!-- If applicable, add screenshots or videos to show the changes -->
+<!-- Se aplicável, adicione capturas de tela ou vídeos para mostrar as mudanças -->
 
-**Before:**
+**Antes:**
 
-<!-- Add screenshots of the current state -->
+<!-- Adicione capturas de tela do estado atual -->
 
-**After:**
+**Depois:**
 
-<!-- Add screenshots of the new state -->
+<!-- Adicione capturas de tela do novo estado -->
 
-## Testing
+## Testes
 
-<!-- Describe the tests you ran to verify your changes -->
+<!-- Descreva os testes que você executou para verificar suas mudanças -->
 
-- [ ] I have tested this change locally
-- [ ] I have added tests that prove my fix is effective or that my feature works
-- [ ] New and existing unit tests pass locally with my changes
-- [ ] I have tested this change in different browsers (if UI changes)
-- [ ] I have tested responsive behavior (if UI changes)
+- [ ] Testei esta mudança localmente
+- [ ] Adicionei testes que provam que minha correção é eficaz ou que minha funcionalidade funciona
+- [ ] Testes unitários novos e existentes passam localmente com minhas mudanças
+- [ ] Testei esta mudança em diferentes navegadores (se houver mudanças na UI)
+- [ ] Testei o comportamento responsivo (se houver mudanças na UI)
 
-## Browser Testing
+## Testes de Navegador
 
-<!-- Mark browsers you've tested on -->
+<!-- Marque os navegadores nos quais você testou -->
 
 - [ ] Chrome
 - [ ] Firefox
 - [ ] Safari
 - [ ] Edge
 
-## Checklist
+## Lista de Verificação
 
-<!-- Mark items as completed with "x" -->
+<!-- Marque os itens como concluídos com "x" -->
 
-- [ ] My code follows the project's style guidelines
-- [ ] I have performed a self-review of my code
-- [ ] I have commented my code, particularly in hard-to-understand areas
-- [ ] I have made corresponding changes to the documentation
-- [ ] My changes generate no new warnings or errors
-- [ ] I have added tests that prove my fix is effective or that my feature works
-- [ ] New and existing unit tests pass locally with my changes
-- [ ] Any dependent changes have been merged and published
+- [ ] Meu código segue as diretrizes de estilo do projeto
+- [ ] Realizei uma auto-revisão do meu código
+- [ ] Comentei meu código, especialmente em áreas difíceis de entender
+- [ ] Fiz as mudanças correspondentes na documentação
+- [ ] Minhas mudanças não geram novos avisos ou erros
+- [ ] Adicionei testes que provam que minha correção é eficaz ou que minha funcionalidade funciona
+- [ ] Testes unitários novos e existentes passam localmente com minhas mudanças
+- [ ] Quaisquer mudanças dependentes foram mescladas e publicadas
 
-## Additional Notes
+## Notas Adicionais
 
-<!-- Add any additional notes for reviewers -->
+<!-- Adicione quaisquer notas adicionais para revisores -->
 
-## For Reviewers
+## Para Revisores
 
-<!-- Any specific guidance for reviewers? -->
+<!-- Alguma orientação específica para revisores? -->

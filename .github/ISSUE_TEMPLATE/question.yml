@@ -1,5 +1,5 @@
-name: ❓ Question
-description: Ask a question about CVAts
+name: Pergunta
+description: Faça uma pergunta sobre o cvats
 title: "[QUESTION]: "
 labels: ["question", "help-wanted"]
 assignees: []
@@ -8,60 +8,60 @@ body:
   - type: markdown
     attributes:
       value: |
-        Have a question about CVAts? We're here to help! Please provide as much context as possible.
+        Tem uma pergunta sobre o cvats? Estamos aqui para ajudar! Por favor, forneça o máximo de contexto possível.
 
   - type: textarea
     id: question
     attributes:
-      label: ❓ Your Question
-      description: What would you like to know about CVAts?
-      placeholder: Ask your question here...
+      label: Sua Pergunta
+      description: O que você gostaria de saber sobre o cvats?
+      placeholder: Faça sua pergunta aqui...
     validations:
       required: true
 
   - type: dropdown
     id: question-type
     attributes:
-      label: 🔍 Question Type
-      description: What type of question are you asking?
+      label: Tipo de Pergunta
+      description: Que tipo de pergunta você está fazendo?
       options:
-        - How to use a feature
-        - Troubleshooting
-        - Best practices
-        - Technical implementation
-        - Contribution related
-        - General inquiry
-        - Other
+        - Como usar uma funcionalidade
+        - Solução de problemas
+        - Melhores práticas
+        - Implementação técnica
+        - Relacionado a contribuição
+        - Consulta geral
+        - Outro
     validations:
       required: true
 
   - type: textarea
     id: context
     attributes:
-      label: 📝 Context
-      description: Provide any relevant context about your question
+      label: Contexto
+      description: Forneça qualquer contexto relevante sobre sua pergunta
       placeholder: |
-        - What are you trying to achieve?
-        - What have you tried so far?
-        - Any relevant background information...
+        - O que você está tentando alcançar?
+        - O que você já tentou até agora?
+        - Qualquer informação relevante de fundo...
 
   - type: textarea
     id: browser-info
     attributes:
-      label: 🌐 Browser & System Info
-      description: If your question is related to a specific issue, please include your browser and system information.
+      label: Informações do Navegador e Sistema
+      description: Se sua pergunta estiver relacionada a um problema específico, por favor inclua informações sobre seu navegador e sistema.
       placeholder: |
-        Browser: Chrome/Firefox/Safari/etc.
-        Version: (if known)
-        OS: Windows/macOS/Linux/etc.
+        Navegador: Chrome/Firefox/Safari/etc.
+        Versão: (se conhecida)
+        SO: Windows/macOS/Linux/etc.
 
   - type: checkboxes
     id: terms
     attributes:
-      label: 📋 Checklist
-      description: Please confirm the following
+      label: Lista de Verificação
+      description: Por favor, confirme o seguinte
       options:
-        - label: I have searched existing issues and documentation
+        - label: Busquei em issues e documentação existentes
           required: true
-        - label: I have read the contributing guidelines (if contributing)
+        - label: Li as diretrizes de contribuição (se contribuindo)
           required: false
