@@ -54,16 +54,20 @@ pnpm build   # build de produção
 pnpm start   # inicia servidor de produção após o build
 pnpm lint    # checa lint
 ```
+## 💪 Contribuidores
 
-## Contribuidores
+Obrigado a todos que contribuíram 💖
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore-start -->
 <!-- markdownlint-disable -->
-
+<table>
+  <tr>
+    <td align="center"><a href="https://github.com/renato"><img src="https://avatars.githubusercontent.com/u/123456?v=4" width="100px;" alt=""/><br /><sub><b>Renato</b></sub></a></td>
+  </tr>
+</table>
 <!-- markdownlint-restore -->
 <!-- prettier-ignore-end -->
-
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 ## Licença
