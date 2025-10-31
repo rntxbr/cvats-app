@@ -31,6 +31,8 @@ export const FooterBar = () => {
                         key=""
                         className="text-green-200 hover:text-[#6aac9c] ml-2 py-2 rounded-xl min-w-[120px] sm:min-w-[150px] text-center font-bold tracking-tighter text-sm "
                         href="https://github.com/rntxbr/cvats-app"
+                        target="_blank"
+                        rel="noopener noreferrer"
                     >
                         Contribua aqui
                     </Link>
