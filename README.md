@@ -55,6 +55,17 @@ pnpm start   # inicia servidor de produção após o build
 pnpm lint    # checa lint
 ```
 
+## Contribuidores
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
+
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
 ## Licença
 
 AGPL-3.0 — veja `LICENSE`.
