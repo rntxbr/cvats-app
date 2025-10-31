@@ -18,8 +18,8 @@ export default function ClientPage() {
   }, []);
 
   return (
-    <main className="min-h-screen flex flex-col justify-center items-center">
-      <div className="mx-auto container px-10 py-10 text-center bg-white rounded-3xl ">
+    <main className="min-h-screen flex flex-col justify-center items-center py-16 mt-10">
+      <div className="mx-auto container  text-center rounded-3xl p-6 ">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
           {!hasUsedAppBefore ? (
             <>
