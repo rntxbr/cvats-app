@@ -77,7 +77,7 @@ export const LottieWorkflow = () => {
           autoplay
           loop
           mode="normal"
-          style={{ width: "100%", maxWidth: 560, height: "auto", zIndex: 10 }}
+          style={{ width: "100%", maxWidth: 450, height: "auto", zIndex: 10 }}
         />
       </div>
     </div>
