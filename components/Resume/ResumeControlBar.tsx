@@ -26,7 +26,7 @@ const ResumeControlBar = ({
         </div>
       ) : instance.url ? (
         <Link
-          className="w-full flex justify-center items-center cursor-pointer bg-[#28584c] text-white px-6 py-4 rounded-xl font-bold gap-2  "
+          className="w-full flex justify-center items-center cursor-pointer bg-[#28584c] text-white px-6 py-4 rounded-xl font-bold gap-2 transition-all duration-200 ease-out hover:-translate-y-0.5 hover:shadow-lg hover:bg-[#1f473d] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#28584c]  "
           href={instance.url}
           download={fileName}
         >

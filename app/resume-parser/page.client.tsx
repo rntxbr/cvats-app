@@ -90,11 +90,11 @@ export default function ClientPage() {
   }, [fileUrl]);
 
   return (
-    <main className=" w-full py-32">
+    <main className=" w-full py-16 mt-10">
       <div className="container mx-auto grid md:grid-cols-2 gap-4">
         <section className="w-full">
           <div className="aspect-h-[9.5] aspect-w-7">
-            {fileUrl && <iframe src={`${fileUrl}#navpanes=0`} className="h-screen w-full" />}
+            {fileUrl && <iframe src={`${fileUrl}#navpanes=0`} className="h-screen w-full p-6 rounded-3xl" />}
             {!fileUrl && (
               <div className="flex h-full w-full items-center justify-center border-2 border-dashed border-gray-300">
                 <p className="text-gray-500">Nenhum PDF selecionado</p>
@@ -102,7 +102,7 @@ export default function ClientPage() {
             )}
           </div>
         </section>
-        <div className="flex px-6 text-gray-900 flex-1">
+        <div className="flex p-6 text-gray-900 flex-1">
           <section className="w-full grow">
             <div className="mt-3">
               <ResumeDropzone

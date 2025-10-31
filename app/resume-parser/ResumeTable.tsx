@@ -20,23 +20,31 @@ const TableRow = ({
   label: string;
   value: string | string[];
   className?: string | false;
-}) => (
-  <tr className={cx("divide-x", className)}>
-    <th className="px-3 py-2 font-medium" scope="row">
-      {label}
-    </th>
-    <td className="w-full px-3 py-2">
-      {typeof value === "string"
-        ? value
-        : value.map((x, idx) => (
-            <Fragment key={idx}>
-              • {x}
-              <br />
-            </Fragment>
-          ))}
-    </td>
-  </tr>
-);
+}) => {
+  const normalizedValue = typeof value === "string" 
+    ? value 
+    : Array.isArray(value) 
+    ? value 
+    : "";
+  
+  return (
+    <tr className={cx("divide-x", className)}>
+      <th className="px-3 py-2 font-medium" scope="row">
+        {label}
+      </th>
+      <td className="w-full px-3 py-2">
+        {typeof normalizedValue === "string"
+          ? normalizedValue
+          : normalizedValue.map((x, idx) => (
+              <Fragment key={idx}>
+                • {x}
+                <br />
+              </Fragment>
+            ))}
+      </td>
+    </tr>
+  );
+};
 
 export const ResumeTable = ({ resume }: { resume: Resume }) => {
   const educations =
@@ -61,13 +69,13 @@ export const ResumeTable = ({ resume }: { resume: Resume }) => {
       <tbody className="divide-y text-left align-top">
         <TableRowHeader>Dados Pessoais</TableRowHeader>
         <TableRow label="Nome" value={resume.profile.name} />
-     
+        <TableRow label="Cargo" value={resume.profile.role || ""} />
         <TableRow label="E-mail" value={resume.profile.email} />
         <TableRow label="Telefone" value={resume.profile.phone} />
         <TableRow label="Localidade" value={resume.profile.location} />
         <TableRow label="Linkedin" value={resume.profile.url} />
         <TableRow label="Resumo" value={resume.profile.summary} />
-        <TableRowHeader>Education</TableRowHeader>
+        <TableRowHeader>Formaçao Academica</TableRowHeader>
         {educations.map((education, idx) => (
           <Fragment key={idx}>
             <TableRow label="Faculdade" value={education.school} />

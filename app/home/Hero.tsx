@@ -6,7 +6,7 @@ import { FaArrowRight } from "react-icons/fa";
 
 export const Hero = () => {
   return (
-    <section className="grid grid-cols-1 lg:grid-cols-2 items-center gap-4 mt-16 min-h-[70vh]">
+    <section className="grid grid-cols-1 lg:grid-cols-2 items-center gap-4 mt-16 min-h-[70vh] py-10">
       
       <div className="w-full flex flex-col items-center lg:items-start justify-center text-center lg:text-left mt-10">
         <span className="text-xs sm:text-sm bg-[#28584c36] text-[#28584c] px-6 sm:px-8 py-1.5 sm:py-2 rounded-full font-bold inline-block ">Seu futuro profissional começa aqui.</span>
@@ -17,7 +17,7 @@ export const Hero = () => {
         <p className="mt-3 text-base sm:text-lg lg:mt-5 lg:text-xl max-w-xl tracking-tight">
         Gere currículos 100% compatíveis com ATS. <br />  De graça e em poucos minutos.  
         </p>
-        <div className="flex items-center gap-2">
+        <div className="flex-col items-center lg:flex-row lg:space-x-2">
         <Link href="/resume-import" className="inline-flex justify-center items-center gap-2 bg-[#28584c] text-white px-8 sm:px-10 py-4 rounded-xl font-bold mt-6 w-full sm:w-auto transition-all duration-200 ease-out hover:-translate-y-0.5 hover:shadow-lg hover:bg-[#1f473d] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#28584c]">
           Criar currículo <ArrowRightIcon className="h-4 w-4" />
         </Link>

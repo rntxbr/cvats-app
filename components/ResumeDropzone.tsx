@@ -146,7 +146,7 @@ export const ResumeDropzone = ({
           {!hasFile ? (
             <>
               <label
-                className="cursor-pointer bg-[#28584c] text-white px-10 py-4 rounded-xl font-bold flex items-center gap-4"
+                className="cursor-pointer bg-[#28584c] text-white px-10 py-4 rounded-xl font-bold flex items-center gap-4 transition-all duration-200 ease-out hover:-translate-y-0.5 hover:shadow-lg hover:bg-[#1f473d] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#28584c]"
                 
               >
                 <ArrowUpTrayIcon className="h-5 w-5" />
