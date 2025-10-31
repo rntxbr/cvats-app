@@ -10,10 +10,10 @@ export default function ClientPage() {
     <Provider store={store}>
       <main className="bg-[#f1eee1] min-h-screen w-full flex justify-center items-center  overflow-hidden py-16 mt-10 ">
         <div className="container mx-auto grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <div className="w-full p-6 lg:p-0">
+          <div className="w-full p-6">
             <ResumeForm />
           </div>
-          <div className="w-full p-6 lg:p-0">
+          <div className="w-full p-6">
             <Resume />
           </div>
         </div>
