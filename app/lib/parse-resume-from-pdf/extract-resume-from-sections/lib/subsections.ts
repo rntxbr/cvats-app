@@ -1,6 +1,6 @@
 import { BULLET_POINTS } from "@/app/lib/parse-resume-from-pdf/extract-resume-from-sections/lib/bullet-points";
 import { isBold } from "@/app/lib/parse-resume-from-pdf/extract-resume-from-sections/lib/common-features";
-import type { Lines, Line, Subsections } from "@/app/lib/parse-resume-from-pdf/types";
+import type { Line, Lines, Subsections } from "@/app/lib/parse-resume-from-pdf/types";
 
 /**
  * Divide lines into subsections based on difference in line gap or bold text.
@@ -14,8 +14,7 @@ import type { Lines, Line, Subsections } from "@/app/lib/parse-resume-from-pdf/t
 export const divideSectionIntoSubsections = (lines: Lines): Subsections => {
   // The main heuristic to determine a subsection is to check if its vertical line gap
   // is larger than the typical line gap * 1.4
-  const isLineNewSubsectionByLineGap =
-    createIsLineNewSubsectionByLineGap(lines);
+  const isLineNewSubsectionByLineGap = createIsLineNewSubsectionByLineGap(lines);
 
   let subsections = createSubsections(lines, isLineNewSubsectionByLineGap);
 
@@ -41,9 +40,7 @@ export const divideSectionIntoSubsections = (lines: Lines): Subsections => {
 
 type IsLineNewSubsection = (line: Line, prevLine: Line) => boolean;
 
-const createIsLineNewSubsectionByLineGap = (
-  lines: Lines
-): IsLineNewSubsection => {
+const createIsLineNewSubsectionByLineGap = (lines: Lines): IsLineNewSubsection => {
   // Extract the common typical line gap
   const lineGapToCount: { [lineGap: number]: number } = {};
   const linesY = lines.map((line) => line[0].y);
@@ -68,10 +65,7 @@ const createIsLineNewSubsectionByLineGap = (
   return isLineNewSubsection;
 };
 
-const createSubsections = (
-  lines: Lines,
-  isLineNewSubsection: IsLineNewSubsection
-): Subsections => {
+const createSubsections = (lines: Lines, isLineNewSubsection: IsLineNewSubsection): Subsections => {
   const subsections: Subsections = [];
   let subsection: Lines = [];
   for (let i = 0; i < lines.length; i++) {

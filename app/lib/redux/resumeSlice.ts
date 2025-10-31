@@ -1,4 +1,5 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
+import type { ShowForm } from "@/app/lib/redux/settingsSlice";
 import type { RootState } from "@/app/lib/redux/store";
 import type {
   FeaturedSkill,
@@ -9,7 +10,6 @@ import type {
   ResumeSkills,
   ResumeWorkExperience,
 } from "@/app/lib/redux/types";
-import type { ShowForm } from "@/app/lib/redux/settingsSlice";
 
 export const initialProfile: ResumeProfile = {
   name: "",
@@ -88,9 +88,7 @@ export const resumeSlice = createSlice({
     },
     changeWorkExperiences: (
       draft,
-      action: PayloadAction<
-        CreateChangeActionWithDescriptions<ResumeWorkExperience>
-      >
+      action: PayloadAction<CreateChangeActionWithDescriptions<ResumeWorkExperience>>
     ) => {
       const { idx, field, value } = action.payload;
       const workExperience = draft.workExperiences[idx];
@@ -135,10 +133,7 @@ export const resumeSlice = createSlice({
         featuredSkill.rating = rating;
       }
     },
-    changeCustom: (
-      draft,
-      action: PayloadAction<{ field: "descriptions"; value: string[] }>
-    ) => {
+    changeCustom: (draft, action: PayloadAction<{ field: "descriptions"; value: string[] }>) => {
       const { value } = action.payload;
       draft.custom.descriptions = value;
     },
@@ -186,16 +181,13 @@ export const resumeSlice = createSlice({
         }
       }
     },
-    deleteSectionInFormByIdx: (
-      draft,
-      action: PayloadAction<{ form: ShowForm; idx: number }>
-    ) => {
+    deleteSectionInFormByIdx: (draft, action: PayloadAction<{ form: ShowForm; idx: number }>) => {
       const { form, idx } = action.payload;
       if (form !== "skills" && form !== "custom") {
         draft[form].splice(idx, 1);
       }
     },
-    setResume: (draft, action: PayloadAction<Resume>) => {
+    setResume: (_draft, action: PayloadAction<Resume>) => {
       return action.payload;
     },
   },
@@ -216,8 +208,7 @@ export const {
 
 export const selectResume = (state: RootState) => state.resume;
 export const selectProfile = (state: RootState) => state.resume.profile;
-export const selectWorkExperiences = (state: RootState) =>
-  state.resume.workExperiences;
+export const selectWorkExperiences = (state: RootState) => state.resume.workExperiences;
 export const selectEducations = (state: RootState) => state.resume.educations;
 export const selectProjects = (state: RootState) => state.resume.projects;
 export const selectSkills = (state: RootState) => state.resume.skills;

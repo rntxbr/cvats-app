@@ -73,31 +73,19 @@ export const settingsSlice = createSlice({
   name: "settings",
   initialState: initialSettings,
   reducers: {
-    changeSettings: (
-      draft,
-      action: PayloadAction<{ field: GeneralSetting; value: string }>
-    ) => {
+    changeSettings: (draft, action: PayloadAction<{ field: GeneralSetting; value: string }>) => {
       const { field, value } = action.payload;
       draft[field] = value;
     },
-    changeShowForm: (
-      draft,
-      action: PayloadAction<{ field: ShowForm; value: boolean }>
-    ) => {
+    changeShowForm: (draft, action: PayloadAction<{ field: ShowForm; value: boolean }>) => {
       const { field, value } = action.payload;
       draft.formToShow[field] = value;
     },
-    changeFormHeading: (
-      draft,
-      action: PayloadAction<{ field: ShowForm; value: string }>
-    ) => {
+    changeFormHeading: (draft, action: PayloadAction<{ field: ShowForm; value: string }>) => {
       const { field, value } = action.payload;
       draft.formToHeading[field] = value;
     },
-    changeFormOrder: (
-      draft,
-      action: PayloadAction<{ form: ShowForm; type: "up" | "down" }>
-    ) => {
+    changeFormOrder: (draft, action: PayloadAction<{ form: ShowForm; type: "up" | "down" }>) => {
       const { form, type } = action.payload;
       const lastIdx = draft.formsOrder.length - 1;
       const pos = draft.formsOrder.indexOf(form);
@@ -119,9 +107,9 @@ export const settingsSlice = createSlice({
       }>
     ) => {
       const { field, value } = action.payload;
-      draft["showBulletPoints"][field] = value;
+      draft.showBulletPoints[field] = value;
     },
-    setSettings: (draft, action: PayloadAction<Settings>) => {
+    setSettings: (_draft, action: PayloadAction<Settings>) => {
       return action.payload;
     },
   },
@@ -143,8 +131,7 @@ export const selectFormToShow = (state: RootState) => state.settings.formToShow;
 export const selectShowByForm = (form: ShowForm) => (state: RootState) =>
   state.settings.formToShow[form];
 
-export const selectFormToHeading = (state: RootState) =>
-  state.settings.formToHeading;
+export const selectFormToHeading = (state: RootState) => state.settings.formToHeading;
 export const selectHeadingByForm = (form: ShowForm) => (state: RootState) =>
   state.settings.formToHeading[form];
 
@@ -154,8 +141,7 @@ export const selectIsFirstForm = (form: ShowForm) => (state: RootState) =>
 export const selectIsLastForm = (form: ShowForm) => (state: RootState) =>
   state.settings.formsOrder[state.settings.formsOrder.length - 1] === form;
 
-export const selectShowBulletPoints =
-  (form: FormWithBulletPoints) => (state: RootState) =>
-    state.settings.showBulletPoints[form];
+export const selectShowBulletPoints = (form: FormWithBulletPoints) => (state: RootState) =>
+  state.settings.showBulletPoints[form];
 
 export default settingsSlice.reducer;

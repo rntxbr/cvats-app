@@ -1,7 +1,7 @@
-import { Text, View, Link } from "@react-pdf/renderer";
-import { styles, spacing } from "@/components/Resume/ResumePDF/styles";
+import { Link, Text, View } from "@react-pdf/renderer";
 import { DEBUG_RESUME_PDF_FLAG } from "@/app/lib/constants";
 import { DEFAULT_FONT_COLOR } from "@/app/lib/redux/settingsSlice";
+import { spacing, styles } from "@/components/Resume/ResumePDF/styles";
 
 export const ResumePDFSection = ({
   themeColor,
@@ -100,9 +100,7 @@ export const ResumePDFBulletList = ({
           )}
           {/* A breaking change was introduced causing text layout to be wider than node's width
               https://github.com/diegomura/react-pdf/issues/2182. flexGrow & flexBasis fixes it */}
-          <ResumePDFText
-            style={{ lineHeight: "1.3", flexGrow: 1, flexBasis: 0 }}
-          >
+          <ResumePDFText style={{ lineHeight: "1.3", flexGrow: 1, flexBasis: 0 }}>
             {item}
           </ResumePDFText>
         </View>
@@ -128,12 +126,7 @@ export const ResumePDFLink = ({
     );
   }
   return (
-    <a
-      href={src}
-      style={{ textDecoration: "none" }}
-      target="_blank"
-      rel="noreferrer"
-    >
+    <a href={src} style={{ textDecoration: "none" }} target="_blank" rel="noreferrer">
       {children}
     </a>
   );
@@ -154,9 +147,7 @@ export const ResumeFeaturedSkill = ({
 
   return (
     <View style={{ ...styles.flexRow, alignItems: "center", ...style }}>
-      <ResumePDFText style={{ marginRight: spacing[0.5] }}>
-        {skill}
-      </ResumePDFText>
+      <ResumePDFText style={{ marginRight: spacing[0.5] }}>{skill}</ResumePDFText>
       {[...Array(numCircles)].map((_, idx) => (
         <View
           key={idx}

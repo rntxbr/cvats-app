@@ -15,9 +15,7 @@ export const Steps = () => {
               <dt className="text-lg font-bold">
                 <div className="bg-primary absolute left-0 top-1 flex h-10 w-10 select-none items-center justify-center rounded-full p-[3.5px] opacity-80">
                   <div className="flex h-full w-full items-center justify-center rounded-full bg-white">
-                    <div className="text-primary -mt-0.5 text-2xl">
-                      {idx + 1}
-                    </div>
+                    <div className="text-primary -mt-0.5 text-2xl">{idx + 1}</div>
                   </div>
                 </div>
                 {title}

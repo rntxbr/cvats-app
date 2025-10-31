@@ -1,20 +1,18 @@
 "use client";
-import { useState } from "react";
 import {
   useAppSelector,
   useSaveStateToLocalStorageOnChange,
   useSetInitialStore,
 } from "@/app/lib/redux/hooks";
-import { ShowForm, selectFormsOrder } from "@/app/lib/redux/settingsSlice";
-import { ProfileForm } from "@/components/ResumeForm/ProfileForm";
-import { WorkExperiencesForm } from "@/components/ResumeForm/WorkExperiencesForm";
+import { type ShowForm, selectFormsOrder } from "@/app/lib/redux/settingsSlice";
+import { FlexboxSpacer } from "@/components/FlexboxSpacer";
+import { CustomForm } from "@/components/ResumeForm/CustomForm";
 import { EducationsForm } from "@/components/ResumeForm/EducationsForm";
+import { ProfileForm } from "@/components/ResumeForm/ProfileForm";
 import { ProjectsForm } from "@/components/ResumeForm/ProjectsForm";
 import { SkillsForm } from "@/components/ResumeForm/SkillsForm";
 import { ThemeForm } from "@/components/ResumeForm/ThemeForm";
-import { CustomForm } from "@/components/ResumeForm/CustomForm";
-import { FlexboxSpacer } from "@/components/FlexboxSpacer";
-import { cx } from "@/app/lib/cx";
+import { WorkExperiencesForm } from "@/components/ResumeForm/WorkExperiencesForm";
 
 const formTypeToComponent: { [type in ShowForm]: () => React.ReactElement } = {
   workExperiences: WorkExperiencesForm,
@@ -29,7 +27,6 @@ export const ResumeForm = () => {
   useSaveStateToLocalStorageOnChange();
 
   const formsOrder = useAppSelector(selectFormsOrder);
-
 
   return (
     <div>

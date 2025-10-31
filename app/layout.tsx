@@ -1,10 +1,8 @@
 import "./globals.css";
-import { TopNavBar } from "@/components/TopNavBar";
 import { Sora } from "next/font/google";
 import { FooterBar } from "@/components/FooterBar";
 import { GoogleAnalytics } from "@/components/GoogleAnalytics";
-
-
+import { TopNavBar } from "@/components/TopNavBar";
 
 const sora = Sora({
   subsets: ["latin"],
@@ -17,7 +15,6 @@ const siteName = "cvats";
 const siteTitle = "cvats - criador de currículos gratuito otimizado para ATS";
 const siteDescription =
   "CVAts é um criador de currículos gratuito, de código aberto e poderoso que permite criar um currículo profissional moderno em 3 passos simples. Otimizado para sistemas ATS (Applicant Tracking System) como Greenhouse, Lever e Workday. Teste a compatibilidade do seu currículo com o analisador ATS integrado.";
-
 
 export const metadata = {
   metadataBase: new URL(siteUrl),
@@ -90,7 +87,7 @@ export const metadata = {
     shortcut: "/favicon.ico",
     apple: "/apple-touch-icon.png",
   },
- 
+
   alternates: {
     canonical: siteUrl,
   },
@@ -99,20 +96,14 @@ export const metadata = {
   },
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="pt-br" className={sora.variable}>
+    <html lang="pt-BR" className={sora.variable}>
       <body className="bg-[#f1eee1]">
-      <GoogleAnalytics />
+        <GoogleAnalytics />
         <TopNavBar />
-        <main>
-        {children}
-        </main>
-     <FooterBar />     
+        <main>{children}</main>
+        <FooterBar />
       </body>
     </html>
   );

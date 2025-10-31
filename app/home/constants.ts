@@ -1,3 +1,4 @@
+import { deepClone } from "../lib/deep-clone";
 import {
   initialEducation,
   initialProfile,
@@ -5,14 +6,12 @@ import {
   initialWorkExperience,
 } from "../lib/redux/resumeSlice";
 import type { Resume } from "../lib/redux/types";
-import { deepClone } from "../lib/deep-clone";
 
 export const END_HOME_RESUME: Resume = {
   profile: {
     name: "João Silva",
     role: "Engenheiro de Software",
-    summary:
-      "Engenheiro de software focado em criar produtos excepcionais que as pessoas amam",
+    summary: "Engenheiro de software focado em criar produtos excepcionais que as pessoas amam",
     email: "joao.silva@example.com",
     phone: "+55 11 91234-5678",
     location: "São Paulo, SP",
@@ -92,9 +91,7 @@ export const END_HOME_RESUME: Resume = {
 
 export const START_HOME_RESUME: Resume = {
   profile: deepClone(initialProfile),
-  workExperiences: END_HOME_RESUME.workExperiences.map(() =>
-    deepClone(initialWorkExperience)
-  ),
+  workExperiences: END_HOME_RESUME.workExperiences.map(() => deepClone(initialWorkExperience)),
   educations: [deepClone(initialEducation)],
   projects: [deepClone(initialProject)],
   skills: {

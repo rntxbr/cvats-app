@@ -1,10 +1,11 @@
 // Getting pdfjs to work is tricky. The following 3 lines would make it work
 // https://stackoverflow.com/a/63486898/7699841
 import * as pdfjs from "pdfjs-dist";
-// @ts-ignore
+
+// @ts-expect-error
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
-  'pdfjs-dist/build/pdf.worker.min.mjs',
-  import.meta.url,
+  "pdfjs-dist/build/pdf.worker.min.mjs",
+  import.meta.url
 ).toString();
 
 import type { TextItem as PdfjsTextItem } from "pdfjs-dist/types/src/display/api";
@@ -40,7 +41,7 @@ export const readPdf = async (fileUrl: string): Promise<TextItems> => {
     const pageTextItems = textContent.items.map((item) => {
       const {
         str: text,
-        dir, // Remove text direction
+        // dir, // Remove text direction
         transform,
         fontName: pdfFontName,
         ...otherProps
@@ -83,8 +84,7 @@ export const readPdf = async (fileUrl: string): Promise<TextItems> => {
   }
 
   // Filter out empty space textItem noise
-  const isEmptySpace = (textItem: TextItem) =>
-    !textItem.hasEOL && textItem.text.trim() === "";
+  const isEmptySpace = (textItem: TextItem) => !textItem.hasEOL && textItem.text.trim() === "";
   textItems = textItems.filter((textItem) => !isEmptySpace(textItem));
 
   return textItems;

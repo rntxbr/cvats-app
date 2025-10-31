@@ -1,13 +1,13 @@
 "use client";
-import { useEffect, useState, useRef } from "react";
-import { ResumePDF } from "@/components/Resume/ResumePDF";
+import { useEffect, useRef, useState } from "react";
+import { END_HOME_RESUME, START_HOME_RESUME } from "@/app/home/constants";
+// Removed useTailwindBreakpoints to avoid layout shift from post-mount updates
+import { deepClone } from "@/app/lib/deep-clone";
+import { makeObjectCharIterator } from "@/app/lib/make-object-char-iterator";
 import { initialResumeState } from "@/app/lib/redux/resumeSlice";
 import { initialSettings } from "@/app/lib/redux/settingsSlice";
 import { ResumeIframeCSR } from "@/components/Resume/ResumeIFrame";
-import { START_HOME_RESUME, END_HOME_RESUME } from "@/app/home/constants";
-import { makeObjectCharIterator } from "@/app/lib/make-object-char-iterator";
-// Removed useTailwindBreakpoints to avoid layout shift from post-mount updates
-import { deepClone } from "@/app/lib/deep-clone";
+import { ResumePDF } from "@/components/Resume/ResumePDF";
 
 // countObjectChar(END_HOME_RESUME) -> ~1800 chars
 const INTERVAL_MS = 50; // 20 Intervals Per Second
@@ -19,22 +19,21 @@ const CHARS_PER_INTERVAL = 10;
 
 const RESET_INTERVAL_MS = 60 * 1000; // 60s
 
+const computeScaleFromWindow = () => {
+  if (typeof window === "undefined") return 0.5;
+  const w = window.innerWidth;
+  if (w >= 1536) return 0.9; // 2xl
+  if (w >= 1280) return 0.8; // xl
+  if (w >= 1024) return 0.7; // lg
+  if (w >= 768) return 0.6; // md
+  if (w >= 640) return 0.55; // sm
+  return 0.5;
+};
+
 export const AutoTypingResume = () => {
   const [resume, setResume] = useState(deepClone(initialResumeState));
-  const resumeCharIterator = useRef(
-    makeObjectCharIterator(START_HOME_RESUME, END_HOME_RESUME)
-  );
+  const resumeCharIterator = useRef(makeObjectCharIterator(START_HOME_RESUME, END_HOME_RESUME));
   const hasSetEndResume = useRef(false);
-  const computeScaleFromWindow = () => {
-    if (typeof window === "undefined") return 0.5;
-    const w = window.innerWidth;
-    if (w >= 1536) return 0.9; // 2xl
-    if (w >= 1280) return 0.8; // xl
-    if (w >= 1024) return 0.7; // lg
-    if (w >= 768) return 0.6; // md
-    if (w >= 640) return 0.55; // sm
-    return 0.5;
-  };
 
   const [scale, setScale] = useState<number>(() => computeScaleFromWindow());
 
@@ -60,10 +59,7 @@ export const AutoTypingResume = () => {
 
   useEffect(() => {
     const intervalId = setInterval(() => {
-      resumeCharIterator.current = makeObjectCharIterator(
-        START_HOME_RESUME,
-        END_HOME_RESUME
-      );
+      resumeCharIterator.current = makeObjectCharIterator(START_HOME_RESUME, END_HOME_RESUME);
       hasSetEndResume.current = false;
     }, RESET_INTERVAL_MS);
     return () => clearInterval(intervalId);
@@ -79,17 +75,15 @@ export const AutoTypingResume = () => {
   }, []);
 
   return (
-    <>
-      <ResumeIframeCSR documentSize="A4" scale={scale}>
-        <ResumePDF
-          resume={resume}
-          settings={{
-            ...initialSettings,
-            documentSize: "A4",
-            fontSize: "12",
-          }}
-        />
-      </ResumeIframeCSR>
-    </>
+    <ResumeIframeCSR documentSize="A4" scale={scale}>
+      <ResumePDF
+        resume={resume}
+        settings={{
+          ...initialSettings,
+          documentSize: "A4",
+          fontSize: "12",
+        }}
+      />
+    </ResumeIframeCSR>
   );
 };

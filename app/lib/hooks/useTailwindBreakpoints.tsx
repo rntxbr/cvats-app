@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-const enum TailwindBreakpoint {
+enum TailwindBreakpoint {
   sm = 640,
   md = 768,
   lg = 1024,

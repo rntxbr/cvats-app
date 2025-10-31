@@ -1,8 +1,8 @@
-import { BaseForm } from "@/components/ResumeForm/Form";
-import { Input, Textarea } from "@/components/ResumeForm/Form/InputGroup";
 import { useAppDispatch, useAppSelector } from "@/app/lib/redux/hooks";
 import { changeProfile, selectProfile } from "@/app/lib/redux/resumeSlice";
-import { ResumeProfile } from "@/app/lib/redux/types";
+import type { ResumeProfile } from "@/app/lib/redux/types";
+import { BaseForm } from "@/components/ResumeForm/Form";
+import { Input, Textarea } from "@/components/ResumeForm/Form/InputGroup";
 
 export const ProfileForm = () => {
   const profile = useAppSelector(selectProfile);
@@ -24,7 +24,7 @@ export const ProfileForm = () => {
           value={name}
           onChange={handleProfileChange}
         />
-         <Input
+        <Input
           label="Cargo"
           labelClassName="col-span-full"
           name="role"

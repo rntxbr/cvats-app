@@ -1,16 +1,16 @@
-import { Page, View, Document } from "@react-pdf/renderer";
+import { Document, Page, View } from "@react-pdf/renderer";
 import { Fragment } from "react";
-import { styles, spacing } from "@/components/Resume/ResumePDF/styles";
-import { ResumePDFProfile } from "@/components/Resume/ResumePDF/ResumePDFProfile";
-import { ResumePDFWorkExperience } from "@/components/Resume/ResumePDF/ResumePDFWorkExperience";
-import { ResumePDFEducation } from "@/components/Resume/ResumePDF/ResumePDFEducation";
-import { ResumePDFProject } from "@/components/Resume/ResumePDF/ResumePDFProject";
-import { ResumePDFSkills } from "@/components/Resume/ResumePDF/ResumePDFSkills";
-import { ResumePDFCustom } from "@/components/Resume/ResumePDF/ResumePDFCustom";
-import { DEFAULT_FONT_COLOR } from "@/app/lib/redux/settingsSlice";
 import type { Settings, ShowForm } from "@/app/lib/redux/settingsSlice";
+import { DEFAULT_FONT_COLOR } from "@/app/lib/redux/settingsSlice";
 import type { Resume } from "@/app/lib/redux/types";
 import { SuppressResumePDFErrorMessage } from "@/components/Resume/ResumePDF/common/SuppressResumePDFErrorMessage";
+import { ResumePDFCustom } from "@/components/Resume/ResumePDF/ResumePDFCustom";
+import { ResumePDFEducation } from "@/components/Resume/ResumePDF/ResumePDFEducation";
+import { ResumePDFProfile } from "@/components/Resume/ResumePDF/ResumePDFProfile";
+import { ResumePDFProject } from "@/components/Resume/ResumePDF/ResumePDFProject";
+import { ResumePDFSkills } from "@/components/Resume/ResumePDF/ResumePDFSkills";
+import { ResumePDFWorkExperience } from "@/components/Resume/ResumePDF/ResumePDFWorkExperience";
+import { spacing, styles } from "@/components/Resume/ResumePDF/styles";
 
 /**
  * Note: ResumePDF is supposed to be rendered inside PDFViewer. However,
@@ -38,8 +38,7 @@ export const ResumePDF = ({
   isPDF?: boolean;
   suppressErrorMessages?: boolean;
 }) => {
-  const { profile, workExperiences, educations, projects, skills, custom } =
-    resume;
+  const { profile, workExperiences, educations, projects, skills, custom } = resume;
   const { name } = profile;
   const {
     fontFamily,
@@ -57,40 +56,40 @@ export const ResumePDF = ({
   const formTypeToComponent: { [type in ShowForm]: () => React.ReactNode } = {
     workExperiences: () => (
       <ResumePDFWorkExperience
-        heading={formToHeading["workExperiences"]}
+        heading={formToHeading.workExperiences}
         workExperiences={workExperiences}
         themeColor={themeColor}
       />
     ),
     educations: () => (
       <ResumePDFEducation
-        heading={formToHeading["educations"]}
+        heading={formToHeading.educations}
         educations={educations}
         themeColor={themeColor}
-        showBulletPoints={showBulletPoints["educations"]}
+        showBulletPoints={showBulletPoints.educations}
       />
     ),
     projects: () => (
       <ResumePDFProject
-        heading={formToHeading["projects"]}
+        heading={formToHeading.projects}
         projects={projects}
         themeColor={themeColor}
       />
     ),
     skills: () => (
       <ResumePDFSkills
-        heading={formToHeading["skills"]}
+        heading={formToHeading.skills}
         skills={skills}
         themeColor={themeColor}
-        showBulletPoints={showBulletPoints["skills"]}
+        showBulletPoints={showBulletPoints.skills}
       />
     ),
     custom: () => (
       <ResumePDFCustom
-        heading={formToHeading["custom"]}
+        heading={formToHeading.custom}
         custom={custom}
         themeColor={themeColor}
-        showBulletPoints={showBulletPoints["custom"]}
+        showBulletPoints={showBulletPoints.custom}
       />
     ),
   };
@@ -103,13 +102,13 @@ export const ResumePDF = ({
           ...styles.flexCol,
           color: DEFAULT_FONT_COLOR,
           fontFamily,
-          fontSize: fontSize + "pt",
+          fontSize: `${fontSize}pt`,
         }}
       >
         {Boolean(settings.themeColor) && (
           <View
             style={{
-              width: spacing["full"],
+              width: spacing.full,
               height: spacing[3.5],
               backgroundColor: themeColor,
             }}
@@ -121,11 +120,7 @@ export const ResumePDF = ({
             padding: `${spacing[0]} ${spacing[20]}`,
           }}
         >
-          <ResumePDFProfile
-            profile={profile}
-            themeColor={themeColor}
-            isPDF={isPDF}
-          />
+          <ResumePDFProfile profile={profile} themeColor={themeColor} isPDF={isPDF} />
           {showFormsOrder.map((form) => {
             const Component = formTypeToComponent[form];
             const element = Component();

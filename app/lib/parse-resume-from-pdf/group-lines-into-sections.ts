@@ -1,14 +1,10 @@
-import type { ResumeKey } from "@/app/lib/redux/types";
-import type {
-  Line,
-  Lines,
-  ResumeSectionToLines,
-} from "@/app/lib/parse-resume-from-pdf/types";
 import {
   hasLetterAndIsAllUpperCase,
   hasOnlyLettersSpacesAmpersands,
   isBold,
 } from "@/app/lib/parse-resume-from-pdf/extract-resume-from-sections/lib/common-features";
+import type { Line, Lines, ResumeSectionToLines } from "@/app/lib/parse-resume-from-pdf/types";
+import type { ResumeKey } from "@/app/lib/redux/types";
 
 export const PROFILE_SECTION: ResumeKey = "profile";
 
@@ -21,7 +17,7 @@ export const PROFILE_SECTION: ResumeKey = "profile";
  * into the closest section title above these lines.
  */
 export const groupLinesIntoSections = (lines: Lines) => {
-  let sections: ResumeSectionToLines = {};
+  const sections: ResumeSectionToLines = {};
   let sectionName: string = PROFILE_SECTION;
   let sectionLines = [];
   for (let i = 0; i < lines.length; i++) {
@@ -94,13 +90,8 @@ const SECTION_TITLE_KEYWORDS = [
   ...SECTION_TITLE_SECONDARY_KEYWORDS,
 ];
 const normalizeForKeyword = (value: string) =>
-  value
-    .normalize("NFD")
-    .replace(/\p{M}/gu, "")
-    .toLowerCase();
-const SECTION_TITLE_KEYWORDS_NORMALIZED = SECTION_TITLE_KEYWORDS.map(
-  normalizeForKeyword
-);
+  value.normalize("NFD").replace(/\p{M}/gu, "").toLowerCase();
+const SECTION_TITLE_KEYWORDS_NORMALIZED = SECTION_TITLE_KEYWORDS.map(normalizeForKeyword);
 
 const isSectionTitle = (line: Line, lineNumber: number) => {
   const isFirstTwoLines = lineNumber < 2;
@@ -121,8 +112,7 @@ const isSectionTitle = (line: Line, lineNumber: number) => {
   // The following is a fallback heuristic to detect section title if it includes a keyword match
   // (This heuristics is not well tested and may not work well)
   const text = textItem.text.trim();
-  const textHasAtMost2Words =
-    text.split(" ").filter((s) => s !== "&").length <= 2;
+  const textHasAtMost2Words = text.split(" ").filter((s) => s !== "&").length <= 2;
   const startsWithCapitalLetter = /\p{Lu}/u.test(text.slice(0, 1));
   const normalizedText = normalizeForKeyword(text);
 
@@ -130,9 +120,7 @@ const isSectionTitle = (line: Line, lineNumber: number) => {
     textHasAtMost2Words &&
     hasOnlyLettersSpacesAmpersands(textItem) &&
     startsWithCapitalLetter &&
-    SECTION_TITLE_KEYWORDS_NORMALIZED.some((keyword) =>
-      normalizedText.includes(keyword)
-    )
+    SECTION_TITLE_KEYWORDS_NORMALIZED.some((keyword) => normalizedText.includes(keyword))
   ) {
     return true;
   }

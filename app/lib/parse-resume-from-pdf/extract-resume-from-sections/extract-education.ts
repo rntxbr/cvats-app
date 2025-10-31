@@ -1,11 +1,7 @@
-import type {
-  TextItem,
-  FeatureSet,
-  ResumeSectionToLines,
-} from "@/app/lib/parse-resume-from-pdf/types";
-import type { ResumeEducation } from "@/app/lib/redux/types";
-import { getSectionLinesByKeywords } from "@/app/lib/parse-resume-from-pdf/extract-resume-from-sections/lib/get-section-lines";
-import { divideSectionIntoSubsections } from "@/app/lib/parse-resume-from-pdf/extract-resume-from-sections/lib/subsections";
+import {
+  getBulletPointsFromLines,
+  getDescriptionsLineIdx,
+} from "@/app/lib/parse-resume-from-pdf/extract-resume-from-sections/lib/bullet-points";
 import {
   DATE_FEATURE_SETS,
   hasComma,
@@ -13,10 +9,14 @@ import {
   hasNumber,
 } from "@/app/lib/parse-resume-from-pdf/extract-resume-from-sections/lib/common-features";
 import { getTextWithHighestFeatureScore } from "@/app/lib/parse-resume-from-pdf/extract-resume-from-sections/lib/feature-scoring-system";
-import {
-  getBulletPointsFromLines,
-  getDescriptionsLineIdx,
-} from "@/app/lib/parse-resume-from-pdf/extract-resume-from-sections/lib/bullet-points";
+import { getSectionLinesByKeywords } from "@/app/lib/parse-resume-from-pdf/extract-resume-from-sections/lib/get-section-lines";
+import { divideSectionIntoSubsections } from "@/app/lib/parse-resume-from-pdf/extract-resume-from-sections/lib/subsections";
+import type {
+  FeatureSet,
+  ResumeSectionToLines,
+  TextItem,
+} from "@/app/lib/parse-resume-from-pdf/types";
+import type { ResumeEducation } from "@/app/lib/redux/types";
 
 /**
  *              Unique Attribute
@@ -27,22 +27,21 @@ import {
 
 // prettier-ignore
 const SCHOOLS = [
-  'College',
-  'University',
-  'Institute',
-  'School',
-  'Academy',
-  'BASIS',
-  'Magnet',
-  'Universidade',
-  'Faculdade',
-  'Instituto',
-  'Escola',
-  'Centro Universitário',
-  'Centro Universitario',
+  "College",
+  "University",
+  "Institute",
+  "School",
+  "Academy",
+  "BASIS",
+  "Magnet",
+  "Universidade",
+  "Faculdade",
+  "Instituto",
+  "Escola",
+  "Centro Universitário",
+  "Centro Universitario",
 ];
-const hasSchool = (item: TextItem) =>
-  SCHOOLS.some((school) => item.text.includes(school));
+const hasSchool = (item: TextItem) => SCHOOLS.some((school) => item.text.includes(school));
 // prettier-ignore
 const DEGREES = [
   "Associate",
@@ -70,8 +69,7 @@ const DEGREES = [
   "Pós-Graduação",
 ];
 const hasDegree = (item: TextItem) =>
-  DEGREES.some((degree) => item.text.includes(degree)) ||
-  /[ABM][A-Z\.]/.test(item.text); // Match AA, B.S., MBA, etc.
+  DEGREES.some((degree) => item.text.includes(degree)) || /[ABM][A-Z.]/.test(item.text); // Match AA, B.S., MBA, etc.
 const matchGPA = (item: TextItem) => item.text.match(/[0-9]{1,2}[.,]\d{1,2}/);
 const matchGrade = (item: TextItem) => {
   const normalized = item.text.replace(",", ".");
@@ -117,22 +115,10 @@ export const extractEducation = (sections: ResumeSectionToLines) => {
   const subsections = divideSectionIntoSubsections(lines);
   for (const subsectionLines of subsections) {
     const textItems = subsectionLines.flat();
-    const [school, schoolScores] = getTextWithHighestFeatureScore(
-      textItems,
-      SCHOOL_FEATURE_SETS
-    );
-    const [degree, degreeScores] = getTextWithHighestFeatureScore(
-      textItems,
-      DEGREE_FEATURE_SETS
-    );
-    const [gpa, gpaScores] = getTextWithHighestFeatureScore(
-      textItems,
-      GPA_FEATURE_SETS
-    );
-    const [date, dateScores] = getTextWithHighestFeatureScore(
-      textItems,
-      DATE_FEATURE_SETS
-    );
+    const [school, schoolScores] = getTextWithHighestFeatureScore(textItems, SCHOOL_FEATURE_SETS);
+    const [degree, degreeScores] = getTextWithHighestFeatureScore(textItems, DEGREE_FEATURE_SETS);
+    const [gpa, gpaScores] = getTextWithHighestFeatureScore(textItems, GPA_FEATURE_SETS);
+    const [date, dateScores] = getTextWithHighestFeatureScore(textItems, DATE_FEATURE_SETS);
 
     let descriptions: string[] = [];
     const descriptionsLineIdx = getDescriptionsLineIdx(subsectionLines);

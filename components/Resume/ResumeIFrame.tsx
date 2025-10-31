@@ -1,15 +1,15 @@
 "use client";
+import dynamic from "next/dynamic";
 import { useMemo } from "react";
 import Frame from "react-frame-component";
 import {
   A4_HEIGHT_PX,
-  A4_WIDTH_PX,
   A4_WIDTH_PT,
+  A4_WIDTH_PX,
   LETTER_HEIGHT_PX,
-  LETTER_WIDTH_PX,
   LETTER_WIDTH_PT,
+  LETTER_WIDTH_PX,
 } from "@/app/lib/constants";
-import dynamic from "next/dynamic";
 import { getAllFontFamiliesToLoad } from "@/components/fonts/lib";
 
 const getIframeInitialContent = (isA4: boolean) => {
@@ -27,9 +27,7 @@ const getIframeInitialContent = (isA4: boolean) => {
 
   const allFontFamiliesFontFaces = allFontFamilies
     .map(
-      (
-        font
-      ) => `@font-face {font-family: "${font}"; src: url("/fonts/${font}-Regular.ttf");}
+      (font) => `@font-face {font-family: "${font}"; src: url("/fonts/${font}-Regular.ttf");}
 @font-face {font-family: "${font}"; src: url("/fonts/${font}-Bold.ttf"); font-weight: bold;}`
     )
     .join("");
@@ -64,17 +62,10 @@ const ResumeIframe = ({
   enablePDFViewer?: boolean;
 }) => {
   const isA4 = documentSize === "A4";
-  const iframeInitialContent = useMemo(
-    () => getIframeInitialContent(isA4),
-    [isA4]
-  );
+  const iframeInitialContent = useMemo(() => getIframeInitialContent(isA4), [isA4]);
 
   if (enablePDFViewer) {
-    return (
-      <DynamicPDFViewer className="h-full w-full">
-        {children as any}
-      </DynamicPDFViewer>
-    );
+    return <DynamicPDFViewer className="h-full w-full">{children as any}</DynamicPDFViewer>;
   }
   const width = isA4 ? A4_WIDTH_PX : LETTER_WIDTH_PX;
   const height = isA4 ? A4_HEIGHT_PX : LETTER_HEIGHT_PX;

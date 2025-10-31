@@ -18,9 +18,7 @@ export const InlineInput = <K extends string>({
   onChange,
 }: InputProps<K, string>) => {
   return (
-    <label
-      className={`flex gap-2 text-base font-medium text-gray-700 ${labelClassName}`}
-    >
+    <label className={`flex gap-2 text-base font-medium text-gray-700 ${labelClassName}`}>
       <span className="w-28">{label}</span>
       <input
         type="text"

@@ -1,4 +1,4 @@
-export const dynamic = 'force-dynamic';
+export const dynamic = "force-dynamic";
 
 export const metadata = {
   title: "Importar Currículo (PDF) | cvats",
@@ -14,4 +14,3 @@ import ClientPage from "./page.client";
 export default function ImportResume() {
   return <ClientPage />;
 }
- 

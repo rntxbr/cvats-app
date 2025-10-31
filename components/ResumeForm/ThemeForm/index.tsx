@@ -1,3 +1,12 @@
+import { Cog6ToothIcon } from "@heroicons/react/24/outline";
+import { useAppDispatch, useAppSelector } from "@/app/lib/redux/hooks";
+import {
+  changeSettings,
+  DEFAULT_THEME_COLOR,
+  type GeneralSetting,
+  selectSettings,
+} from "@/app/lib/redux/settingsSlice";
+import type { FontFamily } from "@/components/fonts/constants";
 import { BaseForm } from "@/components/ResumeForm/Form";
 import { InputGroupWrapper } from "@/components/ResumeForm/Form/InputGroup";
 import { THEME_COLORS } from "@/components/ResumeForm/ThemeForm/constants";
@@ -7,15 +16,6 @@ import {
   FontFamilySelectionsCSR,
   FontSizeSelections,
 } from "@/components/ResumeForm/ThemeForm/Selection";
-import {
-  changeSettings,
-  DEFAULT_THEME_COLOR,
-  selectSettings,
-  type GeneralSetting,
-} from "@/app/lib/redux/settingsSlice";
-import { useAppDispatch, useAppSelector } from "@/app/lib/redux/hooks";
-import type { FontFamily } from "@/components/fonts/constants";
-import { Cog6ToothIcon } from "@heroicons/react/24/outline";
 
 export const ThemeForm = () => {
   const settings = useAppSelector(selectSettings);
@@ -53,10 +53,8 @@ export const ThemeForm = () => {
                 key={idx}
                 onClick={() => handleSettingsChange("themeColor", color)}
                 onKeyDown={(e) => {
-                  if (["Enter", " "].includes(e.key))
-                    handleSettingsChange("themeColor", color);
+                  if (["Enter", " "].includes(e.key)) handleSettingsChange("themeColor", color);
                 }}
-                tabIndex={0}
               >
                 {settings.themeColor === color ? "✓" : ""}
               </div>

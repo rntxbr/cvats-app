@@ -1,24 +1,24 @@
-import type {
-  ResumeSectionToLines,
-  TextItem,
-  FeatureSet,
-} from "@/app/lib/parse-resume-from-pdf/types";
-import { getSectionLinesByKeywords } from "@/app/lib/parse-resume-from-pdf/extract-resume-from-sections/lib/get-section-lines";
 import {
-  isBold,
-  hasNumber,
   hasComma,
   hasLetter,
   hasLetterAndIsAllUpperCase,
+  hasNumber,
+  isBold,
 } from "@/app/lib/parse-resume-from-pdf/extract-resume-from-sections/lib/common-features";
 import { getTextWithHighestFeatureScore } from "@/app/lib/parse-resume-from-pdf/extract-resume-from-sections/lib/feature-scoring-system";
+import { getSectionLinesByKeywords } from "@/app/lib/parse-resume-from-pdf/extract-resume-from-sections/lib/get-section-lines";
+import type {
+  FeatureSet,
+  ResumeSectionToLines,
+  TextItem,
+} from "@/app/lib/parse-resume-from-pdf/types";
 
 // Name (pt-BR): aceita letras unicode com acento, espaços, ponto, hífen e apóstrofo
 // Exige no mínimo 7 caracteres úteis (desconsiderando espaços, ponto, apóstrofo e hífen) para evitar capturar UFs/abreviações
 export const matchOnlyLetterSpaceOrPeriod = (item: TextItem) => {
-  const normalized = item.text.replace(/[\s\.'-]/g, "");
+  const normalized = item.text.replace(/[\s.'-]/g, "");
   if (normalized.length < 7) return null;
-  return item.text.match(/^[\p{L}\p{M}\s\.'-]+$/u);
+  return item.text.match(/^[\p{L}\p{M}\s.'-]+$/u);
 };
 
 // Email
@@ -35,10 +35,36 @@ const hasParenthesis = (item: TextItem) => /\(\d{2}\)/.test(item.text);
 // Location (pt-BR)
 // "Cidade - UF", "Cidade, UF" ou "Cidade, Estado" (com acentos)
 const UFs = new Set([
-  "AC","AL","AP","AM","BA","CE","DF","ES","GO","MA","MT","MS","MG","PA","PB","PR","PE","PI","RJ","RN","RS","RO","RR","SC","SP","SE","TO",
+  "AC",
+  "AL",
+  "AP",
+  "AM",
+  "BA",
+  "CE",
+  "DF",
+  "ES",
+  "GO",
+  "MA",
+  "MT",
+  "MS",
+  "MG",
+  "PA",
+  "PB",
+  "PR",
+  "PE",
+  "PI",
+  "RJ",
+  "RN",
+  "RS",
+  "RO",
+  "RR",
+  "SC",
+  "SP",
+  "SE",
+  "TO",
 ]);
 export const matchCityAndState = (item: TextItem) => {
-  const m = item.text.match(/^[\p{L}\p{M}\s\.'-]+(?:\s*[-,]\s*)([A-Z]{2}|[\p{L}\p{M}\s\.'-]+)$/u);
+  const m = item.text.match(/^[\p{L}\p{M}\s.'-]+(?:\s*[-,]\s*)([A-Z]{2}|[\p{L}\p{M}\s.'-]+)$/u);
   if (!m) return null;
   const tail = m[1];
   if (tail.length === 2) return UFs.has(tail) ? m : null;
@@ -48,11 +74,9 @@ export const matchCityAndState = (item: TextItem) => {
 // Url (permite TLDs de 2+ letras)
 export const matchUrl = (item: TextItem) => item.text.match(/\S+\.[a-z]{2,}\/\S+/i);
 // Match https://xxx.xxx where s is optional
-const matchUrlHttpFallback = (item: TextItem) =>
-  item.text.match(/https?:\/\/\S+\.\S+/);
+const matchUrlHttpFallback = (item: TextItem) => item.text.match(/https?:\/\/\S+\.\S+/);
 // Match www.xxx.xxx
-const matchUrlWwwFallback = (item: TextItem) =>
-  item.text.match(/www\.\S+\.\S+/);
+const matchUrlWwwFallback = (item: TextItem) => item.text.match(/www\.\S+\.\S+/);
 const hasSlash = (item: TextItem) => item.text.includes("/");
 
 // Summary
@@ -137,26 +161,14 @@ export const extractProfile = (sections: ResumeSectionToLines) => {
   const lines = sections.profile || [];
   const textItems = lines.flat();
 
-  const [name, nameScores] = getTextWithHighestFeatureScore(
-    textItems,
-    NAME_FEATURE_SETS
-  );
-  const [email, emailScores] = getTextWithHighestFeatureScore(
-    textItems,
-    EMAIL_FEATURE_SETS
-  );
-  const [phone, phoneScores] = getTextWithHighestFeatureScore(
-    textItems,
-    PHONE_FEATURE_SETS
-  );
+  const [name, nameScores] = getTextWithHighestFeatureScore(textItems, NAME_FEATURE_SETS);
+  const [email, emailScores] = getTextWithHighestFeatureScore(textItems, EMAIL_FEATURE_SETS);
+  const [phone, phoneScores] = getTextWithHighestFeatureScore(textItems, PHONE_FEATURE_SETS);
   const [location, locationScores] = getTextWithHighestFeatureScore(
     textItems,
     LOCATION_FEATURE_SETS
   );
-  const [url, urlScores] = getTextWithHighestFeatureScore(
-    textItems,
-    URL_FEATURE_SETS
-  );
+  const [url, urlScores] = getTextWithHighestFeatureScore(textItems, URL_FEATURE_SETS);
   const [summary, summaryScores] = getTextWithHighestFeatureScore(
     textItems,
     SUMMARY_FEATURE_SETS,

@@ -18,13 +18,7 @@ export const Heading = ({
 }) => {
   const Component = `h${level}` as const;
   return (
-    <Component
-      className={cx(
-        "mt-[2em] text-gray-900",
-        HEADING_CLASSNAMES[level],
-        className
-      )}
-    >
+    <Component className={cx("mt-[2em] text-gray-900", HEADING_CLASSNAMES[level], className)}>
       {children}
     </Component>
   );

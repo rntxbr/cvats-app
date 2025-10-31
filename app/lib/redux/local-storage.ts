@@ -9,7 +9,7 @@ export const loadStateFromLocalStorage = () => {
     const stringifiedState = localStorage.getItem(LOCAL_STORAGE_KEY);
     if (!stringifiedState) return undefined;
     return JSON.parse(stringifiedState);
-  } catch (e) {
+  } catch (_e) {
     return undefined;
   }
 };
@@ -18,7 +18,7 @@ export const saveStateToLocalStorage = (state: RootState) => {
   try {
     const stringifiedState = JSON.stringify(state);
     localStorage.setItem(LOCAL_STORAGE_KEY, stringifiedState);
-  } catch (e) {
+  } catch (_e) {
     // Ignore
   }
 };

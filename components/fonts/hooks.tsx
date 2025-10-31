@@ -1,5 +1,5 @@
-import { useEffect } from "react";
 import { Font } from "@react-pdf/renderer";
+import { useEffect } from "react";
 import { ENGLISH_FONT_FAMILIES } from "@/components/fonts/constants";
 import { getAllFontFamiliesToLoad } from "@/components/fonts/lib";
 
@@ -36,12 +36,7 @@ export const useRegisterReactPDFHyphenationCallback = (fontFamily: string) => {
       // React PDF doesn't understand how to wrap non-english word on line break
       // A workaround is to add an empty character after each word
       // Reference https://github.com/diegomura/react-pdf/issues/1568
-      Font.registerHyphenationCallback((word) =>
-        word
-          .split("")
-          .map((char) => [char, ""])
-          .flat()
-      );
+      Font.registerHyphenationCallback((word) => word.split("").flatMap((char) => [char, ""]));
     }
   }, [fontFamily]);
 };

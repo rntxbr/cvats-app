@@ -13,10 +13,7 @@ export const Link = ({
     <a
       href={href}
       target="_blank"
-      className={cx(
-        "underline underline-offset-2 hover:decoration-2",
-        className
-      )}
+      className={cx("underline underline-offset-2 hover:decoration-2", className)}
     >
       {children}
     </a>

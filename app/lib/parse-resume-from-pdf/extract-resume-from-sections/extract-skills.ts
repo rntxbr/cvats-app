@@ -1,12 +1,12 @@
-import type { ResumeSkills } from "@/app/lib/redux/types";
-import type { ResumeSectionToLines } from "@/app/lib/parse-resume-from-pdf/types";
 import { deepClone } from "@/app/lib/deep-clone";
-import { getSectionLinesByKeywords } from "@/app/lib/parse-resume-from-pdf/extract-resume-from-sections/lib/get-section-lines";
-import { initialFeaturedSkills } from "@/app/lib/redux/resumeSlice";
 import {
   getBulletPointsFromLines,
   getDescriptionsLineIdx,
 } from "@/app/lib/parse-resume-from-pdf/extract-resume-from-sections/lib/bullet-points";
+import { getSectionLinesByKeywords } from "@/app/lib/parse-resume-from-pdf/extract-resume-from-sections/lib/get-section-lines";
+import type { ResumeSectionToLines } from "@/app/lib/parse-resume-from-pdf/types";
+import { initialFeaturedSkills } from "@/app/lib/redux/resumeSlice";
+import type { ResumeSkills } from "@/app/lib/redux/types";
 
 export const extractSkills = (sections: ResumeSectionToLines) => {
   const lines = getSectionLinesByKeywords(sections, [

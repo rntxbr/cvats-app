@@ -1,15 +1,12 @@
 import { View } from "@react-pdf/renderer";
-import {
-  ResumePDFIcon,
-  type IconType,
-} from "@/components/Resume/ResumePDF/common/ResumePDFIcon";
-import { styles, spacing } from "@/components/Resume/ResumePDF/styles";
+import type { ResumeProfile } from "@/app/lib/redux/types";
 import {
   ResumePDFLink,
   ResumePDFSection,
   ResumePDFText,
 } from "@/components/Resume/ResumePDF/common";
-import type { ResumeProfile } from "@/app/lib/redux/types";
+import { type IconType, ResumePDFIcon } from "@/components/Resume/ResumePDF/common/ResumePDFIcon";
+import { spacing, styles } from "@/components/Resume/ResumePDF/styles";
 
 export const ResumePDFProfile = ({
   profile,
@@ -25,11 +22,7 @@ export const ResumePDFProfile = ({
 
   return (
     <ResumePDFSection style={{ marginTop: spacing["4"] }}>
-      <ResumePDFText
-        bold={true}
-        themeColor={themeColor}
-        style={{ fontSize: "20pt" }}
-      >
+      <ResumePDFText bold={true} themeColor={themeColor} style={{ fontSize: "20pt" }}>
         {name}
       </ResumePDFText>
       {role && (

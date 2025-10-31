@@ -1,12 +1,12 @@
-import { IconButton } from "@/components/Button";
 import {
+  ArrowSmallDownIcon,
+  ArrowSmallUpIcon,
   EyeIcon,
   EyeSlashIcon,
-  ArrowSmallUpIcon,
-  ArrowSmallDownIcon,
-  TrashIcon,
   ListBulletIcon,
+  TrashIcon,
 } from "@heroicons/react/24/outline";
+import { IconButton } from "@/components/Button";
 
 export const ShowIconButton = ({
   show,
@@ -44,11 +44,7 @@ export const MoveIconButton = ({
   const Icon = type === "up" ? ArrowSmallUpIcon : ArrowSmallDownIcon;
 
   return (
-    <IconButton
-      onClick={() => onClick(type)}
-      tooltipText={tooltipText}
-      size={size}
-    >
+    <IconButton onClick={() => onClick(type)} tooltipText={tooltipText} size={size}>
       <Icon className={`${sizeClassName} text-gray-400`} aria-hidden="true" />
       <span className="sr-only">{tooltipText}</span>
     </IconButton>
@@ -77,9 +73,7 @@ export const BulletListIconButton = ({
   onClick: (newShowBulletPoints: boolean) => void;
   showBulletPoints: boolean;
 }) => {
-  const tooltipText = showBulletPoints
-    ? "Hide bullet points"
-    : "Show bullet points";
+  const tooltipText = showBulletPoints ? "Hide bullet points" : "Show bullet points";
 
   return (
     <IconButton
@@ -89,9 +83,7 @@ export const BulletListIconButton = ({
       className={showBulletPoints ? "!bg-sky-100" : ""}
     >
       <ListBulletIcon
-        className={`h-4 w-4 ${
-          showBulletPoints ? "text-gray-700" : "text-gray-400"
-        }`}
+        className={`h-4 w-4 ${showBulletPoints ? "text-gray-700" : "text-gray-400"}`}
         aria-hidden="true"
       />
       <span className="sr-only">{tooltipText}</span>

@@ -1,12 +1,12 @@
-import type { GeneralSetting } from "@/app/lib/redux/settingsSlice";
+import dynamic from "next/dynamic";
 import { PX_PER_PT } from "@/app/lib/constants";
+import type { GeneralSetting } from "@/app/lib/redux/settingsSlice";
 import {
-  FONT_FAMILY_TO_STANDARD_SIZE_IN_PT,
   FONT_FAMILY_TO_DISPLAY_NAME,
+  FONT_FAMILY_TO_STANDARD_SIZE_IN_PT,
   type FontFamily,
 } from "@/components/fonts/constants";
 import { getAllFontFamiliesToLoad } from "@/components/fonts/lib";
-import dynamic from "next/dynamic";
 
 const Selection = ({
   selectedColor,
@@ -36,7 +36,6 @@ const Selection = ({
       onKeyDown={(e) => {
         if (["Enter", " "].includes(e.key)) onClick();
       }}
-      tabIndex={0}
     >
       {children}
     </div>
@@ -85,12 +84,9 @@ const FontFamilySelections = ({
  * Load FontFamilySelections client side since it calls getAllFontFamiliesToLoad,
  * which uses navigator object that is only available on client side
  */
-export const FontFamilySelectionsCSR = dynamic(
-  () => Promise.resolve(FontFamilySelections),
-  {
-    ssr: false,
-  }
-);
+export const FontFamilySelectionsCSR = dynamic(() => Promise.resolve(FontFamilySelections), {
+  ssr: false,
+});
 
 export const FontSizeSelections = ({
   selectedFontSize,

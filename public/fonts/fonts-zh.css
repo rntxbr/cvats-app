@@ -1,2 +1,9 @@
-@font-face {font-family: "NotoSansSC"; src: url("/fonts/NotoSansSC-Regular.ttf");}
-@font-face {font-family: "NotoSansSC"; src: url("/fonts/NotoSansSC-Bold.ttf"); font-weight: bold;}
+@font-face {
+  font-family: "NotoSansSC";
+  src: url("/fonts/NotoSansSC-Regular.ttf");
+}
+@font-face {
+  font-family: "NotoSansSC";
+  src: url("/fonts/NotoSansSC-Bold.ttf");
+  font-weight: bold;
+}

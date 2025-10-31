@@ -1,32 +1,32 @@
+import {
+  AcademicCapIcon,
+  BuildingOfficeIcon,
+  LightBulbIcon,
+  PlusSmallIcon,
+  WrenchIcon,
+} from "@heroicons/react/24/outline";
+import { useAppDispatch, useAppSelector } from "@/app/lib/redux/hooks";
+import {
+  addSectionInForm,
+  deleteSectionInFormByIdx,
+  moveSectionInForm,
+} from "@/app/lib/redux/resumeSlice";
+import {
+  changeFormHeading,
+  changeFormOrder,
+  changeShowForm,
+  type ShowForm,
+  selectHeadingByForm,
+  selectIsFirstForm,
+  selectIsLastForm,
+  selectShowByForm,
+} from "@/app/lib/redux/settingsSlice";
 import { ExpanderWithHeightTransition } from "@/components/ExpanderWithHeightTransition";
 import {
   DeleteIconButton,
   MoveIconButton,
   ShowIconButton,
 } from "@/components/ResumeForm/Form/IconButton";
-import { useAppDispatch, useAppSelector } from "@/app/lib/redux/hooks";
-import {
-  changeFormHeading,
-  changeFormOrder,
-  changeShowForm,
-  selectHeadingByForm,
-  selectIsFirstForm,
-  selectIsLastForm,
-  selectShowByForm,
-  ShowForm,
-} from "@/app/lib/redux/settingsSlice";
-import {
-  BuildingOfficeIcon,
-  AcademicCapIcon,
-  LightBulbIcon,
-  WrenchIcon,
-  PlusSmallIcon,
-} from "@heroicons/react/24/outline";
-import {
-  addSectionInForm,
-  deleteSectionInFormByIdx,
-  moveSectionInForm,
-} from "@/app/lib/redux/resumeSlice";
 
 /**
  * BaseForm is the bare bone form, i.e. just the outline with no title and no control buttons.
@@ -85,9 +85,7 @@ export const Form = ({
 
   return (
     <BaseForm
-      className={`transition-opacity duration-200 ${
-        showForm ? "pb-6" : "pb-2 opacity-60"
-      }`}
+      className={`transition-opacity duration-200 ${showForm ? "pb-6" : "pb-2 opacity-60"}`}
     >
       <div className="flex items-center justify-between gap-4">
         <div className="flex grow items-center gap-2">
@@ -100,18 +98,12 @@ export const Form = ({
           />
         </div>
         <div className="flex items-center gap-0.5">
-          {!isFirstForm && (
-            <MoveIconButton type="up" onClick={handleMoveClick} />
-          )}
-          {!isLastForm && (
-            <MoveIconButton type="down" onClick={handleMoveClick} />
-          )}
+          {!isFirstForm && <MoveIconButton type="up" onClick={handleMoveClick} />}
+          {!isLastForm && <MoveIconButton type="down" onClick={handleMoveClick} />}
           <ShowIconButton show={showForm} setShow={setShowForm} />
         </div>
       </div>
-      <ExpanderWithHeightTransition expanded={showForm}>
-        {children}
-      </ExpanderWithHeightTransition>
+      <ExpanderWithHeightTransition expanded={showForm}>{children}</ExpanderWithHeightTransition>
       {showForm && addButtonText && (
         <div className="mt-2 flex justify-end">
           <button
@@ -121,10 +113,7 @@ export const Form = ({
             }}
             className="cursor-pointer flex items-center rounded-md bg-[#f1eee1] py-2 pl-3 pr-4 text-sm font-semibold text-[#28584c] "
           >
-            <PlusSmallIcon
-              className="-ml-0.5 mr-1.5 h-5 w-5 text-gray-400"
-              aria-hidden="true"
-            />
+            <PlusSmallIcon className="-ml-0.5 mr-1.5 h-5 w-5 text-gray-400" aria-hidden="true" />
             {addButtonText}
           </button>
         </div>
@@ -160,9 +149,7 @@ export const FormSection = ({
 
   return (
     <>
-      {idx !== 0 && (
-        <div className="mb-4 mt-6 border-t-2 border-dotted border-gray-200" />
-      )}
+      {idx !== 0 && <div className="mb-4 mt-6 border-t-2 border-dotted border-gray-200" />}
       <div className="relative grid grid-cols-6 gap-3">
         {children}
         <div className={`absolute right-0 top-0 flex gap-0.5 `}>
@@ -171,32 +158,15 @@ export const FormSection = ({
               showMoveUp ? "" : "invisible opacity-0"
             } ${showMoveDown ? "" : "-mr-6"}`}
           >
-            <MoveIconButton
-              type="up"
-              size="small"
-              onClick={() => handleMoveClick("up")}
-            />
+            <MoveIconButton type="up" size="small" onClick={() => handleMoveClick("up")} />
           </div>
           <div
-            className={`transition-all duration-300 ${
-              showMoveDown ? "" : "invisible opacity-0"
-            }`}
+            className={`transition-all duration-300 ${showMoveDown ? "" : "invisible opacity-0"}`}
           >
-            <MoveIconButton
-              type="down"
-              size="small"
-              onClick={() => handleMoveClick("down")}
-            />
+            <MoveIconButton type="down" size="small" onClick={() => handleMoveClick("down")} />
           </div>
-          <div
-            className={`transition-all duration-300 ${
-              showDelete ? "" : "invisible opacity-0"
-            }`}
-          >
-            <DeleteIconButton
-              onClick={handleDeleteClick}
-              tooltipText={deleteButtonTooltipText}
-            />
+          <div className={`transition-all duration-300 ${showDelete ? "" : "invisible opacity-0"}`}>
+            <DeleteIconButton onClick={handleDeleteClick} tooltipText={deleteButtonTooltipText} />
           </div>
         </div>
       </div>

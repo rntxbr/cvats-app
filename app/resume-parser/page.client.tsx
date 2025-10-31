@@ -1,10 +1,10 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import type { TextItems } from "@/app/lib/parse-resume-from-pdf/types";
-import { ResumeDropzone } from "@/components/ResumeDropzone";
-import { Heading, Link } from "@/components/documentation";
 import { ResumeTable } from "@/app/resume-parser/ResumeTable";
+import { Heading, Link } from "@/components/documentation";
+import { ResumeDropzone } from "@/components/ResumeDropzone";
 
 const RESUME_EXAMPLES = [
   {
@@ -22,29 +22,28 @@ const RESUME_EXAMPLES = [
     fileUrl: "resume-example/cvats-resume.pdf",
     description: (
       <span>
-        Created with cvats resume builder -{" "}
-        <Link href="/resume-builder">Link</Link>
+        Created with cvats resume builder - <Link href="/resume-builder">Link</Link>
       </span>
     ),
   },
 ];
 
-const defaultFileUrl = RESUME_EXAMPLES[0]["fileUrl"];
+const defaultFileUrl = RESUME_EXAMPLES[0].fileUrl;
 
 export default function ClientPage() {
   const [fileUrl, setFileUrl] = useState<string | null>(defaultFileUrl);
-  const [textItems, setTextItems] = useState<TextItems>([]);
-  const [lines, setLines] = useState<any[]>([]);
-  const [sections, setSections] = useState<any>({});
+  const [_textItems, setTextItems] = useState<TextItems>([]);
+  const [_lines, setLines] = useState<any[]>([]);
+  const [_sections, setSections] = useState<any>({});
   const [resume, setResume] = useState<any>({
     profile: { name: "", email: "", phone: "", location: "", url: "", summary: "" },
     workExperiences: [],
     educations: [],
     projects: [],
     skills: { featuredSkills: [], descriptions: [] },
-    custom: { descriptions: [] }
+    custom: { descriptions: [] },
   });
-  const [error, setError] = useState<string | null>(null);
+  const [_error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     async function test() {
@@ -55,9 +54,15 @@ export default function ClientPage() {
       try {
         setError(null);
         const pdfModule = await import("@/app/lib/parse-resume-from-pdf/read-pdf");
-        const { groupTextItemsIntoLines } = await import("@/app/lib/parse-resume-from-pdf/group-text-items-into-lines");
-        const { groupLinesIntoSections } = await import("@/app/lib/parse-resume-from-pdf/group-lines-into-sections");
-        const { extractResumeFromSections } = await import("@/app/lib/parse-resume-from-pdf/extract-resume-from-sections");
+        const { groupTextItemsIntoLines } = await import(
+          "@/app/lib/parse-resume-from-pdf/group-text-items-into-lines"
+        );
+        const { groupLinesIntoSections } = await import(
+          "@/app/lib/parse-resume-from-pdf/group-lines-into-sections"
+        );
+        const { extractResumeFromSections } = await import(
+          "@/app/lib/parse-resume-from-pdf/extract-resume-from-sections"
+        );
 
         const textItems = await pdfModule.readPdf(fileUrl);
         setTextItems(textItems);
@@ -72,7 +77,9 @@ export default function ClientPage() {
         setResume(resume);
       } catch (err) {
         console.error("Error reading PDF:", err);
-        setError(`Erro ao carregar PDF: ${err instanceof Error ? err.message : 'Arquivo não encontrado'}`);
+        setError(
+          `Erro ao carregar PDF: ${err instanceof Error ? err.message : "Arquivo não encontrado"}`
+        );
         setTextItems([]);
         setLines([]);
         setSections({});
@@ -82,7 +89,7 @@ export default function ClientPage() {
           educations: [],
           projects: [],
           skills: { featuredSkills: [], descriptions: [] },
-          custom: { descriptions: [] }
+          custom: { descriptions: [] },
         });
       }
     }
@@ -94,7 +101,13 @@ export default function ClientPage() {
       <div className="container mx-auto grid md:grid-cols-2 gap-4">
         <section className="w-full">
           <div className="aspect-h-[9.5] aspect-w-7">
-            {fileUrl && <iframe src={`${fileUrl}#navpanes=0`} className="h-screen w-full p-6 rounded-3xl" />}
+            {fileUrl && (
+              <iframe
+                src={`${fileUrl}#navpanes=0`}
+                title="Visualizador de PDF"
+                className="h-screen w-full p-6 rounded-3xl"
+              />
+            )}
             {!fileUrl && (
               <div className="flex h-full w-full items-center justify-center border-2 border-dashed border-gray-300">
                 <p className="text-gray-500">Nenhum PDF selecionado</p>
@@ -123,5 +136,3 @@ export default function ClientPage() {
     </main>
   );
 }
-
-

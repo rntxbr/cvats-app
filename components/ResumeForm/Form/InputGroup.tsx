@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import ContentEditable from "react-contenteditable";
 import { useAutosizeTextareaHeight } from "@/app/lib/hooks/useAutosizeTextareaHeight";
 
@@ -90,8 +90,7 @@ export const BulletListTextarea = <T extends string>(
   useEffect(() => {
     const isFirefox = navigator.userAgent.includes("Firefox");
     const isSafari =
-      navigator.userAgent.includes("Safari") &&
-      !navigator.userAgent.includes("Chrome"); // Note that Chrome also includes Safari in its userAgent
+      navigator.userAgent.includes("Safari") && !navigator.userAgent.includes("Chrome"); // Note that Chrome also includes Safari in its userAgent
     if (isFirefox || isSafari) {
       setShowFallback(true);
     }
@@ -135,8 +134,7 @@ const BulletListTextareaGeneral = <T extends string>({
         onChange={(e) => {
           if (e.type === "input") {
             const { innerText } = e.currentTarget as HTMLDivElement;
-            const newBulletListStrings =
-              getBulletListStringsFromInnerText(innerText);
+            const newBulletListStrings = getBulletListStringsFromInnerText(innerText);
             onChange(name, newBulletListStrings);
           }
         }}
@@ -153,10 +151,8 @@ const NORMALIZED_LINE_BREAK = "\n";
  *    Unix    -> \n (LF)
  *    Mac     -> \n (LF), or \r (CR) for earlier versions
  */
-const normalizeLineBreak = (str: string) =>
-  str.replace(/\r?\n/g, NORMALIZED_LINE_BREAK);
-const dedupeLineBreak = (str: string) =>
-  str.replace(/\n\n/g, NORMALIZED_LINE_BREAK);
+const normalizeLineBreak = (str: string) => str.replace(/\r?\n/g, NORMALIZED_LINE_BREAK);
+const dedupeLineBreak = (str: string) => str.replace(/\n\n/g, NORMALIZED_LINE_BREAK);
 const getStringsByLineBreak = (str: string) => str.split(NORMALIZED_LINE_BREAK);
 
 const getBulletListStringsFromInnerText = (innerText: string) => {
@@ -198,10 +194,7 @@ const BulletListTextareaFallback = <T extends string>({
   onChange,
   showBulletPoints = true,
 }: InputProps<T, string[]> & { showBulletPoints?: boolean }) => {
-  const textareaValue = getTextareaValueFromBulletListStrings(
-    bulletListStrings,
-    showBulletPoints
-  );
+  const textareaValue = getTextareaValueFromBulletListStrings(bulletListStrings, showBulletPoints);
 
   return (
     <Textarea
@@ -211,10 +204,7 @@ const BulletListTextareaFallback = <T extends string>({
       value={textareaValue}
       placeholder={placeholder}
       onChange={(name, value) => {
-        onChange(
-          name,
-          getBulletListStringsFromTextareaValue(value, showBulletPoints)
-        );
+        onChange(name, getBulletListStringsFromTextareaValue(value, showBulletPoints));
       }}
     />
   );
@@ -243,8 +233,7 @@ const getBulletListStringsFromTextareaValue = (
   textareaValue: string,
   showBulletPoints: boolean
 ) => {
-  const textareaValueWithNormalizedLineBreak =
-    normalizeLineBreak(textareaValue);
+  const textareaValueWithNormalizedLineBreak = normalizeLineBreak(textareaValue);
 
   const strings = getStringsByLineBreak(textareaValueWithNormalizedLineBreak);
 
@@ -252,8 +241,8 @@ const getBulletListStringsFromTextareaValue = (
     // Filter out empty strings
     const nonEmptyStrings = strings.filter((s) => s !== "•");
 
-    let newStrings: string[] = [];
-    for (let string of nonEmptyStrings) {
+    const newStrings: string[] = [];
+    for (const string of nonEmptyStrings) {
       if (string.startsWith("• ")) {
         newStrings.push(string.slice(2));
       } else if (string.startsWith("•")) {

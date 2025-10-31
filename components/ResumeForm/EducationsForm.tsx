@@ -1,17 +1,11 @@
-import { Form, FormSection } from "@/components/ResumeForm/Form";
-import {
-  BulletListTextarea,
-  Input,
-} from "@/components/ResumeForm/Form/InputGroup";
-import { BulletListIconButton } from "@/components/ResumeForm/Form/IconButton";
-import type { CreateHandleChangeArgsWithDescriptions } from "@/components/ResumeForm/types";
 import { useAppDispatch, useAppSelector } from "@/app/lib/redux/hooks";
 import { changeEducations, selectEducations } from "@/app/lib/redux/resumeSlice";
+import { changeShowBulletPoints, selectShowBulletPoints } from "@/app/lib/redux/settingsSlice";
 import type { ResumeEducation } from "@/app/lib/redux/types";
-import {
-  changeShowBulletPoints,
-  selectShowBulletPoints,
-} from "@/app/lib/redux/settingsSlice";
+import { Form, FormSection } from "@/components/ResumeForm/Form";
+import { BulletListIconButton } from "@/components/ResumeForm/Form/IconButton";
+import { BulletListTextarea, Input } from "@/components/ResumeForm/Form/InputGroup";
+import type { CreateHandleChangeArgsWithDescriptions } from "@/components/ResumeForm/types";
 
 export const EducationsForm = () => {
   const educations = useAppSelector(selectEducations);
@@ -24,10 +18,7 @@ export const EducationsForm = () => {
     <Form form={form} addButtonText="Adicionar Educação">
       {educations.map(({ school, degree, gpa, date, descriptions }, idx) => {
         const handleEducationChange = (
-          ...[
-            field,
-            value,
-          ]: CreateHandleChangeArgsWithDescriptions<ResumeEducation>
+          ...[field, value]: CreateHandleChangeArgsWithDescriptions<ResumeEducation>
         ) => {
           dispatch(changeEducations({ idx, field, value } as any));
         };

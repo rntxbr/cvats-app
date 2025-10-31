@@ -1,20 +1,17 @@
-import type { ResumeProject } from "@/app/lib/redux/types";
-import type {
-  FeatureSet,
-  ResumeSectionToLines,
-} from "@/app/lib/parse-resume-from-pdf/types";
-import { getSectionLinesByKeywords } from "@/app/lib/parse-resume-from-pdf/extract-resume-from-sections/lib/get-section-lines";
+import {
+  getBulletPointsFromLines,
+  getDescriptionsLineIdx,
+} from "@/app/lib/parse-resume-from-pdf/extract-resume-from-sections/lib/bullet-points";
 import {
   DATE_FEATURE_SETS,
   getHasText,
   isBold,
 } from "@/app/lib/parse-resume-from-pdf/extract-resume-from-sections/lib/common-features";
-import { divideSectionIntoSubsections } from "@/app/lib/parse-resume-from-pdf/extract-resume-from-sections/lib/subsections";
 import { getTextWithHighestFeatureScore } from "@/app/lib/parse-resume-from-pdf/extract-resume-from-sections/lib/feature-scoring-system";
-import {
-  getBulletPointsFromLines,
-  getDescriptionsLineIdx,
-} from "@/app/lib/parse-resume-from-pdf/extract-resume-from-sections/lib/bullet-points";
+import { getSectionLinesByKeywords } from "@/app/lib/parse-resume-from-pdf/extract-resume-from-sections/lib/get-section-lines";
+import { divideSectionIntoSubsections } from "@/app/lib/parse-resume-from-pdf/extract-resume-from-sections/lib/subsections";
+import type { FeatureSet, ResumeSectionToLines } from "@/app/lib/parse-resume-from-pdf/types";
+import type { ResumeProject } from "@/app/lib/redux/types";
 
 export const extractProject = (sections: ResumeSectionToLines) => {
   const projects: ResumeProject[] = [];
@@ -32,9 +29,7 @@ export const extractProject = (sections: ResumeSectionToLines) => {
   for (const subsectionLines of subsections) {
     const descriptionsLineIdx = getDescriptionsLineIdx(subsectionLines) ?? 1;
 
-    const subsectionInfoTextItems = subsectionLines
-      .slice(0, descriptionsLineIdx)
-      .flat();
+    const subsectionInfoTextItems = subsectionLines.slice(0, descriptionsLineIdx).flat();
     const [date, dateScores] = getTextWithHighestFeatureScore(
       subsectionInfoTextItems,
       DATE_FEATURE_SETS

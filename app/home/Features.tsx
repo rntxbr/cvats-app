@@ -27,11 +27,8 @@ const FEATURES = [
     title: "Open-Source",
     text: (
       <>
-        cvats is an open-source project, and its source code can be viewed
-        by anyone on its{" "}
-        <Link href="https://github.com/xitanggg/open-resume">
-          GitHub repository
-        </Link>
+        cvats is an open-source project, and its source code can be viewed by anyone on its{" "}
+        <Link href="https://github.com/xitanggg/open-resume">GitHub repository</Link>
       </>
     ),
   },

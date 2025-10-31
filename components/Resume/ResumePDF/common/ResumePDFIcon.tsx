@@ -1,4 +1,4 @@
-import { Svg, Path } from "@react-pdf/renderer";
+import { Path, Svg } from "@react-pdf/renderer";
 import { styles } from "@/components/Resume/ResumePDF/styles";
 
 /**
@@ -26,21 +26,9 @@ const TYPE_TO_PATH_D = {
   url_linkedin: LINKEDIN_PATH_D,
 } as const;
 
-export type IconType =
-  | "email"
-  | "phone"
-  | "location"
-  | "url"
-  | "url_github"
-  | "url_linkedin";
+export type IconType = "email" | "phone" | "location" | "url" | "url_github" | "url_linkedin";
 
-export const ResumePDFIcon = ({
-  type,
-  isPDF,
-}: {
-  type: IconType;
-  isPDF: boolean;
-}) => {
+export const ResumePDFIcon = ({ type, isPDF }: { type: IconType; isPDF: boolean }) => {
   const pathD = TYPE_TO_PATH_D[type];
   if (isPDF) {
     return <PDFIcon pathD={pathD} />;
@@ -57,11 +45,7 @@ const PDFIcon = ({ pathD }: { pathD: string }) => (
 );
 
 const SVGIcon = ({ pathD }: { pathD: string }) => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 512 512"
-    style={{ width, height, fill }}
-  >
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" style={{ width, height, fill }}>
     <path d={pathD} />
   </svg>
 );

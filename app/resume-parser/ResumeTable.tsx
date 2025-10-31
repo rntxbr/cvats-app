@@ -1,8 +1,8 @@
 import { Fragment } from "react";
-import type { Resume } from "@/app/lib/redux/types";
-import { initialEducation, initialWorkExperience } from "@/app/lib/redux/resumeSlice";
-import { deepClone } from "@/app/lib/deep-clone";
 import { cx } from "@/app/lib/cx";
+import { deepClone } from "@/app/lib/deep-clone";
+import { initialEducation, initialWorkExperience } from "@/app/lib/redux/resumeSlice";
+import type { Resume } from "@/app/lib/redux/types";
 
 const TableRowHeader = ({ children }: { children: React.ReactNode }) => (
   <tr className="divide-x bg-gray-50">
@@ -21,12 +21,8 @@ const TableRow = ({
   value: string | string[];
   className?: string | false;
 }) => {
-  const normalizedValue = typeof value === "string" 
-    ? value 
-    : Array.isArray(value) 
-    ? value 
-    : "";
-  
+  const normalizedValue = typeof value === "string" ? value : Array.isArray(value) ? value : "";
+
   return (
     <tr className={cx("divide-x", className)}>
       <th className="px-3 py-2 font-medium" scope="row">
@@ -48,9 +44,7 @@ const TableRow = ({
 
 export const ResumeTable = ({ resume }: { resume: Resume }) => {
   const educations =
-    resume.educations.length === 0
-      ? [deepClone(initialEducation)]
-      : resume.educations;
+    resume.educations.length === 0 ? [deepClone(initialEducation)] : resume.educations;
   const workExperiences =
     resume.workExperiences.length === 0
       ? [deepClone(initialWorkExperience)]
@@ -86,9 +80,7 @@ export const ResumeTable = ({ resume }: { resume: Resume }) => {
               label="Descrição"
               value={education.descriptions}
               className={
-                educations.length - 1 !== 0 &&
-                idx !== educations.length - 1 &&
-                "!border-b-4"
+                educations.length - 1 !== 0 && idx !== educations.length - 1 && "!border-b-4"
               }
             />
           </Fragment>
@@ -110,9 +102,7 @@ export const ResumeTable = ({ resume }: { resume: Resume }) => {
             />
           </Fragment>
         ))}
-        {resume.projects.length > 0 && (
-          <TableRowHeader>Projetos</TableRowHeader>
-        )}
+        {resume.projects.length > 0 && <TableRowHeader>Projetos</TableRowHeader>}
         {resume.projects.map((project, idx) => (
           <Fragment key={idx}>
             <TableRow label="Nome do Projeto" value={project.project} />

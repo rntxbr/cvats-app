@@ -5,7 +5,6 @@ import dynamic from "next/dynamic";
 import Link from "next/link";
 
 const ResumeControlBar = ({
-
   document,
   fileName,
 }: {
@@ -30,7 +29,7 @@ const ResumeControlBar = ({
           href={instance.url}
           download={fileName}
         >
-        <ArrowDownTrayIcon className="h-5 w-5" />
+          <ArrowDownTrayIcon className="h-5 w-5" />
           <span>Baixar Currículo</span>
         </Link>
       ) : (
@@ -45,12 +44,9 @@ const ResumeControlBar = ({
 /**
  * Load ResumeControlBar client side since it uses usePDF, which is a web specific API
  */
-export const ResumeControlBarCSR = dynamic(
-  () => Promise.resolve(ResumeControlBar),
-  {
-    ssr: false,
-  }
-);
+export const ResumeControlBarCSR = dynamic(() => Promise.resolve(ResumeControlBar), {
+  ssr: false,
+});
 
 export const ResumeControlBarBorder = () => (
   <div className="absolute bottom-(--resume-control-bar-height) w-full border-t-2 bg-gray-50" />

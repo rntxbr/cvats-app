@@ -1,11 +1,11 @@
 import { View } from "@react-pdf/renderer";
+import type { ResumeProject } from "@/app/lib/redux/types";
 import {
-  ResumePDFSection,
   ResumePDFBulletList,
+  ResumePDFSection,
   ResumePDFText,
 } from "@/components/Resume/ResumePDF/common";
-import { styles, spacing } from "@/components/Resume/ResumePDF/styles";
-import type { ResumeProject } from "@/app/lib/redux/types";
+import { spacing, styles } from "@/components/Resume/ResumePDF/styles";
 
 export const ResumePDFProject = ({
   heading,

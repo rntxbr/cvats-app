@@ -20,8 +20,7 @@ const LOGOS = [
 export const LogoCloud = () => (
   <section className="mt-14 lg:mt-10">
     <h2 className="text-center font-semibold text-gray-500">
-      Trusted by students and employees from top universities and companies
-      worldwide
+      Trusted by students and employees from top universities and companies worldwide
     </h2>
     <div className="mt-6 grid grid-cols-6 items-center justify-items-center gap-x-8 gap-y-10">
       {LOGOS.map(({ src, alt }, idx) => (

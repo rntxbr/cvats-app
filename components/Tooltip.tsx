@@ -10,13 +10,7 @@ import { createPortal } from "react-dom";
  *   <div>Hello</div>
  * </Tooltip>
  */
-export const Tooltip = ({
-  text,
-  children,
-}: {
-  text: string;
-  children: React.ReactNode;
-}) => {
+export const Tooltip = ({ text, children }: { text: string; children: React.ReactNode }) => {
   const spanRef = useRef<HTMLSpanElement>(null);
   const tooltipRef = useRef<HTMLDivElement>(null);
 
@@ -40,7 +34,7 @@ export const Tooltip = ({
         left: newLeft,
       });
     }
-  }, [show]);
+  }, []);
 
   return (
     <span

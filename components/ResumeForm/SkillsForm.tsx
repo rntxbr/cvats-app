@@ -1,17 +1,14 @@
-import { Form } from "@/components/ResumeForm/Form";
-import {
-  BulletListTextarea,
-  InputGroupWrapper,
-} from "@/components/ResumeForm/Form/InputGroup";
-import { FeaturedSkillInput } from "@/components/ResumeForm/Form/FeaturedSkillInput";
-import { BulletListIconButton } from "@/components/ResumeForm/Form/IconButton";
 import { useAppDispatch, useAppSelector } from "@/app/lib/redux/hooks";
-import { selectSkills, changeSkills } from "@/app/lib/redux/resumeSlice";
+import { changeSkills, selectSkills } from "@/app/lib/redux/resumeSlice";
 import {
-  selectShowBulletPoints,
   changeShowBulletPoints,
+  selectShowBulletPoints,
   selectThemeColor,
 } from "@/app/lib/redux/settingsSlice";
+import { Form } from "@/components/ResumeForm/Form";
+import { FeaturedSkillInput } from "@/components/ResumeForm/Form/FeaturedSkillInput";
+import { BulletListIconButton } from "@/components/ResumeForm/Form/IconButton";
+import { BulletListTextarea, InputGroupWrapper } from "@/components/ResumeForm/Form/InputGroup";
 
 export const SkillsForm = () => {
   const skills = useAppSelector(selectSkills);
@@ -24,11 +21,7 @@ export const SkillsForm = () => {
   const handleSkillsChange = (field: "descriptions", value: string[]) => {
     dispatch(changeSkills({ field, value }));
   };
-  const handleFeaturedSkillsChange = (
-    idx: number,
-    skill: string,
-    rating: number
-  ) => {
+  const handleFeaturedSkillsChange = (idx: number, skill: string, rating: number) => {
     dispatch(changeSkills({ field: "featuredSkills", idx, skill, rating }));
   };
   const handleShowBulletPoints = (value: boolean) => {
@@ -56,13 +49,10 @@ export const SkillsForm = () => {
           </div>
         </div>
         <div className="col-span-full mb-4 mt-6 border-t-2 border-dotted border-gray-200" />
-        <InputGroupWrapper
-          label="Habilidades em destaque (opcional)"
-          className="col-span-full"
-        >
+        <InputGroupWrapper label="Habilidades em destaque (opcional)" className="col-span-full">
           <p className="mt-2 text-sm font-normal text-gray-600">
-          
-Habilidades destacadas são opcionais para destacar habilidades-chave: <strong>com mais círculos significando maior proficiência.</strong>
+            Habilidades destacadas são opcionais para destacar habilidades-chave:{" "}
+            <strong>com mais círculos significando maior proficiência.</strong>
           </p>
         </InputGroupWrapper>
 

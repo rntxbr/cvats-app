@@ -1,19 +1,16 @@
 "use client";
 
-import { useState } from "react";
-import { LockClosedIcon, ArrowUpTrayIcon, ArrowRightIcon, DocumentTextIcon } from "@heroicons/react/24/solid";
 import { XMarkIcon } from "@heroicons/react/24/outline";
-import {
-  getHasUsedAppBefore,
-  saveStateToLocalStorage,
-} from "@/app/lib/redux/local-storage";
-import { type ShowForm, initialSettings } from "@/app/lib/redux/settingsSlice";
+import { ArrowRightIcon, ArrowUpTrayIcon, DocumentTextIcon } from "@heroicons/react/24/solid";
 import { useRouter } from "next/navigation";
-const addPdfSrc = "/assets/add-pdf.svg";
-import Image from "next/image";
+import { useState } from "react";
+import { getHasUsedAppBefore, saveStateToLocalStorage } from "@/app/lib/redux/local-storage";
+import { initialSettings, type ShowForm } from "@/app/lib/redux/settingsSlice";
+
+const _addPdfSrc = "/assets/add-pdf.svg";
+
 import { cx } from "@/app/lib/cx";
 import { deepClone } from "@/app/lib/deep-clone";
- 
 
 const defaultFileState = {
   name: "",
@@ -31,7 +28,7 @@ export const ResumeDropzone = ({
   playgroundView?: boolean;
 }) => {
   const [file, setFile] = useState(defaultFileState);
-  const [isHoveredOnDropzone, setIsHoveredOnDropzone] = useState(false);
+  const [_isHoveredOnDropzone, setIsHoveredOnDropzone] = useState(false);
   const [hasNonPdfFile, setHasNonPdfFile] = useState(false);
   const router = useRouter();
 
@@ -100,8 +97,6 @@ export const ResumeDropzone = ({
   return (
     <div
       className="flex justify-center rounded-3xl border-2 border-dashed border-[#28584c] p-10"
-     
-
       onDragOver={(event) => {
         event.preventDefault();
         setIsHoveredOnDropzone(true);
@@ -109,22 +104,13 @@ export const ResumeDropzone = ({
       onDragLeave={() => setIsHoveredOnDropzone(false)}
       onDrop={onDrop}
     >
-      <div
-        className="flex flex-col justify-center items-center space-y-4"
-      >
-        {!playgroundView && (
-         <DocumentTextIcon className="h-16 w-16 text-[#28584c]" />
-        )}
+      <div className="flex flex-col justify-center items-center space-y-4">
+        {!playgroundView && <DocumentTextIcon className="h-16 w-16 text-[#28584c]" />}
         {!hasFile ? (
           <>
-            <h2
-              className="text-2xl font-bold text-[#28584c] max-w-lg"
-            >
-              Carregue um arquivo PDF. 
-            </h2>
+            <h2 className="text-2xl font-bold text-[#28584c] max-w-lg">Carregue um arquivo PDF.</h2>
             <p className="text-lg text-[#28584c] max-w-lg">
-            
-             Importe seu currículo em PDF para extrair os dados e agilizar o preenchimento.
+              Importe seu currículo em PDF para extrair os dados e agilizar o preenchimento.
             </p>
           </>
         ) : (
@@ -145,18 +131,10 @@ export const ResumeDropzone = ({
         <div className="flex flex-col items-center justify-center">
           {!hasFile ? (
             <>
-              <label
-                className="cursor-pointer bg-[#28584c] text-white px-10 py-4 rounded-xl font-bold flex items-center gap-4 transition-all duration-200 ease-out hover:-translate-y-0.5 hover:shadow-lg hover:bg-[#1f473d] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#28584c]"
-                
-              >
+              <label className="cursor-pointer bg-[#28584c] text-white px-10 py-4 rounded-xl font-bold flex items-center gap-4 transition-all duration-200 ease-out hover:-translate-y-0.5 hover:shadow-lg hover:bg-[#1f473d] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#28584c]">
                 <ArrowUpTrayIcon className="h-5 w-5" />
                 Procurar arquivo
-                <input
-                  type="file"
-                  className="sr-only"
-                  accept=".pdf"
-                  onChange={onInputChange}
-                />
+                <input type="file" className="sr-only" accept=".pdf" onChange={onInputChange} />
               </label>
               {hasNonPdfFile && (
                 <p className="mt-6 text-red-400">Apenas arquivos PDF são suportados</p>
@@ -170,11 +148,12 @@ export const ResumeDropzone = ({
                   className="cursor-pointer bg-[#28584c] text-white px-10 py-4 rounded-xl font-bold flex justify-center items-center gap-2"
                   onClick={onImportClick}
                 >
-                 Continuar <ArrowRightIcon className="h-4 w-4" />
+                  Continuar <ArrowRightIcon className="h-4 w-4" />
                 </button>
               )}
               <p className={cx(" text-[#28584c]", !playgroundView && "mt-6")}>
-                Aviso: {!playgroundView ? "Importar" : "Analisar"} funciona melhor em currículos de uma coluna
+                Aviso: {!playgroundView ? "Importar" : "Analisar"} funciona melhor em currículos de
+                uma coluna
               </p>
             </>
           )}
@@ -188,8 +167,8 @@ const getFileSizeString = (fileSizeB: number) => {
   const fileSizeKB = fileSizeB / 1024;
   const fileSizeMB = fileSizeKB / 1024;
   if (fileSizeKB < 1000) {
-    return fileSizeKB.toPrecision(3) + " KB";
+    return `${fileSizeKB.toPrecision(3)} KB`;
   } else {
-    return fileSizeMB.toPrecision(3) + " MB";
+    return `${fileSizeMB.toPrecision(3)} MB`;
   }
 };

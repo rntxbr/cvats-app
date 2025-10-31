@@ -1,8 +1,8 @@
 "use client";
-import Link from "next/link";
-import Image from "next/image";
-import { useState } from "react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
+import Image from "next/image";
+import Link from "next/link";
+import { useState } from "react";
 import { useTailwindBreakpoints } from "@/app/lib/hooks/useTailwindBreakpoints";
 
 const logoSrc = "/logo.svg";
@@ -36,13 +36,7 @@ export const TopNavBar = () => {
           <div className="flex items-center gap-2">
             <Link href="/">
               <span className="sr-only">cvats</span>
-              <Image
-                src={logoSrc}
-                alt="cvats Logo"
-                width={80}
-                height={30}
-                priority
-              />
+              <Image src={logoSrc} alt="cvats Logo" width={80} height={30} priority />
             </Link>
           </div>
           <nav className="justify-self-center flex items-center gap-2 flex-wrap justify-center">
@@ -57,7 +51,7 @@ export const TopNavBar = () => {
             ))}
           </nav>
           <Link
-            style={{justifySelf: 'end'}}
+            style={{ justifySelf: "end" }}
             href="/about"
             className="text-green-200 hover:text-[#6aac9c] bg-[#2a4d44] px-4 py-2 rounded-xl min-w-[120px] sm:min-w-[150px] text-center font-bold tracking-tighter text-xs "
           >
@@ -69,26 +63,16 @@ export const TopNavBar = () => {
         <div className="md:hidden flex items-center justify-between">
           <Link href="/" onClick={closeMenu}>
             <span className="sr-only">cvats</span>
-            <Image
-              src={logoSrc}
-              alt="cvats Logo"
-              width={80}
-              height={30}
-              priority
-            />
+            <Image src={logoSrc} alt="cvats Logo" width={80} height={30} priority />
           </Link>
-          
+
           <button
             onClick={toggleMenu}
             className="text-green-200 hover:text-[#6aac9c] p-2 rounded-lg transition-colors"
             aria-label="Toggle menu"
             aria-expanded={isMenuOpen}
           >
-            {isMenuOpen ? (
-              <XMarkIcon className="h-6 w-6" />
-            ) : (
-              <Bars3Icon className="h-6 w-6" />
-            )}
+            {isMenuOpen ? <XMarkIcon className="h-6 w-6" /> : <Bars3Icon className="h-6 w-6" />}
           </button>
 
           {/* Dropdown Menu */}

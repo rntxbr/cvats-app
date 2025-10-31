@@ -9,7 +9,7 @@ export const LottieWorkflow = () => {
     loadedRef.current = true;
     if (typeof window !== "undefined") {
       // Load lottie-player web component once
-      const hasPlayer = document.querySelector('script[data-lottie-player]');
+      const hasPlayer = document.querySelector("script[data-lottie-player]");
       if (!hasPlayer) {
         const script = document.createElement("script");
         script.src = "https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js";
@@ -83,5 +83,3 @@ export const LottieWorkflow = () => {
     </div>
   );
 };
-
-

@@ -1,15 +1,9 @@
-import { Form, FormSection } from "@/components/ResumeForm/Form";
-import {
-  Input,
-  BulletListTextarea,
-} from "@/components/ResumeForm/Form/InputGroup";
-import type { CreateHandleChangeArgsWithDescriptions } from "@/components/ResumeForm/types";
 import { useAppDispatch, useAppSelector } from "@/app/lib/redux/hooks";
-import {
-  changeWorkExperiences,
-  selectWorkExperiences,
-} from "@/app/lib/redux/resumeSlice";
+import { changeWorkExperiences, selectWorkExperiences } from "@/app/lib/redux/resumeSlice";
 import type { ResumeWorkExperience } from "@/app/lib/redux/types";
+import { Form, FormSection } from "@/components/ResumeForm/Form";
+import { BulletListTextarea, Input } from "@/components/ResumeForm/Form/InputGroup";
+import type { CreateHandleChangeArgsWithDescriptions } from "@/components/ResumeForm/types";
 
 export const WorkExperiencesForm = () => {
   const workExperiences = useAppSelector(selectWorkExperiences);
@@ -21,10 +15,7 @@ export const WorkExperiencesForm = () => {
     <Form form="workExperiences" addButtonText="Adicionar Experiência">
       {workExperiences.map(({ company, jobTitle, date, descriptions }, idx) => {
         const handleWorkExperienceChange = (
-          ...[
-            field,
-            value,
-          ]: CreateHandleChangeArgsWithDescriptions<ResumeWorkExperience>
+          ...[field, value]: CreateHandleChangeArgsWithDescriptions<ResumeWorkExperience>
         ) => {
           // TS doesn't support passing union type to single call signature
           // https://github.com/microsoft/TypeScript/issues/54027

@@ -1,11 +1,11 @@
 import { View } from "@react-pdf/renderer";
+import type { ResumeWorkExperience } from "@/app/lib/redux/types";
 import {
-  ResumePDFSection,
   ResumePDFBulletList,
+  ResumePDFSection,
   ResumePDFText,
 } from "@/components/Resume/ResumePDF/common";
-import { styles, spacing } from "@/components/Resume/ResumePDF/styles";
-import type { ResumeWorkExperience } from "@/app/lib/redux/types";
+import { spacing, styles } from "@/components/Resume/ResumePDF/styles";
 
 export const ResumePDFWorkExperience = ({
   heading,
@@ -20,20 +20,15 @@ export const ResumePDFWorkExperience = ({
     <ResumePDFSection themeColor={themeColor} heading={heading}>
       {workExperiences.map(({ company, jobTitle, date, descriptions }, idx) => {
         // Hide company name if it is the same as the previous company
-        const hideCompanyName =
-          idx > 0 && company === workExperiences[idx - 1].company;
+        const hideCompanyName = idx > 0 && company === workExperiences[idx - 1].company;
 
         return (
           <View key={idx} style={idx !== 0 ? { marginTop: spacing["2"] } : {}}>
-            {!hideCompanyName && (
-              <ResumePDFText bold={true}>{company}</ResumePDFText>
-            )}
+            {!hideCompanyName && <ResumePDFText bold={true}>{company}</ResumePDFText>}
             <View
               style={{
                 ...styles.flexRowBetween,
-                marginTop: hideCompanyName
-                  ? "-" + spacing["1"]
-                  : spacing["1.5"],
+                marginTop: hideCompanyName ? `-${spacing["1"]}` : spacing["1.5"],
               }}
             >
               <ResumePDFText>{jobTitle}</ResumePDFText>

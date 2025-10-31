@@ -2,8 +2,8 @@
 
 import { Provider } from "react-redux";
 import { store } from "@/app/lib/redux/store";
-import { ResumeForm } from "@/components/ResumeForm";
 import { Resume } from "@/components/Resume";
+import { ResumeForm } from "@/components/ResumeForm";
 
 export default function ClientPage() {
   return (
@@ -21,5 +21,3 @@ export default function ClientPage() {
     </Provider>
   );
 }
-
-

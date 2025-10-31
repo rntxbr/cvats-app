@@ -1,8 +1,8 @@
 "use client";
 
-import { useEffect } from "react";
 import { usePathname } from "next/navigation";
 import Script from "next/script";
+import { useEffect } from "react";
 
 export const GoogleAnalytics = () => {
   const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
@@ -34,7 +34,7 @@ export const GoogleAnalytics = () => {
         }}
       />
       {/* Pageview em mudanças de rota (App Router) */}
-      <RouteChangeTracker measurementId={GA_MEASUREMENT_ID} pathname={pathname || '/'} />
+      <RouteChangeTracker measurementId={GA_MEASUREMENT_ID} pathname={pathname || "/"} />
     </>
   );
 };

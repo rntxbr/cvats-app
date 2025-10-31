@@ -1,11 +1,11 @@
 import { View } from "@react-pdf/renderer";
-import {
-  ResumePDFSection,
-  ResumePDFBulletList,
-  ResumeFeaturedSkill,
-} from "@/components/Resume/ResumePDF/common";
-import { styles, spacing } from "@/components/Resume/ResumePDF/styles";
 import type { ResumeSkills } from "@/app/lib/redux/types";
+import {
+  ResumeFeaturedSkill,
+  ResumePDFBulletList,
+  ResumePDFSection,
+} from "@/components/Resume/ResumePDF/common";
+import { spacing, styles } from "@/components/Resume/ResumePDF/styles";
 
 export const ResumePDFSkills = ({
   heading,
@@ -56,10 +56,7 @@ export const ResumePDFSkills = ({
         </View>
       )}
       <View style={{ ...styles.flexCol }}>
-        <ResumePDFBulletList
-          items={descriptions}
-          showBulletPoints={showBulletPoints}
-        />
+        <ResumePDFBulletList items={descriptions} showBulletPoints={showBulletPoints} />
       </View>
     </ResumePDFSection>
   );

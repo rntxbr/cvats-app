@@ -16,17 +16,11 @@ export const Table = ({
   const tableHeader = table[0];
   const tableBody = table.slice(1);
   return (
-    <table
-      className={cx("w-full divide-y border text-sm text-gray-900", className)}
-    >
+    <table className={cx("w-full divide-y border text-sm text-gray-900", className)}>
       <thead className="divide-y bg-gray-50 text-left align-top">
         {title && (
           <tr className="divide-x bg-gray-50">
-            <th
-              className="px-2 py-1.5 font-bold"
-              scope="colSpan"
-              colSpan={tableHeader.length}
-            >
+            <th className="px-2 py-1.5 font-bold" scope="colSpan" colSpan={tableHeader.length}>
               {title}
             </th>
           </tr>
@@ -43,10 +37,7 @@ export const Table = ({
         {tableBody.map((row, rowIdx) => (
           <tr className={cx("divide-x", trClassNames[rowIdx])} key={rowIdx}>
             {row.map((item, colIdx) => (
-              <td
-                className={cx("px-2 py-1.5", tdClassNames[colIdx])}
-                key={colIdx}
-              >
+              <td className={cx("px-2 py-1.5", tdClassNames[colIdx])} key={colIdx}>
                 {item}
               </td>
             ))}

@@ -1,13 +1,11 @@
-import type { TextItem, FeatureSet } from "@/app/lib/parse-resume-from-pdf/types";
+import type { FeatureSet, TextItem } from "@/app/lib/parse-resume-from-pdf/types";
 
-const isTextItemBold = (fontName: string) =>
-  fontName.toLowerCase().includes("bold");
+const isTextItemBold = (fontName: string) => fontName.toLowerCase().includes("bold");
 export const isBold = (item: TextItem) => isTextItemBold(item.fontName);
 export const hasLetter = (item: TextItem) => /\p{L}/u.test(item.text);
 export const hasNumber = (item: TextItem) => /[0-9]/.test(item.text);
 export const hasComma = (item: TextItem) => item.text.includes(",");
-export const getHasText = (text: string) => (item: TextItem) =>
-  item.text.includes(text);
+export const getHasText = (text: string) => (item: TextItem) => item.text.includes(text);
 export const hasOnlyLettersSpacesAmpersands = (item: TextItem) =>
   /^[\p{L}\p{M}\s&]+$/u.test(item.text);
 export const hasLetterAndIsAllUpperCase = (item: TextItem) =>
@@ -48,9 +46,7 @@ const hasMonth = (item: TextItem) => {
   const text = item.text.toLowerCase();
   const matchEnglish = MONTHS_EN.some(
     (month) =>
-      text.includes(month) ||
-      text.includes(month.slice(0, 4)) ||
-      text.includes(month.slice(0, 3))
+      text.includes(month) || text.includes(month.slice(0, 4)) || text.includes(month.slice(0, 3))
   );
   const matchPortuguese = MONTHS_PT.some((month) => {
     const base = month.normalize("NFD").replace(/\p{M}/gu, "");
@@ -64,13 +60,7 @@ const hasMonth = (item: TextItem) => {
   return matchEnglish || matchPortuguese;
 };
 const SEASONS_EN = ["summer", "fall", "spring", "winter"];
-const SEASONS_PT = [
-  "verão",
-  "verao",
-  "outono",
-  "primavera",
-  "inverno",
-];
+const SEASONS_PT = ["verão", "verao", "outono", "primavera", "inverno"];
 const hasSeason = (item: TextItem) => {
   const text = item.text.toLowerCase();
   const normalizedText = text.normalize("NFD").replace(/\p{M}/gu, "");
@@ -96,10 +86,7 @@ const hasPresent = (item: TextItem) => {
   const text = item.text.toLowerCase();
   const normalizedText = text.normalize("NFD").replace(/\p{M}/gu, "");
   return PRESENT_KEYWORDS.some((keyword) => {
-    const normalizedKeyword = keyword
-      .toLowerCase()
-      .normalize("NFD")
-      .replace(/\p{M}/gu, "");
+    const normalizedKeyword = keyword.toLowerCase().normalize("NFD").replace(/\p{M}/gu, "");
     return normalizedText.includes(normalizedKeyword);
   });
 };

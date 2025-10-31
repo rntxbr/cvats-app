@@ -1,12 +1,9 @@
-import { Form, FormSection } from "@/components/ResumeForm/Form";
-import {
-  Input,
-  BulletListTextarea,
-} from "@/components/ResumeForm/Form/InputGroup";
-import type { CreateHandleChangeArgsWithDescriptions } from "@/components/ResumeForm/types";
 import { useAppDispatch, useAppSelector } from "@/app/lib/redux/hooks";
-import { selectProjects, changeProjects } from "@/app/lib/redux/resumeSlice";
+import { changeProjects, selectProjects } from "@/app/lib/redux/resumeSlice";
 import type { ResumeProject } from "@/app/lib/redux/types";
+import { Form, FormSection } from "@/components/ResumeForm/Form";
+import { BulletListTextarea, Input } from "@/components/ResumeForm/Form/InputGroup";
+import type { CreateHandleChangeArgsWithDescriptions } from "@/components/ResumeForm/types";
 
 export const ProjectsForm = () => {
   const projects = useAppSelector(selectProjects);
@@ -17,10 +14,7 @@ export const ProjectsForm = () => {
     <Form form="projects" addButtonText="Add Project">
       {projects.map(({ project, date, descriptions }, idx) => {
         const handleProjectChange = (
-          ...[
-            field,
-            value,
-          ]: CreateHandleChangeArgsWithDescriptions<ResumeProject>
+          ...[field, value]: CreateHandleChangeArgsWithDescriptions<ResumeProject>
         ) => {
           dispatch(changeProjects({ idx, field, value } as any));
         };

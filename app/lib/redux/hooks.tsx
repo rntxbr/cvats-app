@@ -1,21 +1,10 @@
 import { useEffect } from "react";
-import {
-  useDispatch,
-  useSelector,
-  type TypedUseSelectorHook,
-} from "react-redux";
-import { store, type RootState, type AppDispatch } from "@/app/lib/redux/store";
-import {
-  loadStateFromLocalStorage,
-  saveStateToLocalStorage,
-} from "@/app/lib/redux/local-storage";
-import { initialResumeState, setResume } from "@/app/lib/redux/resumeSlice";
-import {
-  initialSettings,
-  setSettings,
-  type Settings,
-} from "@/app/lib/redux/settingsSlice";
+import { type TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import { deepMerge } from "@/app/lib/deep-merge";
+import { loadStateFromLocalStorage, saveStateToLocalStorage } from "@/app/lib/redux/local-storage";
+import { initialResumeState, setResume } from "@/app/lib/redux/resumeSlice";
+import { initialSettings, type Settings, setSettings } from "@/app/lib/redux/settingsSlice";
+import { type AppDispatch, type RootState, store } from "@/app/lib/redux/store";
 import type { Resume } from "@/app/lib/redux/types";
 
 export const useAppDispatch: () => AppDispatch = useDispatch;
@@ -42,18 +31,12 @@ export const useSetInitialStore = () => {
       // We merge the initial state with the stored state to ensure
       // backward compatibility, since new fields might be added to
       // the initial state over time.
-      const mergedResumeState = deepMerge(
-        initialResumeState,
-        state.resume
-      ) as Resume;
+      const mergedResumeState = deepMerge(initialResumeState, state.resume) as Resume;
       dispatch(setResume(mergedResumeState));
     }
     if (state.settings) {
-      const mergedSettingsState = deepMerge(
-        initialSettings,
-        state.settings
-      ) as Settings;
+      const mergedSettingsState = deepMerge(initialSettings, state.settings) as Settings;
       dispatch(setSettings(mergedSettingsState));
     }
-  }, []);
+  }, [dispatch]);
 };

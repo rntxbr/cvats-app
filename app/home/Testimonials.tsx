@@ -1,6 +1,7 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
+import type React from "react";
+import { useEffect, useRef, useState } from "react";
 import { useTailwindBreakpoints } from "@/app/lib/hooks/useTailwindBreakpoints";
 
 const heartSrc = "/assets/heart.svg";
@@ -41,9 +42,7 @@ const SM_TESTIMONIALS_CLASSNAMES = ["z-10", "opacity-0", "opacity-0"];
 const ROTATION_INTERVAL_MS = 8 * 1000; // 8s
 
 export const Testimonials = ({ children }: { children?: React.ReactNode }) => {
-  const [testimonialsClassNames, setTestimonialsClassNames] = useState(
-    LG_TESTIMONIALS_CLASSNAMES
-  );
+  const [testimonialsClassNames, setTestimonialsClassNames] = useState(LG_TESTIMONIALS_CLASSNAMES);
   const isHoveredOnTestimonial = useRef(false);
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -58,16 +57,20 @@ export const Testimonials = ({ children }: { children?: React.ReactNode }) => {
 
   const { isLg } = useTailwindBreakpoints();
   useEffect(() => {
-    setTestimonialsClassNames(
-      isLg ? LG_TESTIMONIALS_CLASSNAMES : SM_TESTIMONIALS_CLASSNAMES
-    );
+    setTestimonialsClassNames(isLg ? LG_TESTIMONIALS_CLASSNAMES : SM_TESTIMONIALS_CLASSNAMES);
   }, [isLg]);
 
   return (
     <section className="mx-auto -mt-2 px-8 pb-24">
       <h2 className="mb-8 text-center text-3xl font-bold">
         People{" "}
-        <Image src={heartSrc} alt="love" className="-mt-1 inline-block w-7" width={28} height={28} />{" "}
+        <Image
+          src={heartSrc}
+          alt="love"
+          className="-mt-1 inline-block w-7"
+          width={28}
+          height={28}
+        />{" "}
         cvats
       </h2>
       <div className="mx-auto mt-10 h-[235px] max-w-lg lg:h-[400px] lg:pt-28">
@@ -99,17 +102,12 @@ export const Testimonials = ({ children }: { children?: React.ReactNode }) => {
                   />
                   <div>
                     <blockquote>
-                      <p className="before:content-['“'] after:content-['”']">
-                        {quote}
-                      </p>
+                      <p className="before:content-['“'] after:content-['”']">{quote}</p>
                     </blockquote>
                     <figcaption className="mt-3">
                       <div className="hidden gap-2 lg:flex">
                         <div className="font-semibold">{name}</div>
-                        <div
-                          className="select-none text-gray-700"
-                          aria-hidden="true"
-                        >
+                        <div className="select-none text-gray-700" aria-hidden="true">
                           •
                         </div>
                         <div className="text-gray-600">{title}</div>

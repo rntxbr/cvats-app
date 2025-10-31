@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 
 /**
  * Hook to autosize textarea height.
@@ -10,27 +10,27 @@ import { useEffect, useRef } from "react";
  * const textareaRef = useAutosizeTextareaHeight({ value });
  * <textarea ref={textareaRef} className="resize-none overflow-hidden"/>
  */
-export const useAutosizeTextareaHeight = ({ value }: { value: string }) => {
+export const useAutosizeTextareaHeight = ({ value: _value }: { value: string }) => {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
-  const resizeHeight = () => {
+  const resizeHeight = useCallback(() => {
     const textarea = textareaRef.current;
     if (textarea) {
       textarea.style.height = "0px";
       textarea.style.height = `${textarea.scrollHeight}px`;
     }
-  };
+  }, []);
 
   // Resize height when value changes
   useEffect(() => {
     resizeHeight();
-  }, [value]);
+  }, [resizeHeight]);
 
   // Resize height when viewport resizes
   useEffect(() => {
     window.addEventListener("resize", resizeHeight);
     return () => window.removeEventListener("resize", resizeHeight);
-  }, []);
+  }, [resizeHeight]);
 
   return textareaRef;
 };

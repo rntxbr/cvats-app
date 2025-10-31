@@ -1,12 +1,9 @@
+import { useAppDispatch, useAppSelector } from "@/app/lib/redux/hooks";
+import { changeCustom, selectCustom } from "@/app/lib/redux/resumeSlice";
+import { changeShowBulletPoints, selectShowBulletPoints } from "@/app/lib/redux/settingsSlice";
 import { Form } from "@/components/ResumeForm/Form";
 import { BulletListIconButton } from "@/components/ResumeForm/Form/IconButton";
 import { BulletListTextarea } from "@/components/ResumeForm/Form/InputGroup";
-import { useAppDispatch, useAppSelector } from "@/app/lib/redux/hooks";
-import { changeCustom, selectCustom } from "@/app/lib/redux/resumeSlice";
-import {
-  selectShowBulletPoints,
-  changeShowBulletPoints,
-} from "@/app/lib/redux/settingsSlice";
 
 export const CustomForm = () => {
   const custom = useAppSelector(selectCustom);

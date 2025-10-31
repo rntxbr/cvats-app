@@ -1,10 +1,10 @@
-import type { Resume } from "@/app/lib/redux/types";
-import type { ResumeSectionToLines } from "@/app/lib/parse-resume-from-pdf/types";
-import { extractProfile } from "@/app/lib/parse-resume-from-pdf/extract-resume-from-sections/extract-profile";
 import { extractEducation } from "@/app/lib/parse-resume-from-pdf/extract-resume-from-sections/extract-education";
-import { extractWorkExperience } from "@/app/lib/parse-resume-from-pdf/extract-resume-from-sections/extract-work-experience";
+import { extractProfile } from "@/app/lib/parse-resume-from-pdf/extract-resume-from-sections/extract-profile";
 import { extractProject } from "@/app/lib/parse-resume-from-pdf/extract-resume-from-sections/extract-project";
 import { extractSkills } from "@/app/lib/parse-resume-from-pdf/extract-resume-from-sections/extract-skills";
+import { extractWorkExperience } from "@/app/lib/parse-resume-from-pdf/extract-resume-from-sections/extract-work-experience";
+import type { ResumeSectionToLines } from "@/app/lib/parse-resume-from-pdf/types";
+import type { Resume } from "@/app/lib/redux/types";
 
 /**
  * Step 4. Extract resume from sections.
@@ -20,9 +20,7 @@ import { extractSkills } from "@/app/lib/parse-resume-from-pdf/extract-resume-fr
  * out for all text items within the section, and the text item with the highest computed
  * feature score is identified as the extracted resume attribute.
  */
-export const extractResumeFromSections = (
-  sections: ResumeSectionToLines
-): Resume => {
+export const extractResumeFromSections = (sections: ResumeSectionToLines): Resume => {
   const { profile } = extractProfile(sections);
   const { educations } = extractEducation(sections);
   const { workExperiences } = extractWorkExperience(sections);

@@ -1,0 +1,43 @@
+on:
+    push:
+        branches:
+            - main
+    workflow_dispatch:
+
+jobs:
+    contrib-readme-job:
+        runs-on: ubuntu-latest
+        name: Atualizar lista de contribuidores
+        permissions:
+            contents: write
+            pull-requests: write
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v4
+              with:
+                  fetch-depth: 0
+                  token: ${{ secrets.GITHUB_TOKEN }}
+
+            - name: Setup Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: '20'
+
+            - name: Install all-contributors-cli
+              run: npm install -g all-contributors-cli
+
+            - name: Update contributors
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  GITHUB_REPOSITORY: ${{ github.repository }}
+              run: node .github/scripts/update-contributors.js
+
+            - name: Commit changes
+              run: |
+                  git config --global user.name 'github-actions[bot]'
+                  git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+                  git add README.md .all-contributorsrc
+                  if ! git diff --staged --quiet; then
+                      git commit -m 'docs: atualizar lista de contribuidores [skip ci]'
+                      git push
+                  fi
