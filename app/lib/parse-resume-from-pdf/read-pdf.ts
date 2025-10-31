@@ -2,7 +2,6 @@
 // https://stackoverflow.com/a/63486898/7699841
 import * as pdfjs from "pdfjs-dist";
 
-// @ts-expect-error
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   "pdfjs-dist/build/pdf.worker.min.mjs",
   import.meta.url
