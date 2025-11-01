@@ -3,23 +3,41 @@
   "short_name": "CVAts",
   "description": "Criador de currículos gratuito e otimizado para sistemas ATS. Crie seu currículo profissional em minutos.",
   "start_url": "/",
+  "scope": "/",
   "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#000000",
+  "background_color": "#f1eee1",
+  "theme_color": "#28584c",
   "orientation": "portrait-primary",
   "icons": [
     {
       "src": "/logo.svg",
       "sizes": "any",
-      "type": "image/svg+xml"
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
     },
     {
       "src": "/favicon.ico",
       "sizes": "48x48",
       "type": "image/x-icon"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
     }
   ],
-  "categories": ["productivity", "business"],
+  "categories": ["productivity", "business", "education"],
   "lang": "pt-BR",
-  "dir": "ltr"
+  "dir": "ltr",
+  "screenshots": [
+    {
+      "src": "/og-image.png",
+      "sizes": "1200x630",
+      "type": "image/png"
+    }
+  ],
+  "i18n": {
+    "start_url": "/",
+    "scope": "/"
+  }
 }

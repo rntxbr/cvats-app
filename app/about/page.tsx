@@ -5,19 +5,62 @@ import {
   InformationCircleIcon,
   RocketLaunchIcon,
 } from "@heroicons/react/24/outline";
+import { StructuredData } from "@/app/lib/seo/structured-data";
+
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://cvats.com.br";
 
 export const metadata = {
   title: "Sobre o Projeto | cvats",
   description:
-    "Entenda a proposta do cvats, o problema que resolve e como participar do projeto open-source.",
+    "Entenda a proposta do cvats, o problema que resolve e como participar do projeto open-source. Descubra como contribuir para o desenvolvimento de um criador de currículos gratuito e otimizado para ATS.",
+  keywords: [
+    "sobre cvats",
+    "projeto open source",
+    "criador de currículos",
+    "contribuir projeto",
+    "código aberto",
+    "github cvats",
+  ],
   alternates: {
     canonical: "/about",
   },
+  openGraph: {
+    title: "Sobre o Projeto | cvats",
+    description:
+      "Entenda a proposta do cvats, o problema que resolve e como participar do projeto open-source.",
+    url: `${siteUrl}/about`,
+    type: "website",
+  },
+  twitter: {
+    card: "summary",
+    title: "Sobre o Projeto | cvats",
+    description:
+      "Entenda a proposta do cvats, o problema que resolve e como participar do projeto open-source.",
+  },
+};
+
+const breadcrumbSchema = {
+  itemListElement: [
+    {
+      "@type": "ListItem",
+      position: 1,
+      name: "Início",
+      item: siteUrl,
+    },
+    {
+      "@type": "ListItem",
+      position: 2,
+      name: "Sobre",
+      item: `${siteUrl}/about`,
+    },
+  ],
 };
 
 export default function AboutPage() {
   return (
-    <main className="bg-[#f1eee1] mx-auto max-w-screen-2xl bg-dot px-8 pb-32 text-gray-900 lg:px-12 py-32 lg:py-24">
+    <>
+      <StructuredData type="BreadcrumbList" data={breadcrumbSchema} />
+      <main className="bg-[#f1eee1] mx-auto max-w-screen-2xl bg-dot px-8 pb-32 text-gray-900 lg:px-12 py-32 lg:py-24">
       <section className="pt-12">
         <div className="flex items-start gap-3">
           <InformationCircleIcon className="h-7 w-7 text-[#28584c]" aria-hidden="true" />
@@ -132,5 +175,6 @@ export default function AboutPage() {
         </ul>
       </section>
     </main>
+    </>
   );
 }

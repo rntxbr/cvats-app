@@ -1,11 +1,12 @@
 import { ArrowRightIcon } from "@heroicons/react/24/solid";
 import Link from "next/link";
-import { LottieWorkflow } from "./LottieWorkflow";
+// import { LottieWorkflow } from "./LottieWorkflow";
+import Image from "next/image";
 
 export const Hero = () => {
   return (
-    <section className="grid grid-cols-1 lg:grid-cols-2 items-center gap-4 mt-16 min-h-[70vh] py-10">
-      <div className="w-full flex flex-col items-center lg:items-start justify-center text-center lg:text-left mt-10">
+    <section className="container grid grid-cols-1 lg:grid-cols-2 items-center gap-2 mt-16 min-h-[70vh] p-10 ">
+      <div className="flex flex-col items-center lg:items-start justify-center text-center lg:text-left mt-10">
         <span className="text-xs sm:text-sm bg-[#28584c36] text-[#28584c] px-6 sm:px-8 py-1.5 sm:py-2 rounded-full font-bold inline-block ">
           Seu futuro profissional começa aqui.
         </span>
@@ -33,11 +34,18 @@ export const Hero = () => {
         </div>
         <p className="mt-3 text-sm text-[#28584c] font-bold lg:ml-2">Não é necessário cadastro</p>
       </div>
-      <div className="hidden lg:flex relative overflow-hidden mt-10">
-        <div className="absolute right-0 h-64 w-64 bg-[#28584c36] rounded-3xl"></div>
-        <div className="absolute left-0 bottom-0 h-64 w-64 bg-[#28584c36] rounded-3xl"></div>
-        <div className="w-full overflow-visible ">
-          <LottieWorkflow />
+      <div className="w-full hidden lg:flex relative overflow-hidden mt-10 ">
+        <div className="absolute right-0 h-84 w-64 bg-[#28584c85] rounded-3xl z-0"></div>
+        <div className="absolute left-0 bottom-0 h-64 w-64 bg-[#28584c] rounded-3xl z-0"></div>
+        <div className="w-full relative z-20 flex justify-center items-center">
+          {/* <LottieWorkflow /> */}
+          <Image
+          src="/assets/resume.svg"
+          width={450}
+          height={500}
+          alt="Curriculo Imagem"
+          className="relative z-1 "
+          />
         </div>
       </div>
     </section>
