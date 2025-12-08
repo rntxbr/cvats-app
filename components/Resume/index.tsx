@@ -24,22 +24,30 @@ export const Resume = () => {
   const document = (
     <ResumePDF resume={resume} settings={settings} isPDF={true} suppressErrorMessages={false} />
   );
-  
-  // Key baseada nos dados principais para forçar remontagem do ResumeControlBar
+
+  // Key baseada em todos os dados que afetam o PDF para forçar remontagem do ResumeControlBar
   // quando os dados mudarem, garantindo que usePDF gere o PDF atualizado
-  // Usando uma hash simples dos dados principais
+  // Usando JSON.stringify para capturar todas as mudanças nos objetos
   const controlBarKey = useMemo(() => {
-    const profileHash = `${resume.profile.name}-${resume.profile.email}-${resume.profile.phone}`;
-    const experiencesHash = resume.workExperiences
-      .map((exp) => `${exp.company}-${exp.jobTitle}`)
-      .join("|");
-    const educationsHash = resume.educations
-      .map((edu) => `${edu.school}-${edu.degree}`)
-      .join("|");
-    const projectsHash = resume.projects.map((proj) => proj.project).join("|");
-    const skillsHash = resume.skills.descriptions.join("|");
-    return `${profileHash}-${experiencesHash}-${educationsHash}-${projectsHash}-${skillsHash}-${settings.documentSize}`;
-  }, [resume, settings.documentSize]);
+    const resumeData = {
+      profile: resume.profile,
+      workExperiences: resume.workExperiences,
+      educations: resume.educations,
+      projects: resume.projects,
+      skills: resume.skills,
+      custom: resume.custom,
+    };
+    const settingsData = {
+      themeColor: settings.themeColor,
+      fontFamily: settings.fontFamily,
+      fontSize: settings.fontSize,
+      documentSize: settings.documentSize,
+      formToHeading: settings.formToHeading,
+      formsOrder: settings.formsOrder,
+      showBulletPoints: settings.showBulletPoints,
+    };
+    return JSON.stringify({ resumeData, settingsData });
+  }, [resume, settings]);
 
   useRegisterReactPDFFont();
   useRegisterReactPDFHyphenationCallback(settings.fontFamily);
