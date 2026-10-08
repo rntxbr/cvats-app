@@ -1,174 +1,168 @@
 "use client";
 
-import { XMarkIcon } from "@heroicons/react/24/outline";
-import { ArrowRightIcon, ArrowUpTrayIcon, DocumentTextIcon } from "@heroicons/react/24/solid";
+import { ArrowUpTrayIcon, InformationCircleIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
-import { getHasUsedAppBefore, saveStateToLocalStorage } from "@/app/lib/redux/local-storage";
-import { initialSettings, type ShowForm } from "@/app/lib/redux/settingsSlice";
-
-const _addPdfSrc = "/assets/add-pdf.svg";
-
+import { useEffect, useRef, useState } from "react";
 import { cx } from "@/app/lib/cx";
 import { deepClone } from "@/app/lib/deep-clone";
-
-const defaultFileState = {
-  name: "",
-  size: 0,
-  fileUrl: "",
-};
+import { saveStateToLocalStorage } from "@/app/lib/redux/local-storage";
+import { initialSettings } from "@/app/lib/redux/settingsSlice";
+import { IconButton } from "@/components/Button";
 
 export const ResumeDropzone = ({
   onFileUrlChange,
   className,
   playgroundView = false,
 }: {
-  onFileUrlChange: (fileUrl: string) => void;
+  onFileUrlChange: (url: string) => void;
   className?: string;
   playgroundView?: boolean;
 }) => {
-  const [file, setFile] = useState(defaultFileState);
-  const [_isHoveredOnDropzone, setIsHoveredOnDropzone] = useState(false);
-  const [hasNonPdfFile, setHasNonPdfFile] = useState(false);
   const router = useRouter();
+  const [file, setFile] = useState<File | null>(null);
+  const [error, setError] = useState("");
+  const [busy, setBusy] = useState(false);
+  const [hovered, setHovered] = useState(false);
+  const objectUrl = useRef("");
+  const inputRef = useRef<HTMLInputElement>(null);
+  const selection = useRef(0);
+  useEffect(
+    () => () => {
+      selection.current++;
+      if (objectUrl.current) URL.revokeObjectURL(objectUrl.current);
+    },
+    []
+  );
 
-  const hasFile = Boolean(file.name);
-
-  const setNewFile = (newFile: File) => {
-    if (file.fileUrl) {
-      URL.revokeObjectURL(file.fileUrl);
+  const selectFile = async (candidate?: File) => {
+    if (!candidate || busy) return;
+    const version = ++selection.current;
+    setError("");
+    if (!/\.pdf$/i.test(candidate.name)) {
+      setError("Selecione um arquivo PDF.");
+      return;
     }
-
-    const { name, size } = newFile;
-    const fileUrl = URL.createObjectURL(newFile);
-    setFile({ name, size, fileUrl });
-    onFileUrlChange(fileUrl);
-  };
-
-  const onDrop = (event: React.DragEvent<HTMLDivElement>) => {
-    event.preventDefault();
-    const newFile = event.dataTransfer.files[0];
-    if (newFile.name.endsWith(".pdf")) {
-      setHasNonPdfFile(false);
-      setNewFile(newFile);
-    } else {
-      setHasNonPdfFile(true);
+    if (candidate.size === 0 || candidate.size > 10 * 1024 * 1024) {
+      setError("O arquivo deve ter entre 1 byte e 10 MB.");
+      return;
     }
-    setIsHoveredOnDropzone(false);
+    try {
+      const signature = new TextDecoder().decode(await candidate.slice(0, 5).arrayBuffer());
+      if (version !== selection.current) return;
+      if (signature !== "%PDF-") {
+        setError("O arquivo não contém um PDF válido.");
+        return;
+      }
+      if (objectUrl.current) URL.revokeObjectURL(objectUrl.current);
+      objectUrl.current = URL.createObjectURL(candidate);
+      setFile(candidate);
+      onFileUrlChange(objectUrl.current);
+    } catch {
+      if (version === selection.current)
+        setError("Não foi possível abrir o arquivo. Selecione-o novamente.");
+    }
   };
-
-  const onInputChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    const files = event.target.files;
-    if (!files) return;
-
-    const newFile = files[0];
-    setNewFile(newFile);
-  };
-
-  const onRemove = () => {
-    setFile(defaultFileState);
+  const remove = () => {
+    selection.current++;
+    if (objectUrl.current) URL.revokeObjectURL(objectUrl.current);
+    objectUrl.current = "";
+    setFile(null);
+    setError("");
     onFileUrlChange("");
+    if (inputRef.current) inputRef.current.value = "";
   };
-
-  const onImportClick = async () => {
-    const { parseResumeFromPdf } = await import("@/app/lib/parse-resume-from-pdf");
-    const resume = await parseResumeFromPdf(file.fileUrl);
-    const settings = deepClone(initialSettings);
-
-    // Set formToShow settings based on uploaded resume if users have used the app before
-    if (getHasUsedAppBefore()) {
-      const sections = Object.keys(settings.formToShow) as ShowForm[];
-      const sectionToFormToShow: Record<ShowForm, boolean> = {
+  const importResume = async () => {
+    if (!file || busy) return;
+    setBusy(true);
+    setError("");
+    try {
+      const { parseResumeFromPdf } = await import("@/app/lib/parse-resume-from-pdf");
+      const resume = await parseResumeFromPdf(objectUrl.current);
+      const settings = deepClone(initialSettings);
+      settings.formToShow = {
         workExperiences: resume.workExperiences.length > 0,
         educations: resume.educations.length > 0,
         projects: resume.projects.length > 0,
-        skills: resume.skills.descriptions.length > 0,
+        skills:
+          resume.skills.descriptions.length > 0 ||
+          resume.skills.featuredSkills.some((item) => item.skill.trim()),
         custom: resume.custom.descriptions.length > 0,
       };
-      for (const section of sections) {
-        settings.formToShow[section] = sectionToFormToShow[section];
-      }
+      if (!saveStateToLocalStorage({ resume, settings }))
+        throw new Error(
+          "Não foi possível salvar o currículo neste navegador. Verifique se o armazenamento local está disponível."
+        );
+      router.push("/resume-builder");
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Não foi possível importar o PDF.");
+    } finally {
+      setBusy(false);
     }
-
-    saveStateToLocalStorage({ resume, settings });
-    router.push("/resume-builder");
   };
-
   return (
     <div
-      className="flex justify-center rounded-3xl border-2 border-dashed border-[#28584c] p-10"
+      className={cx(
+        "rounded-2xl border border-dashed bg-white p-5 text-[#28584c]",
+        hovered ? "border-[#28584c] bg-[#f1eee1]" : "border-[#28584c]/40",
+        className
+      )}
       onDragOver={(event) => {
         event.preventDefault();
-        setIsHoveredOnDropzone(true);
+        setHovered(true);
       }}
-      onDragLeave={() => setIsHoveredOnDropzone(false)}
-      onDrop={onDrop}
+      onDragLeave={() => setHovered(false)}
+      onDrop={(event) => {
+        event.preventDefault();
+        setHovered(false);
+        void selectFile(event.dataTransfer.files[0]);
+      }}
     >
-      <div className="flex flex-col justify-center items-center space-y-4">
-        {!playgroundView && <DocumentTextIcon className="h-16 w-16 text-[#28584c]" />}
-        {!hasFile ? (
-          <>
-            <h2 className="text-2xl font-bold text-[#28584c] max-w-lg">Carregue um arquivo PDF.</h2>
-            <p className="text-lg text-[#28584c] max-w-lg">
-              Importe seu currículo em PDF para extrair os dados e agilizar o preenchimento.
-            </p>
-          </>
-        ) : (
-          <div className="flex items-center justify-center gap-3 pt-3">
-            <div className="pl-7 font-semibold text-gray-900">
-              {file.name} - {getFileSizeString(file.size)}
-            </div>
+      <div className="flex items-center justify-between gap-3">
+        <span className="flex items-center gap-2 text-sm font-medium">
+          <ArrowUpTrayIcon className="h-5 w-5" />
+          Arraste seu PDF aqui
+        </span>
+        <IconButton tooltipText="Até 10 MB e 30 páginas. Processado neste navegador. Revise os campos extraídos; PDFs digitalizados precisam de OCR externo.">
+          <InformationCircleIcon className="h-5 w-5" />
+        </IconButton>
+      </div>
+      <input
+        ref={inputRef}
+        type="file"
+        accept=".pdf,application/pdf"
+        disabled={busy}
+        aria-label="Selecionar currículo em PDF"
+        className="mt-4 block w-full text-sm file:mr-3 file:rounded-lg file:border-0 file:bg-[#28584c] file:px-4 file:py-3 file:text-white"
+        onChange={(event) => {
+          void selectFile(event.target.files?.[0]);
+          event.target.value = "";
+        }}
+      />
+      {file && (
+        <div className="mt-4 flex flex-wrap items-center gap-3">
+          <p className="break-all text-sm">
+            {file.name} · {(file.size / 1024).toFixed(1)} KB
+          </p>
+          <IconButton tooltipText="Remover arquivo" disabled={busy} onClick={remove}>
+            <XMarkIcon className="h-5 w-5" />
+          </IconButton>
+          {!playgroundView && (
             <button
               type="button"
-              className="outline-theme-blue rounded-md p-1 bg-red-400 text-white"
-              title="Remover Arquivo"
-              onClick={onRemove}
+              disabled={busy}
+              onClick={importResume}
+              className="rounded-xl bg-[#28584c] px-4 py-3 text-sm text-white disabled:opacity-50"
             >
-              <XMarkIcon className="h-6 w-6" />
+              {busy ? "Importando..." : "Continuar no editor"}
             </button>
-          </div>
-        )}
-        <div className="flex flex-col items-center justify-center">
-          {!hasFile ? (
-            <>
-              <label className="cursor-pointer bg-[#28584c] text-white px-10 py-4 rounded-xl font-bold flex items-center gap-4 transition-all duration-200 ease-out hover:-translate-y-0.5 hover:shadow-lg hover:bg-[#1f473d] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#28584c]">
-                <ArrowUpTrayIcon className="h-5 w-5" />
-                Procurar arquivo
-                <input type="file" className="sr-only" accept=".pdf" onChange={onInputChange} />
-              </label>
-              {hasNonPdfFile && (
-                <p className="mt-6 text-red-400">Apenas arquivos PDF são suportados</p>
-              )}
-            </>
-          ) : (
-            <>
-              {!playgroundView && (
-                <button
-                  type="button"
-                  className="cursor-pointer bg-[#28584c] text-white px-10 py-4 rounded-xl font-bold flex justify-center items-center gap-2"
-                  onClick={onImportClick}
-                >
-                  Continuar <ArrowRightIcon className="h-4 w-4" />
-                </button>
-              )}
-              <p className={cx(" text-[#28584c]", !playgroundView && "mt-6")}>
-                Aviso: {!playgroundView ? "Importar" : "Analisar"} funciona melhor em currículos de
-                uma coluna
-              </p>
-            </>
           )}
         </div>
-      </div>
+      )}
+      {error && (
+        <p role="alert" className="mt-4 text-red-700">
+          {error}
+        </p>
+      )}
     </div>
   );
-};
-
-const getFileSizeString = (fileSizeB: number) => {
-  const fileSizeKB = fileSizeB / 1024;
-  const fileSizeMB = fileSizeKB / 1024;
-  if (fileSizeKB < 1000) {
-    return `${fileSizeKB.toPrecision(3)} KB`;
-  } else {
-    return `${fileSizeMB.toPrecision(3)} MB`;
-  }
 };

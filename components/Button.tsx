@@ -35,9 +35,10 @@ export const IconButton = ({
   <Tooltip text={tooltipText}>
     <Button
       type="button"
+      aria-label={tooltipText}
       className={cx(
-        "cursor-pointer rounded-full outline-none hover:bg-gray-100 focus-visible:bg-gray-100",
-        size === "medium" ? "p-1.5" : "p-1",
+        "inline-flex min-h-9 min-w-9 items-center justify-center cursor-pointer rounded-lg hover:bg-[#f1eee1] focus-visible:outline-2 focus-visible:outline-[#28584c] disabled:cursor-default disabled:opacity-35",
+        size === "medium" ? "p-2" : "p-1.5",
         className
       )}
       {...props}

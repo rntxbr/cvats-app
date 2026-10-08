@@ -12,6 +12,8 @@ import type { Line, Lines, Subsections } from "@/app/lib/parse-resume-from-pdf/t
  * process each subsection to retrieve each's resume attributes and append the results.
  */
 export const divideSectionIntoSubsections = (lines: Lines): Subsections => {
+  lines = lines.filter((line) => line.length > 0);
+  if (!lines.length) return [];
   // The main heuristic to determine a subsection is to check if its vertical line gap
   // is larger than the typical line gap * 1.4
   const isLineNewSubsectionByLineGap = createIsLineNewSubsectionByLineGap(lines);
@@ -48,6 +50,7 @@ const createIsLineNewSubsectionByLineGap = (lines: Lines): IsLineNewSubsection =
   let maxCount = 0;
   for (let i = 1; i < linesY.length; i++) {
     const lineGap = Math.round(linesY[i - 1] - linesY[i]);
+    if (lineGap <= 0 || lines[i - 1][0].page !== lines[i][0].page) continue;
     if (!lineGapToCount[lineGap]) lineGapToCount[lineGap] = 0;
     lineGapToCount[lineGap] += 1;
     if (lineGapToCount[lineGap] > maxCount) {
@@ -59,7 +62,15 @@ const createIsLineNewSubsectionByLineGap = (lines: Lines): IsLineNewSubsection =
   const subsectionLineGapThreshold = lineGapWithMostCount * 1.4;
 
   const isLineNewSubsection = (line: Line, prevLine: Line) => {
-    return Math.round(prevLine[0].y - line[0].y) > subsectionLineGapThreshold;
+    const beginsBoldEntry =
+      isBold(line[0]) &&
+      !prevLine.every(isBold) &&
+      !BULLET_POINTS.some((bullet) => line[0].text.startsWith(bullet));
+    return (
+      beginsBoldEntry ||
+      (prevLine[0].page === line[0].page &&
+        Math.round(prevLine[0].y - line[0].y) > subsectionLineGapThreshold)
+    );
   };
 
   return isLineNewSubsection;

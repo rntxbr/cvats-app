@@ -1,7 +1,10 @@
-import { Link, Text, View } from "@react-pdf/renderer";
+import { Link } from "@react-pdf/renderer";
+import { useContext } from "react";
 import { DEBUG_RESUME_PDF_FLAG } from "@/app/lib/constants";
 import { DEFAULT_FONT_COLOR } from "@/app/lib/redux/settingsSlice";
+import { Text, View } from "@/components/Resume/ResumePDF/primitives";
 import { spacing, styles } from "@/components/Resume/ResumePDF/styles";
+import { TemplateContext } from "@/components/Resume/ResumePDF/templates";
 
 export const ResumePDFSection = ({
   themeColor,
@@ -13,42 +16,59 @@ export const ResumePDFSection = ({
   heading?: string;
   style?: any;
   children: React.ReactNode;
-}) => (
-  <View
-    style={{
-      ...styles.flexCol,
-      gap: spacing["2"],
-      marginTop: spacing["5"],
-      ...style,
-    }}
-  >
-    {heading && (
-      <View style={{ ...styles.flexRow, alignItems: "center" }}>
-        {themeColor && (
-          <View
+}) => {
+  const template = useContext(TemplateContext);
+  return (
+    <View
+      style={{
+        ...styles.flexCol,
+        gap: spacing["2"],
+        marginTop: template === "minimal" ? spacing["3"] : spacing["5"],
+        ...style,
+      }}
+    >
+      {heading && (
+        <View
+          style={{
+            ...styles.flexRow,
+            alignItems: "center",
+            ...(template !== "classic"
+              ? {
+                  borderBottomWidth: template === "executive" ? 1.5 : 0.5,
+                  borderBottomColor: themeColor || DEFAULT_FONT_COLOR,
+                  paddingBottom: 4,
+                }
+              : {}),
+          }}
+        >
+          {themeColor && template === "classic" && (
+            <View
+              style={{
+                height: "3.75pt",
+                width: "30pt",
+                backgroundColor: themeColor,
+                marginRight: spacing["3.5"],
+              }}
+              debug={DEBUG_RESUME_PDF_FLAG}
+            />
+          )}
+          <Text
+            minPresenceAhead={24}
             style={{
-              height: "3.75pt",
-              width: "30pt",
-              backgroundColor: themeColor,
-              marginRight: spacing["3.5"],
+              fontWeight: "bold",
+              color: template === "executive" ? themeColor : DEFAULT_FONT_COLOR,
+              letterSpacing: "0.3pt", // tracking-wide -> 0.025em * 12 pt = 0.3pt
             }}
             debug={DEBUG_RESUME_PDF_FLAG}
-          />
-        )}
-        <Text
-          style={{
-            fontWeight: "bold",
-            letterSpacing: "0.3pt", // tracking-wide -> 0.025em * 12 pt = 0.3pt
-          }}
-          debug={DEBUG_RESUME_PDF_FLAG}
-        >
-          {heading}
-        </Text>
-      </View>
-    )}
-    {children}
-  </View>
-);
+          >
+            {heading}
+          </Text>
+        </View>
+      )}
+      {children}
+    </View>
+  );
+};
 
 export const ResumePDFText = ({
   bold = false,
@@ -84,27 +104,29 @@ export const ResumePDFBulletList = ({
 }) => {
   return (
     <>
-      {items.map((item, idx) => (
-        <View style={{ ...styles.flexRow }} key={idx}>
-          {showBulletPoints && (
-            <ResumePDFText
-              style={{
-                paddingLeft: spacing["2"],
-                paddingRight: spacing["2"],
-                lineHeight: "1.3",
-              }}
-              bold={true}
-            >
-              {"•"}
-            </ResumePDFText>
-          )}
-          {/* A breaking change was introduced causing text layout to be wider than node's width
+      {items
+        .filter((item) => item.trim())
+        .map((item, idx) => (
+          <View style={{ ...styles.flexRow }} key={idx}>
+            {showBulletPoints && (
+              <ResumePDFText
+                style={{
+                  paddingLeft: spacing["2"],
+                  paddingRight: spacing["2"],
+                  lineHeight: "1.3",
+                }}
+                bold={true}
+              >
+                {"•"}
+              </ResumePDFText>
+            )}
+            {/* A breaking change was introduced causing text layout to be wider than node's width
               https://github.com/diegomura/react-pdf/issues/2182. flexGrow & flexBasis fixes it */}
-          <ResumePDFText style={{ lineHeight: "1.3", flexGrow: 1, flexBasis: 0 }}>
-            {item}
-          </ResumePDFText>
-        </View>
-      ))}
+            <ResumePDFText style={{ lineHeight: "1.3", flexGrow: 1, flexBasis: 0 }}>
+              {item}
+            </ResumePDFText>
+          </View>
+        ))}
     </>
   );
 };

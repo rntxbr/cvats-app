@@ -29,16 +29,15 @@ const Selection = ({
   };
 
   return (
-    <div
+    <button
+      type="button"
+      aria-pressed={isSelected}
       className="flex w-[105px] cursor-pointer items-center justify-center rounded-md border border-gray-300 py-1.5 shadow-sm hover:border-gray-400 hover:bg-gray-100"
       onClick={onClick}
       style={isSelected ? selectedStyle : style}
-      onKeyDown={(e) => {
-        if (["Enter", " "].includes(e.key)) onClick();
-      }}
     >
       {children}
-    </div>
+    </button>
   );
 };
 
@@ -104,7 +103,7 @@ export const FontSizeSelections = ({
 
   return (
     <SelectionsWrapper>
-      {["Compact", "Standard", "Large"].map((type, idx) => {
+      {["Compacta", "Padrão", "Maior"].map((type, idx) => {
         const fontSizePt = String(compactSizePt + idx);
         const isSelected = fontSizePt === selectedFontSize;
         return (
@@ -147,9 +146,6 @@ export const DocumentSizeSelections = ({
           >
             <div className="flex flex-col items-center">
               <div>{type}</div>
-              <div className="text-xs">
-                {type === "Letter" ? "(US, Canada)" : "(other countries)"}
-              </div>
             </div>
           </Selection>
         );

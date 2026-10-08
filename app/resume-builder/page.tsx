@@ -1,10 +1,10 @@
-import ClientPage from "./page.client";
 import { StructuredData } from "@/app/lib/seo/structured-data";
+import ClientPage from "./page.client";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://cvats.com.br";
 
 export const metadata = {
-  title: "Criar Currículo | cvats",
+  title: "Criar Currículo",
   description:
     "Monte seu currículo compatível com ATS. Edite seções, visualize em tempo real e exporte em PDF. Interface intuitiva e sem necessidade de cadastro.",
   keywords: [

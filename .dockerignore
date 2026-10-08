@@ -1,4 +1,7 @@
 node_modules
 .next
-.vscode
 .git
+.env*
+coverage
+tmp
+*.tsbuildinfo

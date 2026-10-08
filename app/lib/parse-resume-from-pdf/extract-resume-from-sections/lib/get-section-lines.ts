@@ -7,14 +7,15 @@ export const getSectionLinesByKeywords = (sections: ResumeSectionToLines, keywor
   const normalizeForSearch = (value: string) =>
     value.normalize("NFD").replace(/\p{M}/gu, "").toLowerCase();
   const normalizedKeywords = keywords.map((keyword) => normalizeForSearch(keyword));
+  const lines = [];
   for (const sectionName in sections) {
     const normalizedSectionName = normalizeForSearch(sectionName);
     const hasKeyWord = normalizedKeywords.some((keyword) =>
       normalizedSectionName.includes(keyword)
     );
     if (hasKeyWord) {
-      return sections[sectionName];
+      lines.push(...sections[sectionName]);
     }
   }
-  return [];
+  return lines;
 };

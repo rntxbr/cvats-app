@@ -6,7 +6,7 @@ import { readPdf } from "@/app/lib/parse-resume-from-pdf/read-pdf";
 /**
  * Resume parser util that parses a resume from a resume pdf file
  *
- * Note: The parser algorithm only works for single column resume in English language
+ * Heuristic extraction works best with single-column resumes in Portuguese or English.
  */
 export const parseResumeFromPdf = async (fileUrl: string) => {
   // Step 1. Read a pdf resume file into text items to prepare for processing

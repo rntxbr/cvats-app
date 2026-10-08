@@ -25,7 +25,7 @@ export const CustomForm = () => {
       <div className="col-span-full grid grid-cols-6 gap-3">
         <div className="relative col-span-full">
           <BulletListTextarea
-            label="Custom Textbox"
+            label="Conteúdo"
             labelClassName="col-span-full"
             name="descriptions"
             placeholder="Bullet points"
@@ -33,7 +33,7 @@ export const CustomForm = () => {
             onChange={handleCustomChange}
             showBulletPoints={showBulletPoints}
           />
-          <div className="absolute left-[7.7rem] top-[0.07rem]">
+          <div className="absolute right-0 -top-1">
             <BulletListIconButton
               showBulletPoints={showBulletPoints}
               onClick={handleShowBulletPoints}

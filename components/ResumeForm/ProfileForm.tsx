@@ -36,14 +36,14 @@ export const ProfileForm = () => {
           label="Resumo"
           labelClassName="col-span-full"
           name="summary"
-          placeholder="Entrepreneur and educator obsessed with making education free for anyone"
+          placeholder="Descreva seu foco profissional, competências e resultados relevantes para a vaga."
           value={summary}
           onChange={handleProfileChange}
           rows={5}
         />
         <Input
           label="E-mail"
-          labelClassName="col-span-4"
+          labelClassName="col-span-full sm:col-span-4"
           name="email"
           placeholder="seuemail@dominio.com"
           value={email}
@@ -51,15 +51,15 @@ export const ProfileForm = () => {
         />
         <Input
           label="Telefone"
-          labelClassName="col-span-2"
+          labelClassName="col-span-full sm:col-span-2"
           name="phone"
           placeholder="(11)99999-9999"
           value={phone}
           onChange={handleProfileChange}
         />
         <Input
-          label="Linkedin"
-          labelClassName="col-span-4"
+          label="LinkedIn ou portfólio"
+          labelClassName="col-span-full sm:col-span-4"
           name="url"
           placeholder="linkedin.com/in/rkhael/"
           value={url}
@@ -67,9 +67,9 @@ export const ProfileForm = () => {
         />
         <Input
           label="Localidade"
-          labelClassName="col-span-2"
+          labelClassName="col-span-full sm:col-span-2"
           name="location"
-          placeholder="SP"
+          placeholder="São Paulo, SP"
           value={location}
           onChange={handleProfileChange}
         />

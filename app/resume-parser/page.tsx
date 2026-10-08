@@ -5,7 +5,7 @@ export const dynamic = "force-dynamic";
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://cvats.com.br";
 
 export const metadata = {
-  title: "Analisar ATS | cvats",
+  title: "Analisar ATS",
   description:
     "Teste a compatibilidade do seu currículo com ATS. Veja como parsers leem seções, textos e campos. Analise a estrutura do seu currículo e otimize para sistemas de triagem automatizada.",
   keywords: [

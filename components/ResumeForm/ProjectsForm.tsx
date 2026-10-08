@@ -11,7 +11,7 @@ export const ProjectsForm = () => {
   const showDelete = projects.length > 1;
 
   return (
-    <Form form="projects" addButtonText="Add Project">
+    <Form form="projects" addButtonText="Adicionar projeto">
       {projects.map(({ project, date, descriptions }, idx) => {
         const handleProjectChange = (
           ...[field, value]: CreateHandleChangeArgsWithDescriptions<ResumeProject>
@@ -29,7 +29,7 @@ export const ProjectsForm = () => {
             showMoveUp={showMoveUp}
             showMoveDown={showMoveDown}
             showDelete={showDelete}
-            deleteButtonTooltipText={"Delete project"}
+            deleteButtonTooltipText="Excluir projeto"
           >
             <Input
               name="project"
@@ -37,7 +37,7 @@ export const ProjectsForm = () => {
               placeholder="cvats"
               value={project}
               onChange={handleProjectChange}
-              labelClassName="col-span-4"
+              labelClassName="col-span-full sm:col-span-4"
             />
             <Input
               name="date"
@@ -45,7 +45,7 @@ export const ProjectsForm = () => {
               placeholder="Jul 2025"
               value={date}
               onChange={handleProjectChange}
-              labelClassName="col-span-2"
+              labelClassName="col-span-full sm:col-span-2"
             />
             <BulletListTextarea
               name="descriptions"

@@ -64,11 +64,12 @@ const getMostCommonBulletPoint = (str: string): string => {
     {}
   );
   let bulletWithMostCount = BULLET_POINTS[0];
-  const bulletMaxCount = 0;
+  let bulletMaxCount = 0;
   for (const char of str) {
     if (Object.hasOwn(bulletToCount, char)) {
       bulletToCount[char]++;
       if (bulletToCount[char] > bulletMaxCount) {
+        bulletMaxCount = bulletToCount[char];
         bulletWithMostCount = char;
       }
     }

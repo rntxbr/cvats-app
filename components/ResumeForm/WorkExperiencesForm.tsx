@@ -33,7 +33,7 @@ export const WorkExperiencesForm = () => {
             showMoveUp={showMoveUp}
             showMoveDown={showMoveDown}
             showDelete={showDelete}
-            deleteButtonTooltipText="Delete job"
+            deleteButtonTooltipText="Excluir experiência"
           >
             <Input
               label="Empresa"
@@ -45,15 +45,15 @@ export const WorkExperiencesForm = () => {
             />
             <Input
               label="Cargo"
-              labelClassName="col-span-4"
+              labelClassName="col-span-full sm:col-span-4"
               name="jobTitle"
-              placeholder="Software Engineer"
+              placeholder="Analista de Sistemas"
               value={jobTitle}
               onChange={handleWorkExperienceChange}
             />
             <Input
               label="Período"
-              labelClassName="col-span-2"
+              labelClassName="col-span-full sm:col-span-2"
               name="date"
               placeholder="Jan 2025 - Dez 2025"
               value={date}

@@ -38,35 +38,35 @@ export const EducationsForm = () => {
             showMoveUp={showMoveUp}
             showMoveDown={showMoveDown}
             showDelete={showDelete}
-            deleteButtonTooltipText="Delete school"
+            deleteButtonTooltipText="Excluir formação"
           >
             <Input
-              label="School"
-              labelClassName="col-span-4"
+              label="Instituição"
+              labelClassName="col-span-full sm:col-span-4"
               name="school"
-              placeholder="Cornell University"
+              placeholder="Universidade de São Paulo"
               value={school}
               onChange={handleEducationChange}
             />
             <Input
               label="Período"
-              labelClassName="col-span-2"
+              labelClassName="col-span-full sm:col-span-2"
               name="date"
               placeholder="Mar 2010 - Jul 2014"
               value={date}
               onChange={handleEducationChange}
             />
             <Input
-              label="Graduação/Especialização"
-              labelClassName="col-span-4"
+              label="Curso"
+              labelClassName="col-span-full sm:col-span-4"
               name="degree"
-              placeholder="Bacharelado em Engenharia de Sofware"
+              placeholder="Bacharelado em Engenharia de Software"
               value={degree}
               onChange={handleEducationChange}
             />
             <Input
               label="Nota"
-              labelClassName="col-span-2"
+              labelClassName="col-span-full sm:col-span-2"
               name="gpa"
               placeholder="8.81"
               value={gpa}
@@ -77,12 +77,12 @@ export const EducationsForm = () => {
                 label="Informações adicionais"
                 labelClassName="col-span-full"
                 name="descriptions"
-                placeholder="Free paragraph space to list out additional activities, courses, awards etc"
+                placeholder="Atividades, cursos ou prêmios relevantes."
                 value={descriptions}
                 onChange={handleEducationChange}
                 showBulletPoints={showBulletPoints}
               />
-              <div className="absolute left-[15.6rem] top-[0.07rem]">
+              <div className="absolute right-0 -top-1">
                 <BulletListIconButton
                   showBulletPoints={showBulletPoints}
                   onClick={handleShowBulletPoints}

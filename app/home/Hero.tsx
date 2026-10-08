@@ -1,7 +1,7 @@
 import { ArrowRightIcon } from "@heroicons/react/24/solid";
-import Link from "next/link";
 // import { LottieWorkflow } from "./LottieWorkflow";
 import Image from "next/image";
+import Link from "next/link";
 
 export const Hero = () => {
   return (
@@ -16,7 +16,8 @@ export const Hero = () => {
           Crie. Otimize. Desbloqueie seu currículo.
         </h1>
         <p className="mt-3 text-sm sm:text-lg lg:mt-5 lg:text-xl max-w-xl tracking-tight">
-          Gere currículos 100% compatíveis com ATS. <br /> De graça e em poucos minutos.
+          Crie currículos com estrutura amigável a ATS e compare com a vaga. <br /> De graça e em
+          poucos minutos.
         </p>
         <div className="flex-col items-center lg:flex-row lg:space-x-2">
           <Link
@@ -29,7 +30,7 @@ export const Hero = () => {
             href="/resume-parser"
             className="inline-flex justify-center items-center gap-2 bg-[#28584c36] text-[#28584c] px-8 sm:px-10 py-4 rounded-xl font-bold mt-6 w-full sm:w-auto transition-all duration-200 ease-out hover:-translate-y-0.5 hover:shadow-lg hover:bg-[#28584c26] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#28584c]"
           >
-            Análisar Currículo <ArrowRightIcon className="h-4 w-4" />
+            Analisar currículo <ArrowRightIcon className="h-4 w-4" />
           </Link>
         </div>
         <p className="mt-3 text-sm text-[#28584c] font-bold lg:ml-2">Não é necessário cadastro</p>
@@ -40,11 +41,11 @@ export const Hero = () => {
         <div className="w-full relative z-20 flex justify-center items-center">
           {/* <LottieWorkflow /> */}
           <Image
-          src="/assets/resume.svg"
-          width={450}
-          height={500}
-          alt="Curriculo Imagem"
-          className="relative z-1 "
+            src="/assets/resume.svg"
+            width={450}
+            height={500}
+            alt="Curriculo Imagem"
+            className="relative z-1 "
           />
         </div>
       </div>

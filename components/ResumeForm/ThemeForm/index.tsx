@@ -1,4 +1,3 @@
-import { Cog6ToothIcon } from "@heroicons/react/24/outline";
 import { useAppDispatch, useAppSelector } from "@/app/lib/redux/hooks";
 import {
   changeSettings,
@@ -16,6 +15,7 @@ import {
   FontFamilySelectionsCSR,
   FontSizeSelections,
 } from "@/components/ResumeForm/ThemeForm/Selection";
+import { TemplatePicker } from "@/components/ResumeForm/ThemeForm/TemplatePicker";
 
 export const ThemeForm = () => {
   const settings = useAppSelector(selectSettings);
@@ -30,12 +30,7 @@ export const ThemeForm = () => {
   return (
     <BaseForm>
       <div className="flex flex-col gap-4">
-        <div className="flex items-center gap-2">
-          <Cog6ToothIcon className="h-6 w-6 text-gray-600" aria-hidden="true" />
-          <h1 className="text-lg font-semibold tracking-wide text-gray-900 ">
-            Configurações do Currículo
-          </h1>
-        </div>
+        <TemplatePicker />
         <div>
           <InlineInput
             label="Cor do Tema"
@@ -47,17 +42,17 @@ export const ThemeForm = () => {
           />
           <div className="mt-2 flex flex-wrap gap-2">
             {THEME_COLORS.map((color, idx) => (
-              <div
+              <button
+                type="button"
+                aria-label={`Cor ${color}`}
+                aria-pressed={settings.themeColor === color}
                 className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-md text-sm text-white"
                 style={{ backgroundColor: color }}
                 key={idx}
                 onClick={() => handleSettingsChange("themeColor", color)}
-                onKeyDown={(e) => {
-                  if (["Enter", " "].includes(e.key)) handleSettingsChange("themeColor", color);
-                }}
               >
                 {settings.themeColor === color ? "✓" : ""}
-              </div>
+              </button>
             ))}
           </div>
         </div>

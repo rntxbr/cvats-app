@@ -1,62 +1,62 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useId, useLayoutEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 
-/**
- * A simple Tooltip component that shows tooltip text center below children on hover and on focus
- *
- * @example
- * <Tooltip text="Tooltip Text">
- *   <div>Hello</div>
- * </Tooltip>
- */
 export const Tooltip = ({ text, children }: { text: string; children: React.ReactNode }) => {
-  const spanRef = useRef<HTMLSpanElement>(null);
-  const tooltipRef = useRef<HTMLDivElement>(null);
-
-  const [tooltipPos, setTooltipPos] = useState({ top: 0, left: 0 });
-
+  const anchor = useRef<HTMLSpanElement>(null);
+  const tip = useRef<HTMLDivElement>(null);
+  const id = useId();
   const [show, setShow] = useState(false);
-  const showTooltip = () => setShow(true);
-  const hideTooltip = () => setShow(false);
-
-  // Hook to set tooltip position to be right below children and centered
+  const [position, setPosition] = useState({ top: 0, left: 0 });
+  useLayoutEffect(() => {
+    if (!show || !anchor.current || !tip.current) return;
+    const rect = anchor.current.getBoundingClientRect();
+    const box = tip.current.getBoundingClientRect();
+    setPosition({
+      left: Math.max(
+        8,
+        Math.min(window.innerWidth - box.width - 8, rect.left + (rect.width - box.width) / 2)
+      ),
+      top:
+        rect.bottom + box.height + 12 > window.innerHeight
+          ? Math.max(8, rect.top - box.height - 6)
+          : rect.bottom + 6,
+    });
+  }, [show]);
   useEffect(() => {
-    const span = spanRef.current;
-    const tooltip = tooltipRef.current;
-    if (span && tooltip) {
-      const rect = span.getBoundingClientRect();
-      const TOP_OFFSET = 6;
-      const newTop = rect.top + rect.height + TOP_OFFSET;
-      const newLeft = rect.left - tooltip.offsetWidth / 2 + rect.width / 2;
-      setTooltipPos({
-        top: newTop,
-        left: newLeft,
-      });
-    }
-  }, []);
-
+    if (!show) return;
+    const hide = () => setShow(false);
+    const key = (event: KeyboardEvent) => {
+      if (event.key === "Escape") hide();
+    };
+    window.addEventListener("scroll", hide, true);
+    window.addEventListener("resize", hide);
+    window.addEventListener("keydown", key);
+    return () => {
+      window.removeEventListener("scroll", hide, true);
+      window.removeEventListener("resize", hide);
+      window.removeEventListener("keydown", key);
+    };
+  }, [show]);
   return (
     <span
-      ref={spanRef}
-      onMouseEnter={showTooltip}
-      onMouseLeave={hideTooltip}
-      onFocus={showTooltip}
-      onBlur={hideTooltip}
-      // hide tooltip onClick to handle the edge case where the element position is changed after lick
-      onClick={hideTooltip}
+      ref={anchor}
+      className="inline-flex min-w-0"
+      aria-describedby={show ? id : undefined}
+      onMouseEnter={() => setShow(true)}
+      onMouseLeave={() => setShow(false)}
+      onFocus={() => setShow(true)}
+      onBlur={() => setShow(false)}
     >
       {children}
       {show &&
         createPortal(
           <div
-            ref={tooltipRef}
+            id={id}
+            ref={tip}
             role="tooltip"
-            className="absolute left-0 top-0 z-10 w-max rounded-md bg-gray-600 px-2 py-0.5 text-sm text-white"
-            style={{
-              left: `${tooltipPos.left}px`,
-              top: `${tooltipPos.top}px`,
-            }}
+            className="pointer-events-none fixed z-50 max-w-[min(280px,calc(100vw-16px))] rounded-lg bg-[#28584c] px-3 py-2 text-xs leading-relaxed text-white shadow-lg"
+            style={position}
           >
             {text}
           </div>,

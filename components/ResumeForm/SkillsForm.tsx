@@ -1,14 +1,13 @@
 import { useAppDispatch, useAppSelector } from "@/app/lib/redux/hooks";
 import { changeSkills, selectSkills } from "@/app/lib/redux/resumeSlice";
-import {
-  changeShowBulletPoints,
-  selectShowBulletPoints,
-  selectThemeColor,
-} from "@/app/lib/redux/settingsSlice";
+import { changeShowBulletPoints, selectShowBulletPoints } from "@/app/lib/redux/settingsSlice";
 import { Form } from "@/components/ResumeForm/Form";
-import { FeaturedSkillInput } from "@/components/ResumeForm/Form/FeaturedSkillInput";
 import { BulletListIconButton } from "@/components/ResumeForm/Form/IconButton";
-import { BulletListTextarea, InputGroupWrapper } from "@/components/ResumeForm/Form/InputGroup";
+import {
+  BulletListTextarea,
+  Input,
+  InputGroupWrapper,
+} from "@/components/ResumeForm/Form/InputGroup";
 
 export const SkillsForm = () => {
   const skills = useAppSelector(selectSkills);
@@ -16,7 +15,6 @@ export const SkillsForm = () => {
   const { featuredSkills, descriptions } = skills;
   const form = "skills";
   const showBulletPoints = useAppSelector(selectShowBulletPoints(form));
-  const themeColor = useAppSelector(selectThemeColor) || "#38bdf8";
 
   const handleSkillsChange = (field: "descriptions", value: string[]) => {
     dispatch(changeSkills({ field, value }));
@@ -33,7 +31,7 @@ export const SkillsForm = () => {
       <div className="col-span-full grid grid-cols-6 gap-3">
         <div className="relative col-span-full">
           <BulletListTextarea
-            label="Lista Habilidades"
+            label="Habilidades"
             labelClassName="col-span-full"
             name="descriptions"
             placeholder="Bullet points"
@@ -41,7 +39,7 @@ export const SkillsForm = () => {
             onChange={handleSkillsChange}
             showBulletPoints={showBulletPoints}
           />
-          <div className="absolute left-[10rem] top-[0.07rem]">
+          <div className="absolute right-0 -top-1">
             <BulletListIconButton
               showBulletPoints={showBulletPoints}
               onClick={handleShowBulletPoints}
@@ -49,24 +47,20 @@ export const SkillsForm = () => {
           </div>
         </div>
         <div className="col-span-full mb-4 mt-6 border-t-2 border-dotted border-gray-200" />
-        <InputGroupWrapper label="Habilidades em destaque (opcional)" className="col-span-full">
-          <p className="mt-2 text-sm font-normal text-gray-600">
-            Habilidades destacadas são opcionais para destacar habilidades-chave:{" "}
-            <strong>com mais círculos significando maior proficiência.</strong>
-          </p>
-        </InputGroupWrapper>
+        <InputGroupWrapper
+          label="Habilidades em destaque (opcional)"
+          className="col-span-full"
+        ></InputGroupWrapper>
 
         {featuredSkills.map(({ skill, rating }, idx) => (
-          <FeaturedSkillInput
+          <Input
             key={idx}
-            className="col-span-3"
-            skill={skill}
-            rating={rating}
-            setSkillRating={(newSkill, newRating) => {
-              handleFeaturedSkillsChange(idx, newSkill, newRating);
-            }}
-            placeholder={`Featured Skill ${idx + 1}`}
-            circleColor={themeColor}
+            labelClassName="col-span-full sm:col-span-3"
+            name={`skill-${idx}`}
+            label={`Habilidade ${idx + 1}`}
+            value={skill}
+            onChange={(_, newSkill) => handleFeaturedSkillsChange(idx, newSkill, rating)}
+            placeholder="Ex.: Excel avançado"
           />
         ))}
       </div>

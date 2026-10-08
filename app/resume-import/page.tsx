@@ -5,7 +5,7 @@ export const dynamic = "force-dynamic";
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://cvats.com.br";
 
 export const metadata = {
-  title: "Importar Currículo (PDF) | cvats",
+  title: "Importar Currículo (PDF)",
   description:
     "Importe seu currículo em PDF para editar e otimizar para ATS. Analise e ajuste a estrutura para máxima compatibilidade. Conversão automática de PDF para formato editável.",
   keywords: [

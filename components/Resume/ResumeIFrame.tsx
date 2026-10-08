@@ -40,7 +40,7 @@ const getIframeInitialContent = (isA4: boolean) => {
       ${allFontFamiliesFontFaces}
     </style>
   </head>
-  <body style='overflow: hidden; width: ${width}pt; margin: 0; padding: 0; -webkit-text-size-adjust:none;'>
+  <body style='overflow: auto; width: ${width}pt; margin: 0; padding: 0; -webkit-text-size-adjust:none;'>
     <div></div>
   </body>
 </html>`;
@@ -65,7 +65,7 @@ const ResumeIframe = ({
   const iframeInitialContent = useMemo(() => getIframeInitialContent(isA4), [isA4]);
 
   if (enablePDFViewer) {
-    return <DynamicPDFViewer className="h-full w-full">{children as any}</DynamicPDFViewer>;
+    return <DynamicPDFViewer className="h-[750px] w-full">{children as any}</DynamicPDFViewer>;
   }
   const width = isA4 ? A4_WIDTH_PX : LETTER_WIDTH_PX;
   const height = isA4 ? A4_HEIGHT_PX : LETTER_HEIGHT_PX;
@@ -89,6 +89,7 @@ const ResumeIframe = ({
         className={`origin-top-left bg-white rounded-3xl`}
       >
         <Frame
+          title="Prévia do currículo"
           style={{ width: "100%", height: "100%" }}
           initialContent={iframeInitialContent}
           // key is used to force component to re-mount when document size changes

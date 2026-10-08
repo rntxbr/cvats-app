@@ -26,6 +26,14 @@ export const extractResumeFromSections = (sections: ResumeSectionToLines): Resum
   const { workExperiences } = extractWorkExperience(sections);
   const { projects } = extractProject(sections);
   const { skills } = extractSkills(sections);
+  const recognizedSection =
+    /^(?:profile$)|experience|experiencia|experiência|education|educa|forma[cç]|escolaridade|academ|acadêm|ensino|gradua|curso|course|project|projeto|portfolio|portfólio|skill|habilidade|competencia|competência|tecnologia|summary|resumo|sobre|perfil|apresenta|objetiv|objective|work|employment|career|carreira|trajetoria|trajetória|atuação|atuacao/i;
+  const customDescriptions = Object.entries(sections)
+    .filter(([heading]) => !recognizedSection.test(heading))
+    .flatMap(([heading, lines]) => [
+      heading,
+      ...lines.map((line) => line.map((item) => item.text).join(" ")),
+    ]);
 
   return {
     profile,
@@ -34,7 +42,7 @@ export const extractResumeFromSections = (sections: ResumeSectionToLines): Resum
     projects,
     skills,
     custom: {
-      descriptions: [],
+      descriptions: customDescriptions,
     },
   };
 };

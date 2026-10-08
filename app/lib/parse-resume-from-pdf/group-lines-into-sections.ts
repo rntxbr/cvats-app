@@ -19,12 +19,12 @@ export const PROFILE_SECTION: ResumeKey = "profile";
 export const groupLinesIntoSections = (lines: Lines) => {
   const sections: ResumeSectionToLines = {};
   let sectionName: string = PROFILE_SECTION;
-  let sectionLines = [];
+  let sectionLines: Lines = [];
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i];
     const text = line[0]?.text.trim();
     if (isSectionTitle(line, i)) {
-      sections[sectionName] = [...sectionLines];
+      sections[sectionName] = [...(sections[sectionName] || []), ...sectionLines];
       sectionName = text;
       sectionLines = [];
     } else {
@@ -32,7 +32,7 @@ export const groupLinesIntoSections = (lines: Lines) => {
     }
   }
   if (sectionLines.length > 0) {
-    sections[sectionName] = [...sectionLines];
+    sections[sectionName] = [...(sections[sectionName] || []), ...sectionLines];
   }
   return sections;
 };
@@ -69,6 +69,9 @@ const SECTION_TITLE_PRIMARY_KEYWORDS = [
   "competência",
   "competencias",
   "competências",
+  "tecnologias",
+  "certificações",
+  "idiomas",
 ];
 const SECTION_TITLE_SECONDARY_KEYWORDS = [
   "job",
@@ -96,10 +99,6 @@ const SECTION_TITLE_SECONDARY_KEYWORDS = [
   "project",
   "projeto",
   "projetos",
-  "universidade",
-  "faculdade",
-  "instituicao",
-  "instituição",
 ];
 const SECTION_TITLE_KEYWORDS = [
   ...SECTION_TITLE_PRIMARY_KEYWORDS,

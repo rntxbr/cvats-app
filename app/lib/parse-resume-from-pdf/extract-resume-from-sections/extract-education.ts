@@ -40,10 +40,44 @@ const SCHOOLS = [
   "Escola",
   "Centro Universitário",
   "Centro Universitario",
-  "UFABC", "UFSC", "UFRJ", "USP", "UNICAMP", "UFMG", "UFRGS", "UFBA", "UFPE", "UFC",
-  "UFPR", "UFF", "UFES", "UFPA", "UFCE", "UFGO", "UFMS", "UFMT", "UFAM", "UFPB",
-  "UFPI", "UFAL", "UFS", "UFU", "UFV", "UFJF", "UFPEL", "UFSM", "UFRN", "UFMA",
-  "UNIFESP", "UNB", "PUC", "PUCRS", "PUCSP", "PUC-Rio", "PUC-RJ", "PUC-MG",
+  "UFABC",
+  "UFSC",
+  "UFRJ",
+  "USP",
+  "UNICAMP",
+  "UFMG",
+  "UFRGS",
+  "UFBA",
+  "UFPE",
+  "UFC",
+  "UFPR",
+  "UFF",
+  "UFES",
+  "UFPA",
+  "UFCE",
+  "UFGO",
+  "UFMS",
+  "UFMT",
+  "UFAM",
+  "UFPB",
+  "UFPI",
+  "UFAL",
+  "UFS",
+  "UFU",
+  "UFV",
+  "UFJF",
+  "UFPEL",
+  "UFSM",
+  "UFRN",
+  "UFMA",
+  "UNIFESP",
+  "UNB",
+  "PUC",
+  "PUCRS",
+  "PUCSP",
+  "PUC-Rio",
+  "PUC-RJ",
+  "PUC-MG",
 ];
 const hasSchool = (item: TextItem) => SCHOOLS.some((school) => item.text.includes(school));
 // prettier-ignore
@@ -107,7 +141,12 @@ const hasDegree = (item: TextItem) => {
   // Match abbreviations like AA, B.S., MBA, etc.
   if (/[ABM][A-Z.]/.test(text)) return true;
   // Match common Brazilian degree patterns like "Engenharia de X", "Ciência da X"
-  if (/^(Engenharia|Ciencia|Ciência|Analise|Análise|Sistemas|Administração|Administracao)\s+(da|de|do|dos|das)?\s*[\p{L}\s-]+$/iu.test(text)) return true;
+  if (
+    /^(Engenharia|Ciencia|Ciência|Analise|Análise|Sistemas|Administração|Administracao)\s+(da|de|do|dos|das)?\s*[\p{L}\s-]+$/iu.test(
+      text
+    )
+  )
+    return true;
   return false;
 };
 const matchGPA = (item: TextItem) => item.text.match(/[0-9]{1,2}[.,]\d{1,2}/);
@@ -167,16 +206,26 @@ export const extractEducation = (sections: ResumeSectionToLines) => {
   ]);
   const subsections = divideSectionIntoSubsections(lines);
   for (const subsectionLines of subsections) {
-    const textItems = subsectionLines.flat();
+    const descriptionsLineIdx = getDescriptionsLineIdx(subsectionLines);
+    const textItems = subsectionLines
+      .slice(0, descriptionsLineIdx ?? subsectionLines.length)
+      .flat();
     // For school, don't require positive score - accept any match
-    const [school, schoolScores] = getTextWithHighestFeatureScore(textItems, SCHOOL_FEATURE_SETS, false);
+    const [school, schoolScores] = getTextWithHighestFeatureScore(
+      textItems,
+      SCHOOL_FEATURE_SETS,
+      false
+    );
     // For degree, don't require positive score - accept any match
-    const [degree, degreeScores] = getTextWithHighestFeatureScore(textItems, DEGREE_FEATURE_SETS, false);
+    const [degree, degreeScores] = getTextWithHighestFeatureScore(
+      textItems,
+      DEGREE_FEATURE_SETS,
+      false
+    );
     const [gpa, gpaScores] = getTextWithHighestFeatureScore(textItems, GPA_FEATURE_SETS);
     const [date, dateScores] = getTextWithHighestFeatureScore(textItems, DATE_FEATURE_SETS);
 
     let descriptions: string[] = [];
-    const descriptionsLineIdx = getDescriptionsLineIdx(subsectionLines);
     if (descriptionsLineIdx !== undefined) {
       const descriptionsLines = subsectionLines.slice(descriptionsLineIdx);
       descriptions = getBulletPointsFromLines(descriptionsLines);

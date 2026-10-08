@@ -27,7 +27,6 @@ const WORK_EXPERIENCE_KEYWORDS = [
   "job",
   "experiencia",
   "experiência",
-  "profissional",
   "carreira",
   "trajetoria",
   "trajetória",

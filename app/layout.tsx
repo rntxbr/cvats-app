@@ -1,9 +1,9 @@
 import "./globals.css";
 import { Sora } from "next/font/google";
+import { StructuredData } from "@/app/lib/seo/structured-data";
 import { FooterBar } from "@/components/FooterBar";
 import { GoogleAnalytics } from "@/components/GoogleAnalytics";
 import { TopNavBar } from "@/components/TopNavBar";
-import { StructuredData } from "@/app/lib/seo/structured-data";
 
 const sora = Sora({
   subsets: ["latin"],
@@ -181,7 +181,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <StructuredData type="WebSite" data={webSiteSchema} />
         <GoogleAnalytics />
         <TopNavBar />
-        <main>{children}</main>
+        {children}
         <FooterBar />
       </body>
     </html>

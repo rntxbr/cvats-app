@@ -39,7 +39,7 @@ Consulte `CONTRIBUTING.md` e `CODE_OF_CONDUCT.md` para detalhes rápidos.
 
 ## Como rodar o projeto localmente
 
-Pré-requisitos: Node 18+ e pnpm (ou npm/yarn).
+Pré-requisitos: Node 22+ e pnpm 10+.
 
 ```bash
 pnpm install
@@ -53,7 +53,38 @@ Scripts úteis:
 pnpm build   # build de produção
 pnpm start   # inicia servidor de produção após o build
 pnpm lint    # checa lint
+pnpm typecheck # checa TypeScript
+pnpm test    # testes do analisador, parser e persistência
+pnpm test:pdf # exporta um PDF de várias páginas e verifica extração e importação
+pnpm check   # executa todas as verificações acima
 ```
+
+## Criar e analisar currículos
+
+- `/resume-builder`: editor com painéis Dados, Aparência e ATS; três modelos (Clássico, Essencial e Executivo), prévia ao vivo do mesmo PDF disponível para download, zoom e páginas reais. No celular, a prévia tem um painel próprio. Inclui download em PDF e TXT, backup e restauração em JSON.
+- `/resume-import`: importa um PDF para preencher o editor. Confira os campos extraídos antes de usar.
+- `/resume-parser`: analisa um PDF ou texto colado, mostra o texto extraído e compara palavras-chave com uma vaga.
+
+Os arquivos são processados no navegador, sem upload para uma API. O editor salva os dados no armazenamento local, sob a chave `open-resume-state`. Em computadores compartilhados, os dados continuam acessíveis a quem usar o mesmo perfil. Guarde uma cópia editável antes de limpar dados do navegador. Analytics é opcional, habilitado somente por `NEXT_PUBLIC_GA_MEASUREMENT_ID`.
+
+PDFs de entrada devem ter até 10 MB e 30 páginas. Arquivos digitalizados precisam de OCR externo; arquivos protegidos precisam de uma cópia sem senha. A extração é heurística e funciona melhor com uma coluna, títulos convencionais e texto selecionável em português ou inglês. Não há OCR embutido.
+
+## Como interpretar a avaliação
+
+A nota de estrutura e conteúdo soma critérios visíveis: texto suficiente (20), e-mail (10), telefone (5), resumo/objetivo (10), experiência/projetos (15), formação (10), habilidades (10), períodos (5), resultados concretos (10) e extensão (5).
+
+A comparação com a vaga é uma nota separada: termos encontrados / termos comparados. Você pode revisar a lista automática ou substituí-la por palavras-chave separadas por vírgulas. A comparação ignora caixa e acentos, respeita limites de palavras e preserva termos como C++ e C#. Ela não interpreta sinônimos, contexto, senioridade ou requisitos obrigatórios. Uma palavra presente não comprova experiência.
+
+As notas são referências heurísticas, não uma certificação nem garantia de aprovação em qualquer ATS. O aplicativo não integra serviços comerciais de recrutamento nem simula suas regras proprietárias. A análise de texto não verifica todos os problemas visuais de um PDF. Confira o PDF paginado e o texto extraído antes de enviar.
+
+O PDF gerado usa texto selecionável, seções em uma coluna, fontes locais e habilidades em texto. O worker do PDF.js é copiado da versão instalada em `postinstall`, `predev` e `prebuild`, evitando dependência de CDN e incompatibilidade de versões. Se instalar com scripts desabilitados, execute `node scripts/prepare-pdf-worker.mjs`.
+
+## Produção e Docker
+
+`pnpm build` gera o bundle e a saída standalone. `pnpm start` inicia a aplicação. Para Docker: `docker build -t cvats .` e `docker run --rm -p 3000:3000 cvats`. O container usa Node 22 e executa com usuário sem privilégios. Configure `NEXT_PUBLIC_SITE_URL` no ambiente de build para ajustar os links públicos.
+
+As verificações locais incluem PDFs reais de três páginas nos três modelos, extração de acentos e contatos, habilidades, conteúdo atualizado e importação de experiências e formação. Os arquivos de teste ficam em `tmp/pdfs`, ignorado pelo Git. O CI também executa essa verificação em Node 22 e 24.
+
 ## 💪 Contribuidores
 
 Obrigado a todos que contribuíram 💖

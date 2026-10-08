@@ -3,7 +3,6 @@ import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import { useTailwindBreakpoints } from "@/app/lib/hooks/useTailwindBreakpoints";
 
 const logoSrc = "/logo.svg";
 
@@ -15,7 +14,6 @@ const menuItems = [
 
 export const TopNavBar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { isMd } = useTailwindBreakpoints();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -32,7 +30,7 @@ export const TopNavBar = () => {
     >
       <div className="bg-[#28584c] container m-4 rounded-xl px-4 sm:px-6 lg:px-10 py-3 relative">
         {/* Desktop Layout */}
-        <div className="hidden md:grid grid-cols-3 items-center">
+        <div className="hidden md:flex items-center justify-between gap-4">
           <div className="flex items-center gap-2">
             <Link href="/">
               <span className="sr-only">cvats</span>
@@ -43,7 +41,7 @@ export const TopNavBar = () => {
             {menuItems.slice(0, 2).map(([href, text]) => (
               <Link
                 key={text}
-                className="text-green-200 hover:text-[#6aac9c] px-4 py-2 rounded-xl min-w-[120px] sm:min-w-[150px] text-center font-bold tracking-tighter text-sm "
+                className="text-green-200 hover:text-[#6aac9c] px-4 py-2 rounded-xl text-center font-bold tracking-tighter text-sm "
                 href={href}
               >
                 {text}
@@ -69,7 +67,8 @@ export const TopNavBar = () => {
           <button
             onClick={toggleMenu}
             className="text-green-200 hover:text-[#6aac9c] p-2 rounded-lg transition-colors"
-            aria-label="Toggle menu"
+            type="button"
+            aria-label={isMenuOpen ? "Fechar menu" : "Abrir menu"}
             aria-expanded={isMenuOpen}
           >
             {isMenuOpen ? <XMarkIcon className="h-6 w-6" /> : <Bars3Icon className="h-6 w-6" />}

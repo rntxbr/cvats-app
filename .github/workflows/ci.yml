@@ -12,7 +12,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [18.x, 20.x]
+        node-version: [22.x, 24.x]
 
     steps:
       - uses: actions/checkout@v4
@@ -37,6 +37,9 @@ jobs:
       - name: Run tests
         run: pnpm test
 
+      - name: Verify PDF export and parsing
+        run: pnpm test:pdf
+
       - name: Build application
         run: pnpm build
 
@@ -51,10 +54,10 @@ jobs:
         with:
           version: 10
 
-      - name: Use Node.js 20.x
+      - name: Use Node.js 22.x
         uses: actions/setup-node@v4
         with:
-          node-version: "20.x"
+          node-version: "22.x"
           cache: "pnpm"
 
       - name: Install dependencies
@@ -74,10 +77,10 @@ jobs:
         with:
           version: 10
 
-      - name: Use Node.js 20.x
+      - name: Use Node.js 22.x
         uses: actions/setup-node@v4
         with:
-          node-version: "20.x"
+          node-version: "22.x"
           cache: "pnpm"
 
       - name: Install dependencies

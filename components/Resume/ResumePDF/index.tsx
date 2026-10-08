@@ -1,44 +1,35 @@
-import { Document, Page, View } from "@react-pdf/renderer";
 import { Fragment } from "react";
+import { cleanResume } from "@/app/lib/ats/clean-resume";
 import type { Settings, ShowForm } from "@/app/lib/redux/settingsSlice";
 import { DEFAULT_FONT_COLOR } from "@/app/lib/redux/settingsSlice";
 import type { Resume } from "@/app/lib/redux/types";
-import { SuppressResumePDFErrorMessage } from "@/components/Resume/ResumePDF/common/SuppressResumePDFErrorMessage";
+import { Document, Page, PDFMode, View } from "@/components/Resume/ResumePDF/primitives";
 import { ResumePDFCustom } from "@/components/Resume/ResumePDF/ResumePDFCustom";
 import { ResumePDFEducation } from "@/components/Resume/ResumePDF/ResumePDFEducation";
 import { ResumePDFProfile } from "@/components/Resume/ResumePDF/ResumePDFProfile";
 import { ResumePDFProject } from "@/components/Resume/ResumePDF/ResumePDFProject";
 import { ResumePDFSkills } from "@/components/Resume/ResumePDF/ResumePDFSkills";
 import { ResumePDFWorkExperience } from "@/components/Resume/ResumePDF/ResumePDFWorkExperience";
-import { spacing, styles } from "@/components/Resume/ResumePDF/styles";
+import { styles } from "@/components/Resume/ResumePDF/styles";
+import { TemplateContext } from "@/components/Resume/ResumePDF/templates";
 
 /**
- * Note: ResumePDF is supposed to be rendered inside PDFViewer. However,
- * PDFViewer is rendered too slow and has noticeable delay as you enter
- * the resume form, so we render it without PDFViewer to make it render
- * instantly. There are 2 drawbacks with this approach:
- * 1. Not everything works out of box if not rendered inside PDFViewer,
- *    e.g. svg doesn't work, so it takes in a isPDF flag that maps react
- *    pdf element to the correct dom element.
- * 2. It throws a lot of errors in console log, e.g. "<VIEW /> is using incorrect
- *    casing. Use PascalCase for React components, or lowercase for HTML elements."
- *    in development, causing a lot of noises. We can possibly workaround this by
- *    mapping every react pdf element to a dom element, but for now, we simply
- *    suppress these messages in <SuppressResumePDFErrorMessage />.
- *    https://github.com/diegomura/react-pdf/issues/239#issuecomment-487255027
+ * Share the layout between a lightweight HTML preview and the real PDF renderer.
+ * PDFMode maps primitives explicitly, without suppressing console errors.
  */
 export const ResumePDF = ({
   resume,
   settings,
   isPDF = false,
-  suppressErrorMessages = true,
 }: {
   resume: Resume;
   settings: Settings;
   isPDF?: boolean;
-  suppressErrorMessages?: boolean;
 }) => {
-  const { profile, workExperiences, educations, projects, skills, custom } = resume;
+  const { profile, workExperiences, educations, projects, skills, custom } = cleanResume(
+    resume,
+    settings
+  );
   const { name } = profile;
   const {
     fontFamily,
@@ -51,7 +42,15 @@ export const ResumePDF = ({
   } = settings;
   const themeColor = settings.themeColor || DEFAULT_FONT_COLOR;
 
-  const showFormsOrder = formsOrder.filter((form) => formToShow[form]);
+  const hasContent: Record<ShowForm, boolean> = {
+    workExperiences: workExperiences.length > 0,
+    educations: educations.length > 0,
+    projects: projects.length > 0,
+    skills:
+      skills.descriptions.length > 0 || skills.featuredSkills.some((item) => item.skill.trim()),
+    custom: custom.descriptions.length > 0,
+  };
+  const showFormsOrder = formsOrder.filter((form) => formToShow[form] && hasContent[form]);
 
   const formTypeToComponent: { [type in ShowForm]: () => React.ReactNode } = {
     workExperiences: () => (
@@ -95,7 +94,12 @@ export const ResumePDF = ({
   };
 
   const content = (
-    <Document title={`${name} Resume`} author={name} producer={"cvats"}>
+    <Document
+      title={`${name || "Currículo"} - Currículo`}
+      author={name}
+      producer="cvats"
+      language="pt-BR"
+    >
       <Page
         size={documentSize === "A4" ? "A4" : "LETTER"}
         style={{
@@ -103,21 +107,14 @@ export const ResumePDF = ({
           color: DEFAULT_FONT_COLOR,
           fontFamily,
           fontSize: `${fontSize}pt`,
+          paddingTop: settings.template === "minimal" ? 28 : 24,
+          paddingBottom: 36,
+          paddingHorizontal: settings.template === "minimal" ? 36 : 40,
         }}
       >
-        {Boolean(settings.themeColor) && (
-          <View
-            style={{
-              width: spacing.full,
-              height: spacing[3.5],
-              backgroundColor: themeColor,
-            }}
-          />
-        )}
         <View
           style={{
             ...styles.flexCol,
-            padding: `${spacing[0]} ${spacing[20]}`,
           }}
         >
           <ResumePDFProfile profile={profile} themeColor={themeColor} isPDF={isPDF} />
@@ -131,14 +128,9 @@ export const ResumePDF = ({
     </Document>
   );
 
-  if (suppressErrorMessages) {
-    return (
-      <>
-        {content}
-        <SuppressResumePDFErrorMessage />
-      </>
-    );
-  }
-
-  return content;
+  return (
+    <TemplateContext.Provider value={settings.template || "classic"}>
+      <PDFMode.Provider value={isPDF}>{content}</PDFMode.Provider>
+    </TemplateContext.Provider>
+  );
 };

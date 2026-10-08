@@ -1,53 +1,85 @@
 "use client";
-import { ArrowDownTrayIcon } from "@heroicons/react/24/outline";
-import { usePDF } from "@react-pdf/renderer";
-import dynamic from "next/dynamic";
-import Link from "next/link";
+import {
+  ArrowDownTrayIcon,
+  ArrowPathIcon,
+  ArrowsPointingInIcon,
+  MinusIcon,
+  PlusIcon,
+} from "@heroicons/react/24/outline";
+import { IconButton } from "@/components/Button";
+import { Tooltip } from "@/components/Tooltip";
 
-const ResumeControlBar = ({
-  document,
+export function ResumeControlBar({
+  url,
+  error,
+  pending,
   fileName,
+  zoom,
+  setZoom,
 }: {
-  scale: number;
-  setScale: (scale: number) => void;
-  documentSize: string;
-  document: any;
+  url: string | null;
+  error: string | null;
+  pending: boolean;
   fileName: string;
-}) => {
-  const [instance] = usePDF({ document });
-
+  zoom: number;
+  setZoom: (zoom: number) => void;
+}) {
   return (
-    <div className="mt-4 sticky bottom-0 left-0 right-0 flex h-(--resume-control-bar-height) items-center justify-center px-(--resume-padding) text-gray-600">
-      {instance.loading ? (
-        <div className="ml-1 flex items-center gap-1 px-10 py-4 bg-gray-400 text-white opacity-50">
-          <ArrowDownTrayIcon className="h-4 w-4 animate-spin" />
-          <span className="whitespace-nowrap">Gerando PDF...</span>
-        </div>
-      ) : instance.url ? (
-        <Link
-          className="w-full flex justify-center items-center cursor-pointer bg-[#28584c] text-white px-6 py-4 rounded-xl font-bold gap-2 transition-all duration-200 ease-out hover:-translate-y-0.5 hover:shadow-lg hover:bg-[#1f473d] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#28584c]  "
-          href={instance.url}
-          download={fileName}
+    <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[#28584c]/10 p-3">
+      <div className="flex items-center gap-1 text-[#28584c]">
+        <IconButton
+          aria-label="Diminuir zoom"
+          tooltipText="Diminuir zoom"
+          disabled={zoom <= 0.6}
+          onClick={() => setZoom(Math.max(0.6, zoom - 0.2))}
         >
-          <ArrowDownTrayIcon className="h-5 w-5" />
-          <span>Baixar Currículo</span>
-        </Link>
+          <MinusIcon className="h-5 w-5" />
+        </IconButton>
+        <span className="w-11 text-center text-xs tabular-nums">{Math.round(zoom * 100)}%</span>
+        <IconButton
+          aria-label="Aumentar zoom"
+          tooltipText="Aumentar zoom"
+          disabled={zoom >= 2}
+          onClick={() => setZoom(Math.min(2, zoom + 0.2))}
+        >
+          <PlusIcon className="h-5 w-5" />
+        </IconButton>
+        <IconButton
+          aria-label="Ajustar à largura"
+          tooltipText="Ajustar à largura"
+          onClick={() => setZoom(1)}
+        >
+          <ArrowsPointingInIcon className="h-5 w-5" />
+        </IconButton>
+      </div>
+      {url && !pending && !error ? (
+        <Tooltip text="Baixar PDF">
+          <a
+            href={url}
+            aria-label="Baixar PDF"
+            download={fileName}
+            className="flex min-h-11 items-center gap-2 rounded-xl bg-[#28584c] px-4 text-sm font-semibold text-white hover:bg-[#1f473d] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#28584c]"
+          >
+            <ArrowDownTrayIcon className="h-5 w-5" />
+            <span className="hidden sm:inline">Baixar PDF</span>
+          </a>
+        </Tooltip>
       ) : (
-        <div className="ml-1 flex items-center gap-1 px-10 py-4 bg-red-600 text-white">
-          <span className="whitespace-nowrap">Erro ao gerar o PDF</span>
-        </div>
+        <button
+          disabled
+          type="button"
+          aria-label={error ? "Falha no PDF" : "Gerando PDF"}
+          className="flex min-h-11 items-center gap-2 rounded-xl bg-[#28584c]/50 px-4 text-sm text-white"
+        >
+          <ArrowPathIcon className={`h-5 w-5 ${error ? "" : "animate-spin"}`} />
+          <span className="hidden sm:inline">{error ? "Falha no PDF" : "Gerando…"}</span>
+        </button>
+      )}
+      {error && (
+        <p role="alert" className="w-full text-sm text-red-700">
+          Não foi possível gerar o PDF. Revise os campos ou recarregue a página.
+        </p>
       )}
     </div>
   );
-};
-
-/**
- * Load ResumeControlBar client side since it uses usePDF, which is a web specific API
- */
-export const ResumeControlBarCSR = dynamic(() => Promise.resolve(ResumeControlBar), {
-  ssr: false,
-});
-
-export const ResumeControlBarBorder = () => (
-  <div className="absolute bottom-(--resume-control-bar-height) w-full border-t-2 bg-gray-50" />
-);
+}

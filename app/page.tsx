@@ -1,12 +1,12 @@
-import { Hero } from "./home/Hero";
 import { StructuredData } from "@/app/lib/seo/structured-data";
+import { Hero } from "./home/Hero";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://cvats.com.br";
 
 export const metadata = {
   title: "cvats - Criador de Currículos compatíveis com ATS",
   description:
-    "Crie currículos 100% compatíveis com ATS de forma gratuita e em poucos minutos. Exportação em PDF e foco em legibilidade por sistemas de triagem. Não é necessário cadastro.",
+    "Crie currículos com estrutura amigável a ATS, exporte em PDF e analise a cobertura de palavras-chave da vaga. Gratuito e sem cadastro.",
   keywords: [
     "criar currículo online",
     "currículo grátis",
@@ -22,7 +22,7 @@ export const metadata = {
   openGraph: {
     title: "cvats - Criador de Currículos compatíveis com ATS",
     description:
-      "Crie currículos 100% compatíveis com ATS de forma gratuita e em poucos minutos. Exportação em PDF e foco em legibilidade por sistemas de triagem.",
+      "Crie currículos com estrutura amigável a ATS. Exportação em PDF e avaliação de conteúdo e palavras-chave da vaga.",
     url: siteUrl,
     siteName: "cvats",
     images: [
@@ -40,7 +40,7 @@ export const metadata = {
     card: "summary_large_image",
     title: "cvats - Criador de Currículos compatíveis com ATS",
     description:
-      "Crie currículos 100% compatíveis com ATS de forma gratuita e em poucos minutos.",
+      "Crie e analise currículos com foco em legibilidade por ATS. Gratuito e sem cadastro.",
     images: [`${siteUrl}/og-image.png`],
   },
 };

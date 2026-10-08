@@ -1,6 +1,7 @@
 import type { ResumeKey } from "@/app/lib/redux/types";
 
 export interface TextItem {
+  page?: number;
   text: string;
   x: number;
   y: number;

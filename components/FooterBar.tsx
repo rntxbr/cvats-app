@@ -6,7 +6,7 @@ const logoSrc = "/logo.svg";
 
 export const FooterBar = () => {
   return (
-    <footer className="lg:fixed bottom-0 left-0 right-0 w-full flex justify-center items-center bg-[#28584c] z-10">
+    <footer className="w-full flex justify-center items-center bg-[#28584c] z-10">
       <div className="bg-[#28584c] container px-4 sm:px-6 lg:px-10 py-3 flex flex-col lg:flex-row items-center gap-3 sm:gap-2 justify-between rounded-t-xl">
         <div className="flex items-center gap-2">
           <Link href="/">

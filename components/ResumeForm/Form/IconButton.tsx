@@ -15,7 +15,7 @@ export const ShowIconButton = ({
   show: boolean;
   setShow: (show: boolean) => void;
 }) => {
-  const tooltipText = show ? "Hide section" : "Show section";
+  const tooltipText = show ? "Ocultar seção no PDF" : "Mostrar seção no PDF";
   const onClick = () => {
     setShow(!show);
   };
@@ -39,7 +39,7 @@ export const MoveIconButton = ({
   size?: "small" | "medium";
   onClick: (type: MoveIconButtonType) => void;
 }) => {
-  const tooltipText = type === "up" ? "Move up" : "Move down";
+  const tooltipText = type === "up" ? "Mover para cima" : "Mover para baixo";
   const sizeClassName = size === "medium" ? "h-6 w-6" : "h-4 w-4";
   const Icon = type === "up" ? ArrowSmallUpIcon : ArrowSmallDownIcon;
 
@@ -73,14 +73,14 @@ export const BulletListIconButton = ({
   onClick: (newShowBulletPoints: boolean) => void;
   showBulletPoints: boolean;
 }) => {
-  const tooltipText = showBulletPoints ? "Hide bullet points" : "Show bullet points";
+  const tooltipText = showBulletPoints ? "Ocultar marcadores" : "Mostrar marcadores";
 
   return (
     <IconButton
       onClick={() => onClick(!showBulletPoints)}
       tooltipText={tooltipText}
       size="small"
-      className={showBulletPoints ? "!bg-sky-100" : ""}
+      className={showBulletPoints ? "!bg-[#f1eee1]" : ""}
     >
       <ListBulletIcon
         className={`h-4 w-4 ${showBulletPoints ? "text-gray-700" : "text-gray-400"}`}

@@ -11,12 +11,21 @@ export const groupTextItemsIntoLines = (textItems: TextItems): Lines => {
   // Group text items into lines based on hasEOL
   let line: Line = [];
   for (const item of textItems) {
+    const previous = line[line.length - 1];
+    if (
+      previous &&
+      (previous.page !== item.page ||
+        Math.abs(previous.y - item.y) > Math.max(2, Math.min(previous.height, item.height) * 0.5))
+    ) {
+      if (line.length) lines.push(line);
+      line = [];
+    }
     // If item is EOL, add current line to lines and start a new empty line
     if (item.hasEOL) {
       if (item.text.trim() !== "") {
         line.push({ ...item });
       }
-      lines.push(line);
+      if (line.length) lines.push(line);
       line = [];
     }
     // Otherwise, add item to current line
@@ -41,7 +50,11 @@ export const groupTextItemsIntoLines = (textItems: TextItems): Lines => {
       const leftItem = line[i - 1];
       const leftItemXEnd = leftItem.x + leftItem.width;
       const distance = currentItem.x - leftItemXEnd;
-      if (distance <= typicalCharWidth) {
+      if (
+        distance >= -1 &&
+        distance <= typicalCharWidth &&
+        currentItem.fontName === leftItem.fontName
+      ) {
         if (shouldAddSpaceBetweenText(leftItem.text, currentItem.text)) {
           leftItem.text += " ";
         }
@@ -124,7 +137,7 @@ const getTypicalCharWidth = (textItems: TextItems): number => {
     },
     [0, 0]
   );
-  const typicalCharWidth = totalWidth / numChars;
+  const typicalCharWidth = numChars ? totalWidth / numChars : 0;
 
   return typicalCharWidth;
 };

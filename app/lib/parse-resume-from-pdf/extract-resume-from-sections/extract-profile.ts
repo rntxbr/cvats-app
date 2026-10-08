@@ -29,7 +29,9 @@ const hasAt = (item: TextItem) => item.text.includes("@");
 // Phone (pt-BR)
 // Suporta: opcional +55, DDD (2 dígitos), celular pode ter 9, separadores variados
 export const matchPhone = (item: TextItem) =>
-  item.text.match(/^(?:\+?55[\s-]?)?(?:\(?\d{2}\)?[\s-]?)?(?:9?\d{4}[\s-]?\d{4})$/);
+  item.text
+    .trim()
+    .match(/^(?:\+?\d{1,3}[\s-]?)?(?:\(?\d{2,3}\)?[\s-]?)?(?:\d{4,5}[\s-]?\d{4}|\d{3}[\s-]\d{4})$/);
 const hasParenthesis = (item: TextItem) => /\(\d{2}\)/.test(item.text);
 
 // Location (pt-BR)
@@ -102,26 +104,88 @@ const has4OrMoreWords = (item: TextItem) => item.text.split(" ").length >= 4;
 
 // Role (Job Title/Cargo) - Common job titles in Portuguese and English
 const JOB_TITLES = [
-  "Accountant", "Administrator", "Advisor", "Agent", "Analyst", "Apprentice", "Architect",
-  "Assistant", "Associate", "Auditor", "CEO", "CTO", "Consultant", "Coordinator", "Developer",
-  "Designer", "Director", "Engineer", "Founder", "Freelancer", "Head", "Intern", "Lead",
-  "Manager", "Officer", "President", "Representative", "Researcher", "Specialist", "Supervisor",
-  "Teacher", "Technician", "VP", "Analista", "Assistente", "Coordenador", "Coordenadora",
-  "Diretor", "Diretora", "Engenheiro", "Engenheira", "Especialista", "Estagiario", "Estagiário",
-  "Estagiaria", "Estagiária", "Gerente", "Lider", "Líder", "Supervisor", "Supervisora",
-  "Professor", "Professora", "Pesquisador", "Pesquisadora", "Consultor", "Consultora",
-  "Desenvolvedor", "Desenvolvedora", "Dev", "Programador", "Programadora", "Full", "Stack",
-  "Full-Stack", "Fullstack", "Backend", "Back-end", "Back end", "Frontend", "Front-end", "Front end",
-  "Cargo", "Posição", "Posicao", "Profissional",
+  "Accountant",
+  "Administrator",
+  "Advisor",
+  "Agent",
+  "Analyst",
+  "Apprentice",
+  "Architect",
+  "Assistant",
+  "Associate",
+  "Auditor",
+  "CEO",
+  "CTO",
+  "Consultant",
+  "Coordinator",
+  "Developer",
+  "Designer",
+  "Director",
+  "Engineer",
+  "Founder",
+  "Freelancer",
+  "Head",
+  "Intern",
+  "Lead",
+  "Manager",
+  "Officer",
+  "President",
+  "Representative",
+  "Researcher",
+  "Specialist",
+  "Supervisor",
+  "Teacher",
+  "Technician",
+  "VP",
+  "Analista",
+  "Assistente",
+  "Coordenador",
+  "Coordenadora",
+  "Diretor",
+  "Diretora",
+  "Engenheiro",
+  "Engenheira",
+  "Especialista",
+  "Estagiario",
+  "Estagiário",
+  "Estagiaria",
+  "Estagiária",
+  "Gerente",
+  "Lider",
+  "Líder",
+  "Supervisor",
+  "Supervisora",
+  "Professor",
+  "Professora",
+  "Pesquisador",
+  "Pesquisadora",
+  "Consultor",
+  "Consultora",
+  "Desenvolvedor",
+  "Desenvolvedora",
+  "Dev",
+  "Programador",
+  "Programadora",
+  "Full",
+  "Stack",
+  "Full-Stack",
+  "Fullstack",
+  "Backend",
+  "Back-end",
+  "Back end",
+  "Frontend",
+  "Front-end",
+  "Front end",
+  "Cargo",
+  "Posição",
+  "Posicao",
+  "Profissional",
 ];
 const NORMALIZED_JOB_TITLES = JOB_TITLES.map((title) =>
   title.toLowerCase().normalize("NFD").replace(/\p{M}/gu, "")
 );
 const hasJobTitle = (item: TextItem) => {
-  const normalizedText = item.text
-    .toLowerCase()
-    .normalize("NFD")
-    .replace(/\p{M}/gu, "");
+  const normalizedText = item.text.toLowerCase().normalize("NFD").replace(/\p{M}/gu, "");
   const words = normalizedText.split(/[\s,.;:()/-]+/).filter(Boolean);
   // Check if any job title is contained in the text (full match or partial)
   return NORMALIZED_JOB_TITLES.some((jobTitle) => {
@@ -272,7 +336,7 @@ export const extractProfile = (sections: ResumeSectionToLines) => {
 
   // Extract name first
   const [name, nameScores] = getTextWithHighestFeatureScore(textItems, NAME_FEATURE_SETS);
-  
+
   // Remove name from consideration for role (filter out exact matches and similar)
   const textItemsWithoutName = name
     ? textItems.filter((item) => {
@@ -284,68 +348,74 @@ export const extractProfile = (sections: ResumeSectionToLines) => {
         return true;
       })
     : textItems;
-  
+
   // Role is typically found in the first few lines after the name
   // Try to find it in the first 5 lines or first 10 text items (excluding name)
   const profileLinesForRole = lines.slice(0, 5).flat();
-  const roleTextItems = profileLinesForRole.length > 0 
-    ? profileLinesForRole.filter((item) => {
-        const itemText = item.text.trim();
-        const nameText = name?.trim() || "";
-        return itemText !== nameText && itemText.toLowerCase() !== nameText.toLowerCase();
-      })
-    : textItemsWithoutName.slice(0, 10);
-  
+  const roleTextItems =
+    profileLinesForRole.length > 0
+      ? profileLinesForRole.filter((item) => {
+          const itemText = item.text.trim();
+          const nameText = name?.trim() || "";
+          return itemText !== nameText && itemText.toLowerCase() !== nameText.toLowerCase();
+        })
+      : textItemsWithoutName.slice(0, 10);
+
   // Use dynamic feature sets that exclude the name
   const roleFeatureSets = createRoleFeatureSets(name);
-  const [role, roleScores] = getTextWithHighestFeatureScore(roleTextItems, roleFeatureSets);
-  
+  const [role, roleScores] = getTextWithHighestFeatureScore(
+    roleTextItems.filter(hasJobTitle),
+    roleFeatureSets
+  );
+
   // Remove both name and role from consideration for location
   // Need to check for partial matches because role might be split across textItems
   const textItemsWithoutNameAndRole = textItemsWithoutName.filter((item) => {
     const itemText = item.text.trim();
     const roleText = role?.trim() || "";
     if (!roleText) return true;
-    
+
     // Exact match (case-insensitive)
     if (itemText.toLowerCase() === roleText.toLowerCase()) return false;
-    
+
     // Check if itemText is contained in roleText or vice versa
     // This handles cases where role might be split: "Desenvolvedor" and "Full-Stack"
     const itemNormalized = itemText.toLowerCase().normalize("NFD").replace(/\p{M}/gu, "");
     const roleNormalized = roleText.toLowerCase().normalize("NFD").replace(/\p{M}/gu, "");
-    
+
     // If itemText contains significant portion of roleText, exclude it
     // Check if itemText has 3+ words matching roleText words
-    const itemWords = itemNormalized.split(/\s+/).filter(w => w.length > 2);
-    const roleWords = roleNormalized.split(/\s+/).filter(w => w.length > 2);
-    
+    const itemWords = itemNormalized.split(/\s+/).filter((w) => w.length > 2);
+    const roleWords = roleNormalized.split(/\s+/).filter((w) => w.length > 2);
+
     // If most words from role are in item, exclude it
     if (itemWords.length > 0 && roleWords.length > 0) {
-      const matchingWords = roleWords.filter(rw => itemWords.some(iw => iw.includes(rw) || rw.includes(iw)));
+      const matchingWords = roleWords.filter((rw) =>
+        itemWords.some((iw) => iw.includes(rw) || rw.includes(iw))
+      );
       if (matchingWords.length >= Math.min(2, roleWords.length)) return false;
     }
-    
+
     // Also check if one is contained in the other (handles partial matches)
     if (itemNormalized.length > 5 && roleNormalized.length > 5) {
       if (itemNormalized.includes(roleNormalized) || roleNormalized.includes(itemNormalized)) {
         return false;
       }
     }
-    
+
     return true;
   });
-  
+
   const [email, emailScores] = getTextWithHighestFeatureScore(textItems, EMAIL_FEATURE_SETS);
   const [phone, phoneScores] = getTextWithHighestFeatureScore(textItems, PHONE_FEATURE_SETS);
-  
+
   // Use dynamic feature sets that exclude the role
   const locationFeatureSets = createLocationFeatureSets(role);
   const [location, locationScores] = getTextWithHighestFeatureScore(
     textItemsWithoutNameAndRole,
     locationFeatureSets
   );
-  
+
   const [url, urlScores] = getTextWithHighestFeatureScore(textItems, URL_FEATURE_SETS);
   const [summary, summaryScores] = getTextWithHighestFeatureScore(
     textItems,
