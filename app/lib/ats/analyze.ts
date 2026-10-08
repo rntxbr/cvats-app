@@ -1,5 +1,6 @@
 import { initialSettings, type Settings } from "@/app/lib/redux/settingsSlice";
 import type { Resume } from "@/app/lib/redux/types";
+import { getSectionKind } from "@/app/lib/resume-headings";
 
 export interface AtsCheck {
   id: string;
@@ -119,7 +120,7 @@ export function resumeToText(resume: Resume, settings: Settings = initialSetting
 
 export function analyzeResume(text: string, jobDescription = "", explicitKeywords = ""): AtsReport {
   const trimmed = text.trim();
-  const normalized = normalizeText(trimmed);
+  const headings = new Set(trimmed.split(/\r?\n/).map(getSectionKind));
   const words = trimmed.match(/[\p{L}\p{N}+#]+/gu) || [];
   const checks: AtsCheck[] = [];
   const add = (id: string, label: string, passed: boolean, maxPoints: number, suggestion: string) =>
@@ -148,36 +149,28 @@ export function analyzeResume(text: string, jobDescription = "", explicitKeyword
   add(
     "summary",
     "Resumo ou objetivo identificado",
-    /(?:^|\n)\s*(?:resumo(?: profissional)?|perfil(?: profissional)?|objetivos?|summary|profile|professional summary)\s*[:\n]/.test(
-      normalized
-    ),
+    headings.has("summary"),
     10,
     "Adicione um título padrão como Resumo profissional e descreva seu foco e suas competências."
   );
   add(
     "experience",
     "Experiência ou projetos identificados",
-    /(?:^|\n)\s*(?:experiencias?(?: profissionais?| profissional)?|experience|work experience|employment|projetos?(?: destacados)?|projects?)\s*[:\n]/.test(
-      normalized
-    ),
+    headings.has("experience") || headings.has("projects"),
     15,
     "Use Experiência profissional ou Projetos. Para primeiro emprego, inclua projetos e atividades relevantes."
   );
   add(
     "education",
     "Formação identificada",
-    /(?:^|\n)\s*(?:formacao(?: academica)?|educacao|education|escolaridade|academic background)\s*[:\n]/.test(
-      normalized
-    ),
+    headings.has("education"),
     10,
     "Inclua uma seção Formação acadêmica com instituição, curso e período."
   );
   add(
     "skills",
     "Habilidades identificadas",
-    /(?:^|\n)\s*(?:habilidades?(?: tecnicas)?|competencias?(?: tecnicas)?|skills|technical skills|tecnologias?)\s*[:\n]/.test(
-      normalized
-    ),
+    headings.has("skills"),
     10,
     "Liste habilidades relevantes em texto, com um título padrão e sem depender de barras ou estrelas."
   );

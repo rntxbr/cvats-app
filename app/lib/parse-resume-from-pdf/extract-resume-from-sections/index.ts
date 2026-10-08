@@ -5,6 +5,7 @@ import { extractSkills } from "@/app/lib/parse-resume-from-pdf/extract-resume-fr
 import { extractWorkExperience } from "@/app/lib/parse-resume-from-pdf/extract-resume-from-sections/extract-work-experience";
 import type { ResumeSectionToLines } from "@/app/lib/parse-resume-from-pdf/types";
 import type { Resume } from "@/app/lib/redux/types";
+import { getSectionKind } from "@/app/lib/resume-headings";
 
 /**
  * Step 4. Extract resume from sections.
@@ -22,14 +23,15 @@ import type { Resume } from "@/app/lib/redux/types";
  */
 export const extractResumeFromSections = (sections: ResumeSectionToLines): Resume => {
   const { profile } = extractProfile(sections);
-  const { educations } = extractEducation(sections);
+  const { educations, educationExtras } = extractEducation(sections);
   const { workExperiences } = extractWorkExperience(sections);
   const { projects } = extractProject(sections);
   const { skills } = extractSkills(sections);
-  const recognizedSection =
-    /^(?:profile$)|experience|experiencia|experiência|education|educa|forma[cç]|escolaridade|academ|acadêm|ensino|gradua|curso|course|project|projeto|portfolio|portfólio|skill|habilidade|competencia|competência|tecnologia|summary|resumo|sobre|perfil|apresenta|objetiv|objective|work|employment|career|carreira|trajetoria|trajetória|atuação|atuacao/i;
   const customDescriptions = Object.entries(sections)
-    .filter(([heading]) => !recognizedSection.test(heading))
+    .filter(
+      ([heading]) =>
+        heading !== "profile" && (!getSectionKind(heading) || getSectionKind(heading) === "custom")
+    )
     .flatMap(([heading, lines]) => [
       heading,
       ...lines.map((line) => line.map((item) => item.text).join(" ")),
@@ -42,7 +44,7 @@ export const extractResumeFromSections = (sections: ResumeSectionToLines): Resum
     projects,
     skills,
     custom: {
-      descriptions: customDescriptions,
+      descriptions: [...customDescriptions, ...educationExtras],
     },
   };
 };

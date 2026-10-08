@@ -1,4 +1,5 @@
 import {
+  BULLET_POINTS,
   getBulletPointsFromLines,
   getDescriptionsLineIdx,
 } from "@/app/lib/parse-resume-from-pdf/extract-resume-from-sections/lib/bullet-points";
@@ -15,8 +16,10 @@ import type {
   FeatureSet,
   ResumeSectionToLines,
   TextItem,
+  TextScores,
 } from "@/app/lib/parse-resume-from-pdf/types";
 import type { ResumeEducation } from "@/app/lib/redux/types";
+import { getSectionKind, normalizeHeading } from "@/app/lib/resume-headings";
 
 /**
  *              Unique Attribute
@@ -79,7 +82,8 @@ const SCHOOLS = [
   "PUC-RJ",
   "PUC-MG",
 ];
-const hasSchool = (item: TextItem) => SCHOOLS.some((school) => item.text.includes(school));
+const hasSchool = (item: TextItem) =>
+  SCHOOLS.some((school) => normalizeHeading(item.text).includes(normalizeHeading(school)));
 // prettier-ignore
 const DEGREES = [
   "Associate",
@@ -137,7 +141,8 @@ const DEGREES = [
 const hasDegree = (item: TextItem) => {
   const text = item.text;
   // Check if any degree keyword is in the text
-  if (DEGREES.some((degree) => text.includes(degree))) return true;
+  if (DEGREES.some((degree) => normalizeHeading(text).includes(normalizeHeading(degree))))
+    return true;
   // Match abbreviations like AA, B.S., MBA, etc.
   if (/[ABM][A-Z.]/.test(text)) return true;
   // Match common Brazilian degree patterns like "Engenharia de X", "Ciência da X"
@@ -180,30 +185,34 @@ const GPA_FEATURE_SETS: FeatureSet[] = [
 
 export const extractEducation = (sections: ResumeSectionToLines) => {
   const educations: ResumeEducation[] = [];
-  const educationsScores = [];
-  const lines = getSectionLinesByKeywords(sections, [
-    "education",
-    "educacao",
-    "educação",
-    "formacao",
-    "formação",
-    "formacoes",
-    "formaçoes",
-    "escolaridade",
-    "acadêmico",
-    "academico",
-    "academica",
-    "acadêmica",
-    "ensino",
-    "graduacao",
-    "graduação",
-    "curso",
-    "cursos",
-    "universidade",
-    "faculdade",
-    "instituicao",
-    "instituição",
-  ]);
+  const educationsScores: {
+    schoolScores: TextScores;
+    degreeScores: TextScores;
+    gpaScores: TextScores;
+    dateScores: TextScores;
+  }[] = [];
+  const educationExtras: string[] = [];
+  const lines = Object.entries(sections)
+    .filter(([heading]) => getSectionKind(heading) === "education")
+    .flatMap(([, lines]) => lines);
+
+  // Bullet-list education is a list of records, not a school's activity descriptions.
+  const firstText =
+    lines[0]
+      ?.map((item) => item.text)
+      .join(" ")
+      .trim() || "";
+  if (BULLET_POINTS.some((bullet) => firstText.startsWith(bullet))) {
+    const bullets = getBulletPointsFromLines(lines);
+    const records = bullets.map(parseInlineEducation);
+    if (records.some(Boolean)) {
+      records.forEach((record, index) => {
+        if (record) educations.push(record);
+        else educationExtras.push(bullets[index]);
+      });
+      return { educations, educationsScores, educationExtras };
+    }
+  }
   const subsections = divideSectionIntoSubsections(lines);
   for (const subsectionLines of subsections) {
     const descriptionsLineIdx = getDescriptionsLineIdx(subsectionLines);
@@ -231,6 +240,10 @@ export const extractEducation = (sections: ResumeSectionToLines) => {
       descriptions = getBulletPointsFromLines(descriptionsLines);
     }
 
+    if (!school && !degree) {
+      educationExtras.push(...descriptions);
+      continue;
+    }
     educations.push({ school, degree, gpa, date, descriptions });
     educationsScores.push({
       schoolScores,
@@ -261,5 +274,26 @@ export const extractEducation = (sections: ResumeSectionToLines) => {
   return {
     educations,
     educationsScores,
+    educationExtras,
   };
 };
+
+function parseInlineEducation(text: string): ResumeEducation | undefined {
+  const parts = text.match(/^(.+?)\s+[–—|-]\s+(.+)$/u);
+  if (
+    !parts ||
+    !hasDegree({ text: parts[1] } as TextItem) ||
+    /^(?:idiomas|certifica)/i.test(normalizeHeading(text))
+  )
+    return;
+  const date = parts[2].match(/\(([^()]*(?:19|20)\d{2}[^()]*)\)\s*\.?$/u);
+  const school = (date ? parts[2].slice(0, date.index) : parts[2]).trim().replace(/\.$/, "");
+  if (!school) return;
+  return {
+    degree: parts[1].trim(),
+    school,
+    date: date?.[1].trim() || "",
+    gpa: "",
+    descriptions: [],
+  };
+}

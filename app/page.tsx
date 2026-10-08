@@ -60,7 +60,7 @@ export default function Home() {
   return (
     <>
       <StructuredData type="BreadcrumbList" data={breadcrumbSchema} />
-      <main className="bg-[#f1eee1] mx-auto container">
+      <main className="bg-[#f1eee1] mx-auto container min-h-dvh pb-36 lg:pb-20">
         <Hero />
       </main>
     </>

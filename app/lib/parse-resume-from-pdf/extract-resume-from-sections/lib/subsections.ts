@@ -62,6 +62,17 @@ const createIsLineNewSubsectionByLineGap = (lines: Lines): IsLineNewSubsection =
   const subsectionLineGapThreshold = lineGapWithMostCount * 1.4;
 
   const isLineNewSubsection = (line: Line, prevLine: Line) => {
+    const text = line
+      .map((item) => item.text)
+      .join(" ")
+      .trim();
+    // A large gap before activities or a date is part of the current record.
+    if (
+      BULLET_POINTS.some((bullet) => text.startsWith(bullet)) ||
+      /^(?:[\p{L}.]+\s+)?(?:19|20)\d{2}\b/u.test(text) ||
+      (!isBold(line[0]) && text.split(/\s+/).length > 10)
+    )
+      return false;
     const beginsBoldEntry =
       isBold(line[0]) &&
       !prevLine.every(isBold) &&

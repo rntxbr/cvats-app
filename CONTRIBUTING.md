@@ -8,16 +8,17 @@ Quer contribuir? Ótimo. Mantenha simples: abra uma issue ou um PR e vamos em fr
 - Sem dados de usuário no servidor (tudo é local no navegador).
 
 ## Passo a passo (PR rápido)
-1. Faça um fork e crie uma branch a partir de `main`.
+1. Faça um fork e crie uma branch a partir de `master`.
 2. Instale dependências e rode o projeto:
    ```bash
    pnpm install
    pnpm dev
    ```
 3. Faça sua alteração (pequena e objetiva). Se aplicável, inclua testes.
-4. Rode o lint e garanta que está limpo:
+4. Execute as verificações e o build antes de abrir o PR:
    ```bash
-   pnpm lint
+   pnpm check
+   pnpm build
    ```
 5. Abra um Pull Request explicando em 1–3 frases o que mudou e por quê.
 

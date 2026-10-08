@@ -13,6 +13,22 @@ test("empty input is zero, with no fabricated job coverage", () => {
   expect(analyzeResume("").jobMatch).toBeNull();
   expect(analyzeResume("", "", "SQL").jobMatch?.score).toBe(0);
 });
+
+test("compound headings, accent variants and PDF spacing are recognized", () => {
+  const report = analyzeResume(
+    "Formação  Acadêmica  e  Idiomas:\nMBA em Gestão – Instituto Alfa (2015 - 2017)\nCompetências  Técnicas  Principais\nSQL e React"
+  );
+  expect(report.checks.find((check) => check.id === "education")?.points).toBe(10);
+  expect(report.checks.find((check) => check.id === "skills")?.points).toBe(10);
+  expect(
+    analyzeResume("formaçào acadêmica").checks.find((check) => check.id === "education")?.points
+  ).toBe(10);
+  expect(
+    analyzeResume("Minha formação acadêmica foi em 2017").checks.find(
+      (check) => check.id === "education"
+    )?.points
+  ).toBe(0);
+});
 test("exact boundaries, accents and technical punctuation are preserved", () => {
   expect(containsTerm("JavaScript, C++, C#, gestão de projetos, Node.js", "Java")).toBe(false);
   expect(containsTerm("JavaScript CSS", "C")).toBe(false);

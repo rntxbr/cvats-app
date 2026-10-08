@@ -9,7 +9,6 @@ import {
   isBold,
 } from "@/app/lib/parse-resume-from-pdf/extract-resume-from-sections/lib/common-features";
 import { getTextWithHighestFeatureScore } from "@/app/lib/parse-resume-from-pdf/extract-resume-from-sections/lib/feature-scoring-system";
-import { getSectionLinesByKeywords } from "@/app/lib/parse-resume-from-pdf/extract-resume-from-sections/lib/get-section-lines";
 import { divideSectionIntoSubsections } from "@/app/lib/parse-resume-from-pdf/extract-resume-from-sections/lib/subsections";
 import type {
   FeatureSet,
@@ -17,22 +16,8 @@ import type {
   TextItem,
 } from "@/app/lib/parse-resume-from-pdf/types";
 import type { ResumeWorkExperience } from "@/app/lib/redux/types";
+import { getSectionKind } from "@/app/lib/resume-headings";
 
-// prettier-ignore
-const WORK_EXPERIENCE_KEYWORDS = [
-  "work",
-  "experience",
-  "employment",
-  "history",
-  "job",
-  "experiencia",
-  "experiência",
-  "carreira",
-  "trajetoria",
-  "trajetória",
-  "atuação",
-  "atuacao",
-];
 // prettier-ignore
 const JOB_TITLES = [
   "Accountant",
@@ -159,11 +144,13 @@ const JOB_TITLE_FEATURE_SET: FeatureSet[] = [
 export const extractWorkExperience = (sections: ResumeSectionToLines) => {
   const workExperiences: ResumeWorkExperience[] = [];
   const workExperiencesScores = [];
-  const lines = getSectionLinesByKeywords(sections, WORK_EXPERIENCE_KEYWORDS);
+  const lines = Object.entries(sections)
+    .filter(([heading]) => getSectionKind(heading) === "experience")
+    .flatMap(([, lines]) => lines);
   const subsections = divideSectionIntoSubsections(lines);
 
   for (const subsectionLines of subsections) {
-    const descriptionsLineIdx = getDescriptionsLineIdx(subsectionLines) ?? 2;
+    const descriptionsLineIdx = getDescriptionsLineIdx(subsectionLines) ?? subsectionLines.length;
 
     const subsectionInfoTextItems = subsectionLines.slice(0, descriptionsLineIdx).flat();
     const [date, dateScores] = getTextWithHighestFeatureScore(

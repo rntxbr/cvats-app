@@ -1,12 +1,16 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const logoSrc = "/logo.svg";
 
 export const FooterBar = () => {
+  const isHome = usePathname() === "/";
   return (
-    <footer className="w-full flex justify-center items-center bg-[#28584c] z-10">
+    <footer
+      className={`${isHome ? "fixed inset-x-0 bottom-0" : ""} w-full flex justify-center items-center bg-[#28584c] z-10`}
+    >
       <div className="bg-[#28584c] container px-4 sm:px-6 lg:px-10 py-3 flex flex-col lg:flex-row items-center gap-3 sm:gap-2 justify-between rounded-t-xl">
         <div className="flex items-center gap-2">
           <Link href="/">
