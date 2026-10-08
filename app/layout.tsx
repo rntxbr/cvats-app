@@ -1,4 +1,5 @@
 import "./globals.css";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Sora } from "next/font/google";
 import { StructuredData } from "@/app/lib/seo/structured-data";
 import { FooterBar } from "@/components/FooterBar";
@@ -183,6 +184,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <TopNavBar />
         {children}
         <FooterBar />
+        <SpeedInsights />
       </body>
     </html>
   );
