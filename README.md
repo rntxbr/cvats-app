@@ -140,6 +140,22 @@ Use Conventional Commits, como `feat:`, `fix:` e `docs:`.
 Obrigado a todas as pessoas que contribuem. Veja a [lista de contribuidores no GitHub](https://github.com/rntxbr/cvats-app/graphs/contributors).
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+<table>
+  <tbody>
+    <tr>
+      <td align="center" valign="top" width="14.28%"><a href="https://renatokhael.com/"><img src="https://avatars.githubusercontent.com/u/75772004?v=4?s=100" width="100px;" alt="Renato Khael"/><br /><sub><b>Renato Khael</b></sub></a><br /><a href="https://github.com/rntxbr/cvats/commits?author=rntxbr" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/CommitedBug"><img src="https://avatars.githubusercontent.com/u/71943449?v=4?s=100" width="100px;" alt="Angelo Silva"/><br /><sub><b>Angelo Silva</b></sub></a><br /><a href="https://github.com/rntxbr/cvats/commits?author=CommitedBug" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://ruangustavo.com/"><img src="https://avatars.githubusercontent.com/u/72808747?v=4?s=100" width="100px;" alt="Ruan Gustavo"/><br /><sub><b>Ruan Gustavo</b></sub></a><br /><a href="https://github.com/rntxbr/cvats/commits?author=ruangustavo" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/vitinh0z"><img src="https://avatars.githubusercontent.com/u/100782235?v=4?s=100" width="100px;" alt="Victor Gabriel"/><br /><sub><b>Victor Gabriel</b></sub></a><br /><a href="https://github.com/rntxbr/cvats/commits?author=vitinh0z" title="Code">💻</a></td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
+
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 ## Licença

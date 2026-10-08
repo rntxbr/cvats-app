@@ -1,9 +1,49 @@
 {
   "projectName": "cvats",
   "projectOwner": "rntxbr",
-  "files": ["README.md"],
+  "files": [
+    "README.md"
+  ],
   "imageSize": 100,
   "contributorsPerLine": 7,
-  "contributors": []
+  "contributors": [
+    {
+      "login": "rntxbr",
+      "name": "Renato Khael",
+      "avatar_url": "https://avatars.githubusercontent.com/u/75772004?v=4",
+      "profile": "https://renatokhael.com/",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "CommitedBug",
+      "name": "Angelo Silva",
+      "avatar_url": "https://avatars.githubusercontent.com/u/71943449?v=4",
+      "profile": "https://github.com/CommitedBug",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "ruangustavo",
+      "name": "Ruan Gustavo",
+      "avatar_url": "https://avatars.githubusercontent.com/u/72808747?v=4",
+      "profile": "https://ruangustavo.com/",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "vitinh0z",
+      "name": "Victor Gabriel",
+      "avatar_url": "https://avatars.githubusercontent.com/u/100782235?v=4",
+      "profile": "https://github.com/vitinh0z",
+      "contributions": [
+        "code"
+      ]
+    }
+  ],
+  "repoType": "github",
+  "commitConvention": "angular"
 }
-
